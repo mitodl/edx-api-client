@@ -1,0 +1,12 @@
+include AUTHORS
+include LICENSE
+include DESCRIPTION
+include CHANGELOG.txt
+include README.md
+include tox.ini
+include runtests.py
+include requirements.txt
+graft edx_api
+global-exclude *.orig *.pyc *.log *.swp local_settings.py
+prune edx_api/tests/coverage
+prune edx_api/.ropeproject
