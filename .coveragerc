@@ -1,0 +1,13 @@
+[run]
+branch = True
+source = .
+data_file=/tmp/coverage
+omit = 
+    ./.tox/*
+    *_test.py
+    *_tests.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+show_missing = True
