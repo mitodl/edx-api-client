@@ -10,7 +10,7 @@ To get the latest stable release from PyPi
 
 .. code-block:: bash
 
-    pip install edx-api-client
+    pip install edx-api-client (not yet deployed on pypi)
 
 To get the latest commit from GitHub
 
@@ -21,4 +21,3 @@ To get the latest commit from GitHub
 Release Notes
 -------------
 
-0.1: Initial Release
