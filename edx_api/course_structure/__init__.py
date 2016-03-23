@@ -3,6 +3,7 @@ from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
 from .models import Structure, Block
 
+
 # pylint: disable=too-few-public-methods
 class CourseStructure(object):
     """
