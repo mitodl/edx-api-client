@@ -1,5 +1,5 @@
 # edx-api-client
-
+[![codecov.io](https://codecov.io/github/mitodl/edx-api-client/coverage.svg?branch=master)](https://codecov.io/github/mitodl/edx-api-client?branch=master)
 Python interface for edX REST APIs
 
 ## Installation
