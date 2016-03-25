@@ -2,9 +2,19 @@
 Integration tests.
 
 Thes run against actual edx apis.
+
+NOTE: To run this test you need a running instance of edX properly configured.
+This means that you need:
+- the edx demo course
+- the user staff being "staff" of such course
+- the course being open to enrollment
+- a valid access token for the user "staff"
 """
 import os
+
 import pytest
+from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
+
 from .client import EdxApi
 
 
@@ -22,12 +32,10 @@ require_integration_settings = pytest.mark.skipif(
 def test_course_structure():
     """
     Pull down the course structure and validate it has the correct entries.
+    This test assumes that the used user can access the course.
     """
     api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
-    structure = api.course_structure.course_blocks(
-        'course-v1:edX+DemoX+Demo_Course',
-        'staff'
-    )
+    structure = api.course_structure.course_blocks('course-v1:edX+DemoX+Demo_Course', 'staff')
 
     titles = [
         block.title for block in structure.root.children
@@ -42,3 +50,29 @@ def test_course_structure():
         'About Exams and Certificates',
         'holding section',
     ]
+
+
+@require_integration_settings
+def test_enrollments():
+    """
+    Enrolls the user in a course and then pulls down the enrollments for the user.
+    This assumes that the course in the edX instance is available for enrollment.
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+
+    # the enrollment will be done manually until
+    # a client to enroll the student is implemented
+    requester = api.get_requester()
+    requester.post(
+        urljoin(BASE_URL, '/api/enrollment/v1/enrollment'),
+        json={"course_details": {"course_id": 'course-v1:edX+DemoX+Demo_Course'}}
+    )
+
+    enrollments = api.enrollments.get_student_enrollments()
+
+    enrolled_courses = [
+        enrolled_course.course_details.course_id
+        for enrolled_course in enrollments.enrolled_courses
+    ]
+
+    assert 'course-v1:edX+DemoX+Demo_Course' in enrolled_courses

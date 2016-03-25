@@ -3,6 +3,7 @@
 import requests
 
 from .course_structure import CourseStructure
+from .enrollments import CourseEnrollments
 
 
 # pylint: disable=too-few-public-methods
@@ -37,3 +38,8 @@ class EdxApi(object):
     def course_structure(self):
         """Course Structure API"""
         return CourseStructure(self.get_requester(), self.base_url)
+
+    @property
+    def enrollments(self):
+        """Course Enrollments API"""
+        return CourseEnrollments(self.get_requester(), self.base_url)
