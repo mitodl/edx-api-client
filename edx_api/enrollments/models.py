@@ -38,8 +38,13 @@ class Enrollment(object):
     def __str__(self):
         return "<Enrollment for user {user} in course {course}>".format(
             user=self.user,
-            course=self.course_details.course_id
+            course=self.course_id
         )
+
+    @property
+    def course_id(self):
+        """Shortcut for a nested property"""
+        return self.course_details.course_id
 
     @property
     def created(self):
