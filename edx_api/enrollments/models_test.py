@@ -64,6 +64,11 @@ class EnrollmentTests(TestCase):
         """Test for user property"""
         assert self.enrollment.user == "staff"
 
+    def test_course_id(self):
+        """Test for course id property"""
+        assert self.enrollment.course_id == "course-v1:edX+DemoX+Demo_Course"
+        assert self.enrollment.course_id == self.enrollment.course_details.course_id
+
 
 class CourseDetailsTests(TestCase):
     """Tests for course details object"""
