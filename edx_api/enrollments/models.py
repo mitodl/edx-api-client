@@ -26,6 +26,23 @@ class Enrollments(object):
         for enrollment_json in self.payload:
             yield Enrollment(enrollment_json)
 
+    def get_enrolled_courses_by_ids(self, course_id_list):
+        """
+        Helper function to pull the enrolled courses information for only the
+        course ids specified in course_id_list
+
+        Args:
+            course_id_list (List): list of course IDs
+
+        Returns:
+            generator of Enrollment objects
+        """
+        if not (isinstance(course_id_list, list) or isinstance(course_id_list, tuple)):
+            raise ValueError('course_id_list should be an instance of list or tuple')
+        for enrollment in self.enrolled_courses:
+            if enrollment.course_id in course_id_list:
+                yield enrollment
+
 
 @python_2_unicode_compatible
 class Enrollment(object):
@@ -38,8 +55,13 @@ class Enrollment(object):
     def __str__(self):
         return "<Enrollment for user {user} in course {course}>".format(
             user=self.user,
-            course=self.course_details.course_id
+            course=self.course_id
         )
+
+    @property
+    def course_id(self):
+        """Shortcut for a nested property"""
+        return self.course_details.course_id
 
     @property
     def created(self):
