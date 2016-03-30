@@ -32,6 +32,21 @@ class EnrollmentsTests(TestCase):
         for elem in enrollments_list:
             assert isinstance(elem, Enrollment)
 
+    def test_filter_enrolled_courses(self):
+        """Tests helper method"""
+        with self.assertRaises(ValueError):
+            list(self.enrollments.get_enrolled_courses_by_ids('foo'))
+
+        enrollments_list = list(
+            self.enrollments.get_enrolled_courses_by_ids(('course-v1:edX+DemoX+Demo_Course',))
+        )
+        assert len(enrollments_list) == 1
+        assert enrollments_list[0].course_id == 'course-v1:edX+DemoX+Demo_Course'
+
+    def test_str(self):
+        """Test the __str__"""
+        assert str(self.enrollments) == "<Enrollments>"
+
 
 class EnrollmentTests(TestCase):
     """Tests for enrollment object"""
@@ -43,6 +58,11 @@ class EnrollmentTests(TestCase):
 
         cls.enrollment_json = cls.enrollments_json[0]
         cls.enrollment = Enrollment(cls.enrollment_json)
+
+    def test_str(self):
+        """Test the __str__"""
+        assert str(self.enrollment) == ("<Enrollment for user staff in "
+                                        "course course-v1:edX+DemoX+Demo_Course>")
 
     def test_created(self):
         """Test for created property"""
@@ -64,6 +84,11 @@ class EnrollmentTests(TestCase):
         """Test for user property"""
         assert self.enrollment.user == "staff"
 
+    def test_course_id(self):
+        """Test for course id property"""
+        assert self.enrollment.course_id == "course-v1:edX+DemoX+Demo_Course"
+        assert self.enrollment.course_id == self.enrollment.course_details.course_id
+
 
 class CourseDetailsTests(TestCase):
     """Tests for course details object"""
@@ -75,6 +100,11 @@ class CourseDetailsTests(TestCase):
 
         cls.course_details_json = cls.enrollments_json[0]['course_details']
         cls.course_details = CourseDetails(cls.course_details_json)
+
+    def test_str(self):
+        """Test the __str__"""
+        assert str(self.course_details) == ("<Enrollment details for course "
+                                            "course-v1:edX+DemoX+Demo_Course>")
 
     def test_course_id(self):
         """Test for course_id property"""
