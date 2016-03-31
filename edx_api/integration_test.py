@@ -89,3 +89,21 @@ def test_course_details():
 
     assert details.course_id == "course-v1:edX+DemoX+Demo_Course"
     assert details.name == "edX Demonstration Course"
+
+
+@require_integration_settings
+def test_create_ccx():
+    """
+    Creates a CCX for the demo course. This course *MUST* have ccx enabled in
+    the advanced settings.
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    ccx_id = api.ccx.create(
+        'course-v1:edX+DemoX+Demo_Course',
+        'verified@example.com',
+        100,
+        'My CCX from test_create_ccx integration test via edx-api-client.'
+    )
+
+    assert ccx_id is not None
+    assert '@' in ccx_id  # follows ccx format

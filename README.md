@@ -30,5 +30,8 @@ additionally need to turn off TLS validation with the environment
 variable `OAUTHLIB_INSECURE_TRANSPORT=1`. This will skip the HTTPS
 validation which is required by the OAuth spec.
 
+Your edx demo course (course id `course-v1:edX+DemoX+Demo_Course`)
+must be enabled for CCX.
+
 ## Release Notes
 

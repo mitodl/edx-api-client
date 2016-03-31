@@ -2,12 +2,12 @@
 # pylint: disable=fixme
 import requests
 
+from .ccx import CCX
 from .course_structure import CourseStructure
 from .course_detail import CourseDetails
 from .enrollments import CourseEnrollments
 
 
-# pylint: disable=too-few-public-methods
 class EdxApi(object):
     """
     A client for speaking with edX.
@@ -49,3 +49,8 @@ class EdxApi(object):
     def enrollments(self):
         """Course Enrollments API"""
         return CourseEnrollments(self.get_requester(), self.base_url)
+
+    @property
+    def ccx(self):
+        """CCX API"""
+        return CCX(self.get_requester(), self.base_url)
