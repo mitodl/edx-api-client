@@ -3,6 +3,7 @@
 import requests
 
 from .course_structure import CourseStructure
+from .course_detail import CourseDetails
 from .enrollments import CourseEnrollments
 
 
@@ -38,6 +39,11 @@ class EdxApi(object):
     def course_structure(self):
         """Course Structure API"""
         return CourseStructure(self.get_requester(), self.base_url)
+
+    @property
+    def course_detail(self):
+        """Course Detail API"""
+        return CourseDetails(self.get_requester(), self.base_url)
 
     @property
     def enrollments(self):

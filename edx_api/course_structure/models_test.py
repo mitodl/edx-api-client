@@ -1,5 +1,4 @@
 """Model Tests"""
-import os
 import os.path
 import json
 from unittest import TestCase

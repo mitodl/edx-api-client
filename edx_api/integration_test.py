@@ -76,3 +76,16 @@ def test_enrollments():
     ]
 
     assert 'course-v1:edX+DemoX+Demo_Course' in enrolled_courses
+
+
+@require_integration_settings
+def test_course_details():
+    """
+    Pull down the course details.
+    This test assumes that the used user is not anonymous.
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    details = api.course_detail.get_detail('course-v1:edX+DemoX+Demo_Course')
+
+    assert details.course_id == "course-v1:edX+DemoX+Demo_Course"
+    assert details.name == "edX Demonstration Course"
