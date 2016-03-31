@@ -1,0 +1,25 @@
+{
+    "blocks_url": "http://192.168.33.10:8000/api/courses/v1/blocks/?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course",
+    "effort": "7 hours",
+    "end": "2016-09-01T05:00:00Z",
+    "enrollment_start": "2016-03-01T00:00:00Z",
+    "enrollment_end": null,
+    "id": "course-v1:edX+DemoX+Demo_Course",
+    "media": {
+        "course_image": {
+            "uri": "/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg"
+        },
+        "course_video": {
+            "uri": null
+        }
+    },
+    "name": "edX Demonstration Course",
+    "number": "DemoX",
+    "org": "edX",
+    "short_description": "",
+    "start": "2016-03-25T05:00:00Z",
+    "start_display": "March 25, 2016",
+    "start_type": "timestamp",
+    "course_id": "course-v1:edX+DemoX+Demo_Course",
+    "overview": "<h2>About This Course</h2>\n   <p>Include your long course description here. The long course description should contain 150-400 words.</p>\n"
+}
