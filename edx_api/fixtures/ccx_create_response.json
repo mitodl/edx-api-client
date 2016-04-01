@@ -1,0 +1,13 @@
+{
+  "ccx_course_id": "ccx-v1:Organization+EX101+RUN-FALL2099+ccx@1",
+  "display_name": "CCX example title",
+  "coach_email": "john@example.com",
+  "start": "2019-01-01",
+  "due": "2019-06-01",
+  "max_students_allowed": 123,
+  "course_modules" : [
+    "block-v1:Organization+EX101+RUN-FALL2099+type@chapter+block@week1",
+    "block-v1:Organization+EX101+RUN-FALL2099+type@chapter+block@week4",
+    "block-v1:Organization+EX101+RUN-FALL2099+type@chapter+block@week5"
+  ]
+}
