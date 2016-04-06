@@ -43,6 +43,22 @@ class Enrollments(object):
             if enrollment.course_id in course_id_list:
                 yield enrollment
 
+    def get_enrolled_course_ids(self, course_id_list=None):
+        """
+        Helper function that extracts the course id only from the course IDs
+        Args:
+            course_id_list (List): list of course IDs
+
+        Returns:
+            generator of strings representing course IDs
+        """
+        if course_id_list is not None:
+            enrollments = self.get_enrolled_courses_by_ids(course_id_list)
+        else:
+            enrollments = self.enrolled_courses
+        for enrollment in enrollments:
+            yield enrollment.course_id
+
 
 @python_2_unicode_compatible
 class Enrollment(object):

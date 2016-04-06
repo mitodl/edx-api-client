@@ -43,6 +43,19 @@ class EnrollmentsTests(TestCase):
         assert len(enrollments_list) == 1
         assert enrollments_list[0].course_id == 'course-v1:edX+DemoX+Demo_Course'
 
+    def test_get_id_only(self):
+        """Test for get_enrolled_course_ids method"""
+        enrollments_id_list = list(
+            self.enrollments.get_enrolled_course_ids()
+        )
+        assert len(enrollments_id_list) == 2
+
+        enrollments_id_list = list(
+            self.enrollments.get_enrolled_course_ids(('course-v1:edX+DemoX+Demo_Course',))
+        )
+        assert len(enrollments_id_list) == 1
+        assert enrollments_id_list[0] == 'course-v1:edX+DemoX+Demo_Course'
+
     def test_str(self):
         """Test the __str__"""
         assert str(self.enrollments) == "<Enrollments>"
