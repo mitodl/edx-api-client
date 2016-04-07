@@ -12,8 +12,12 @@ class Enrollments(object):
     """
     The enrollments object
     """
+
     def __init__(self, payload):
-        self.payload = payload
+        self.enrollments = {}
+        for enrollment_json in payload:
+            enrollment = Enrollment(enrollment_json)
+            self.enrollments[enrollment.course_id] = enrollment
 
     def __str__(self):
         return "<Enrollments>"
@@ -21,10 +25,9 @@ class Enrollments(object):
     @property
     def enrolled_courses(self):
         """
-        Returns a generator of all the courses the user has enrolled in
+        Returns a iterable of all the courses the user has enrolled in
         """
-        for enrollment_json in self.payload:
-            yield Enrollment(enrollment_json)
+        return self.enrollments.values()
 
     def get_enrolled_courses_by_ids(self, course_id_list):
         """
@@ -39,25 +42,40 @@ class Enrollments(object):
         """
         if not (isinstance(course_id_list, list) or isinstance(course_id_list, tuple)):
             raise ValueError('course_id_list should be an instance of list or tuple')
-        for enrollment in self.enrolled_courses:
-            if enrollment.course_id in course_id_list:
-                yield enrollment
+        for course_id in course_id_list:
+            yield self.enrollments.get(course_id)
 
-    def get_enrolled_course_ids(self, course_id_list=None):
+    def get_enrolled_course_ids(self, filter_by_id_list=None):
         """
         Helper function that extracts the course id only from the course IDs
         Args:
-            course_id_list (List): list of course IDs
+            filter_by_id_list (List): list of course IDs
 
         Returns:
-            generator of strings representing course IDs
+            iterable of strings representing course IDs
         """
-        if course_id_list is not None:
-            enrollments = self.get_enrolled_courses_by_ids(course_id_list)
-        else:
-            enrollments = self.enrolled_courses
-        for enrollment in enrollments:
-            yield enrollment.course_id
+        all_ids = self.enrollments.keys()
+        if filter_by_id_list is not None:
+            all_ids = set(all_ids).intersection(set(filter_by_id_list))
+        return all_ids
+
+    def is_enrolled_in(self, course_id):
+        """
+        Helper to check if the provided course id is in the enrollments
+
+        Args:
+            course_id (str): a string representing a course id
+
+        Returns:
+            bool: whether an enrollment for the provided course id exists
+        """
+        return course_id in self.enrollments
+
+    def get_enrollment_for_course(self, course_id):
+        """
+        Helper to get a specific enrollment for a course_id
+        """
+        return self.enrollments.get(course_id)
 
 
 @python_2_unicode_compatible
@@ -106,6 +124,13 @@ class Enrollment(object):
     def user(self):
         """Returns the username of the user."""
         return self.json.get('user')
+
+    @property
+    def is_verified(self):
+        """
+        Checks if the mode is "verified"
+        """
+        return self.mode == 'verified'
 
 
 @python_2_unicode_compatible
