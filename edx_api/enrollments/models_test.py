@@ -24,6 +24,10 @@ class EnrollmentsTests(TestCase):
 
         cls.enrollments = Enrollments(cls.enrollments_json)
 
+    def test_str(self):
+        """Test the __str__"""
+        assert str(self.enrollments) == "<Enrollments>"
+
     def test_enrollments(self):
         """Test the enrolled_courses method"""
         enrollments_list = list(self.enrollments.enrolled_courses)
@@ -56,9 +60,22 @@ class EnrollmentsTests(TestCase):
         assert len(enrollments_id_list) == 1
         assert enrollments_id_list[0] == 'course-v1:edX+DemoX+Demo_Course'
 
-    def test_str(self):
-        """Test the __str__"""
-        assert str(self.enrollments) == "<Enrollments>"
+        enrollments_id_list = list(
+            self.enrollments.get_enrolled_course_ids(('course-v1:edX+DemoX+Demo_Course', 'foo'))
+        )
+        assert len(enrollments_id_list) == 1
+        assert enrollments_id_list[0] == 'course-v1:edX+DemoX+Demo_Course'
+
+    def test_is_enrolled_in(self):
+        """Test for is_enrolled_in"""
+        assert self.enrollments.is_enrolled_in('course-v1:foo+bar+baz_course') is False
+        assert self.enrollments.is_enrolled_in('course-v1:edX+DemoX+Demo_Course') is True
+
+    def test_get_enrollment_for_course(self):
+        """Test for get_enrollment_for_course"""
+        assert self.enrollments.get_enrollment_for_course('foo') is None
+        enr = self.enrollments.get_enrollment_for_course('course-v1:edX+DemoX+Demo_Course')
+        assert isinstance(enr, Enrollment)
 
 
 class EnrollmentTests(TestCase):
@@ -101,6 +118,10 @@ class EnrollmentTests(TestCase):
         """Test for course id property"""
         assert self.enrollment.course_id == "course-v1:edX+DemoX+Demo_Course"
         assert self.enrollment.course_id == self.enrollment.course_details.course_id
+
+    def test_is_verified(self):
+        """Test for is_active property"""
+        assert self.enrollment.is_verified is False
 
 
 class CourseDetailsTests(TestCase):
