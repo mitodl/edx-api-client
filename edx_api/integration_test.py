@@ -8,7 +8,25 @@ This means that you need:
 - the edx demo course
 - the user staff being "staff" of such course
 - the course being open to enrollment
+- the course having the ccx enabled in the advanced settings
 - a valid access token for the user "staff"
+- you run the following code in a python shell inside your devstack
+  instance to create a certificate:
+```
+from certificates.models import CertificateStatuses
+from django.contrib.auth.models import User
+from certificates.tests.factories import GeneratedCertificateFactory
+from opaque_keys.edx.keys import CourseKey
+course_key = CourseKey.from_string('course-v1:edX+DemoX+Demo_Course')
+staff = User.objects.get(username='staff')
+GeneratedCertificateFactory.create(
+    user=staff,
+    course_id=course_key,
+    status=CertificateStatuses.downloadable,
+    mode='verified',
+    download_url='www.google.com', grade="0.88",
+)
+```
 """
 import os
 
@@ -107,3 +125,21 @@ def test_create_ccx():
 
     assert ccx_id is not None
     assert '@' in ccx_id  # follows ccx format
+
+
+@require_integration_settings
+def test_get_certificate():
+    """
+    Gets the certificate for the demo course.
+    See this module docstring for the code to run to create one
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    certificate = api.certificates.get_student_certificate(
+        'staff', 'course-v1:edX+DemoX+Demo_Course')
+    assert certificate.username == 'staff'
+    assert certificate.is_verified is True
+
+    certificates = api.certificates.get_student_certificates('staff')
+    assert len(certificates.all_courses_certs) >= 1
+    assert 'course-v1:edX+DemoX+Demo_Course' in certificates.all_courses_certs
+    assert 'course-v1:edX+DemoX+Demo_Course' in certificates.all_courses_verified_certs

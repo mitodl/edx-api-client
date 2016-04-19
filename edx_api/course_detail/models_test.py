@@ -1,4 +1,4 @@
-"""Models Tests for the Enrollment API"""
+"""Models Tests for the Course Detail API"""
 
 import os.path
 import json
