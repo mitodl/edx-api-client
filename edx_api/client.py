@@ -6,6 +6,7 @@ from .ccx import CCX
 from .course_structure import CourseStructure
 from .course_detail import CourseDetails
 from .enrollments import CourseEnrollments
+from .certificates import UserCertificates
 
 
 class EdxApi(object):
@@ -54,3 +55,8 @@ class EdxApi(object):
     def ccx(self):
         """CCX API"""
         return CCX(self.get_requester(), self.base_url)
+
+    @property
+    def certificates(self):
+        """Certificates API"""
+        return UserCertificates(self.get_requester(), self.base_url)
