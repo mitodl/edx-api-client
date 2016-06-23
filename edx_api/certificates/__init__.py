@@ -69,7 +69,8 @@ class UserCertificates(object):
         for course_id in course_ids:
             try:
                 all_certificates.append(self.get_student_certificate(username, course_id))
-            except HTTPError:
-                pass
+            except HTTPError as error:
+                if error.response.status_code >= 500:
+                    raise
 
         return Certificates(all_certificates)
