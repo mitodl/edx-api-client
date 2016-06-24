@@ -11,3 +11,4 @@ pytest-pylint
 pytest-cov
 ipython
 wheel
+pdbpp

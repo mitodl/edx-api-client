@@ -50,14 +50,14 @@ class UserCertificates(object):
 
     def get_student_certificates(self, username, course_ids=None):
         """
-        Returns an Certificate object with the user certificates
+        Returns an Certificates object with the user certificates
 
         Args:
             username (str): an edx user's username
             course_ids (list): a list of edX course ids.
 
         Returns:
-            Certificate: object representing the student certificate for a course
+            Certificates: object representing the student certificates for a course
         """
         # if no course ids are provided, let's get the user enrollments
         if course_ids is None:
@@ -69,7 +69,8 @@ class UserCertificates(object):
         for course_id in course_ids:
             try:
                 all_certificates.append(self.get_student_certificate(username, course_id))
-            except HTTPError:
-                pass
+            except HTTPError as error:
+                if error.response.status_code >= 500:
+                    raise
 
         return Certificates(all_certificates)
