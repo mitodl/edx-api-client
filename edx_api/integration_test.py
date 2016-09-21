@@ -228,3 +228,19 @@ def test_get_certificate_404_error():
         # Note no error here, just empty list
         certs = certificates.get_student_certificates(username)
         assert len(certs.all_courses_certs) == 0
+
+
+@require_integration_settings
+def test_get_current_grade():
+    """
+    Gets the user current grade.
+    If an user is enrolled in a course she has a current grade (probably with percent == 0.0)
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    course_grade = api.current_grades.get_student_current_grade(
+        'staff', 'course-v1:edX+DemoX+Demo_Course')
+    assert course_grade.username == 'staff'
+
+    course_grades = api.current_grades.get_student_current_grades('staff')
+    assert len(course_grades.all_course_ids) >= 1
+    assert 'course-v1:edX+DemoX+Demo_Course' in course_grades.all_course_ids

@@ -3,10 +3,11 @@
 import requests
 
 from .ccx import CCX
-from .course_structure import CourseStructure
-from .course_detail import CourseDetails
-from .enrollments import CourseEnrollments
 from .certificates import UserCertificates
+from .course_detail import CourseDetails
+from .course_structure import CourseStructure
+from .enrollments import CourseEnrollments
+from .grades import UserCurrentGrades
 
 
 class EdxApi(object):
@@ -60,3 +61,8 @@ class EdxApi(object):
     def certificates(self):
         """Certificates API"""
         return UserCertificates(self.get_requester(), self.base_url)
+
+    @property
+    def current_grades(self):
+        """Current Grades API"""
+        return UserCurrentGrades(self.get_requester(), self.base_url)
