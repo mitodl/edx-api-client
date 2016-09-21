@@ -11,4 +11,4 @@ pytest-pylint
 pytest-cov
 ipython
 wheel
-
+requests-mock

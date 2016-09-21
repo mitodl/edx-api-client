@@ -10,6 +10,7 @@ This means that you need:
 - the course being open to enrollment
 - the course having the ccx enabled in the advanced settings
 - a valid access token for the user "staff"
+- another course is available with enrollment open and "staff" NOT enrolled
 - you run the following code in a python shell inside your devstack
   instance to create a certificate:
 ```
@@ -41,11 +42,17 @@ from .client import EdxApi
 
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 BASE_URL = os.getenv('BASE_URL', 'http://localhost:8000/')
+ENROLLMENT_CREATION_COURSE_ID = os.getenv('ENROLLMENT_CREATION_COURSE_ID')
 
 # pylint: disable=invalid-name
 require_integration_settings = pytest.mark.skipif(
     not ACCESS_TOKEN or not BASE_URL,
     reason="You must specify the credential env vars"
+)
+
+require_integration_settings_course_id = pytest.mark.skipif(
+    not ACCESS_TOKEN or not BASE_URL or not ENROLLMENT_CREATION_COURSE_ID,
+    reason="You must specify the credential env vars and the alternate course id for enrollments"
 )
 
 
@@ -97,6 +104,16 @@ def test_enrollments():
     ]
 
     assert 'course-v1:edX+DemoX+Demo_Course' in enrolled_courses
+
+
+@require_integration_settings_course_id
+def test_create_enrollment():
+    """
+    Integration test to enroll the user in a course
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    enrollment = api.enrollments.create_audit_student_enrollment(ENROLLMENT_CREATION_COURSE_ID)
+    assert enrollment.course_id == ENROLLMENT_CREATION_COURSE_ID
 
 
 @require_integration_settings
