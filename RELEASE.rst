@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+Version 0.3.0
+-------------
+
+- Added capability to create enrollment in a course
+- Added Current Grade REST API support
+
 Version 0.2.1
 -------------
 

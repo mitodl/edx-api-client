@@ -7,7 +7,7 @@ Python interface for edX REST APIs
 To get the latest stable release from PyPi
 
 ```bash
-pip install edx-api-client (not yet deployed on pypi)
+pip install edx-api-client
 ```
 
 To get the latest commit from GitHub
@@ -35,3 +35,4 @@ must be enabled for CCX.
 
 ## Release Notes
 
+See the RELEASE.rst file
