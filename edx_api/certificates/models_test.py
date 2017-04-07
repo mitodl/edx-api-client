@@ -121,3 +121,15 @@ class CertificateTests(TestCase):
     def test_grade(self):
         """Test for grade"""
         assert self.certificate.grade == "0.98"
+
+    def test_is_passing(self):
+        """Test for is_passing"""
+        assert self.certificate.is_passing is True
+
+    def test_created(self):
+        """Test for created"""
+        assert self.certificate.created == "2015-07-31T00:00:00Z"
+
+    def test_modified(self):
+        """Test for modified"""
+        assert self.certificate.modified == "2015-08-31T00:00:00Z"

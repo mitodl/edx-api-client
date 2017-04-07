@@ -105,3 +105,18 @@ class Certificate(object):
     def grade(self):
         """Returns the grade property"""
         return self.json.get("grade")
+
+    @property
+    def created(self):
+        """Returns the created property"""
+        return self.json.get("created")
+
+    @property
+    def modified(self):
+        """Returns the modified property"""
+        return self.json.get("modified")
+
+    @property
+    def is_passing(self):
+        """Returns the is_passing property"""
+        return self.json.get("is_passing")
