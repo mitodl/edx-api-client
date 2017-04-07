@@ -8,7 +8,7 @@
 	    "grade": "0.98",
 	    "created": "2015-07-31T00:00:00Z",
 	    "modified": "2015-08-31T00:00:00Z",
-	    "is_passing": True
+	    "is_passing": true
 	},
 	{
 	    "username": "bob",
@@ -19,6 +19,6 @@
 	    "grade": "0.88",
 	    "created": "2015-07-31T00:00:00Z",
 	    "modified": "2015-07-31T00:00:00Z",
-	    "is_passing": False
+	    "is_passing": false
 	}
 ]

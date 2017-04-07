@@ -177,6 +177,7 @@ class CourseDetails(object):
         Returns the date and time when users can begin enrolling in the course.
         If None, enrollment opens immediately when the course is created.
         """
+        # pylint: disable=duplicate-code
         try:
             return parser.parse(self.json.get('enrollment_start'))
         except AttributeError:
@@ -188,6 +189,7 @@ class CourseDetails(object):
         Returns the date and time after which users cannot enroll for the course.
         If None, the enrollment period never ends.
         """
+        # pylint: disable=duplicate-code
         try:
             return parser.parse(self.json.get('enrollment_end'))
         except AttributeError:

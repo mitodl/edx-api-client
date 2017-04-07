@@ -44,6 +44,7 @@ class CourseDetail(object):
     @property
     def enrollment_start(self):
         """Date enrollment begins"""
+        # pylint: disable=duplicate-code
         try:
             return parser.parse(self.json.get('enrollment_start'))
         except AttributeError:
@@ -52,6 +53,7 @@ class CourseDetail(object):
     @property
     def enrollment_end(self):
         """Date enrollment ends"""
+        # pylint: disable=duplicate-code
         try:
             return parser.parse(self.json.get('enrollment_end'))
         except AttributeError:
