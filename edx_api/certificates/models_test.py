@@ -1,6 +1,6 @@
 """Models Tests for the Certificates API"""
 
-from dateutil import parser
+from datetime import datetime
 import os.path
 import json
 from unittest import TestCase
@@ -129,8 +129,14 @@ class CertificateTests(TestCase):
 
     def test_created(self):
         """Test for created"""
-        assert self.certificate.created == parser.parse("2015-07-31T00:00:00Z")
+        expected = datetime.strptime(
+            "2015-07-31T00:00:00", "%Y-%m-%dT%H:%M:%S"
+        )
+        assert self.certificate.created == expected
 
     def test_modified(self):
         """Test for modified"""
-        assert self.certificate.modified == parser.parse("2015-08-31T00:00:00Z")
+        expected = datetime.strptime(
+            "2015-08-31T00:00:00", "%Y-%m-%dT%H:%M:%S"
+        )
+        assert self.certificate.modified == expected

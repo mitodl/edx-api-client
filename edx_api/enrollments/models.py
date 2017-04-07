@@ -172,7 +172,7 @@ class CourseDetails(object):
             return None
 
     @property
-    def enrollment_start(self):  # pylint: disable=duplicate-code
+    def enrollment_start(self):
         """
         Returns the date and time when users can begin enrolling in the course.
         If None, enrollment opens immediately when the course is created.
@@ -183,7 +183,7 @@ class CourseDetails(object):
             return None
 
     @property
-    def enrollment_end(self):  # pylint: disable=duplicate-code
+    def enrollment_end(self):
         """
         Returns the date and time after which users cannot enroll for the course.
         If None, the enrollment period never ends.

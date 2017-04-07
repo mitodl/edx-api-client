@@ -42,7 +42,7 @@ class CourseDetail(object):
             return None
 
     @property
-    def enrollment_start(self):  # pylint: disable=duplicate-code
+    def enrollment_start(self):
         """Date enrollment begins"""
         try:
             return parser.parse(self.json.get('enrollment_start'))
@@ -50,7 +50,7 @@ class CourseDetail(object):
             return None
 
     @property
-    def enrollment_end(self):  # pylint: disable=duplicate-code
+    def enrollment_end(self):
         """Date enrollment ends"""
         try:
             return parser.parse(self.json.get('enrollment_end'))
