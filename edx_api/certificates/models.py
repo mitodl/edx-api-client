@@ -1,6 +1,7 @@
 """
 Business objects for the certificates API
 """
+from dateutil import parser
 from six import python_2_unicode_compatible
 
 
@@ -105,3 +106,18 @@ class Certificate(object):
     def grade(self):
         """Returns the grade property"""
         return self.json.get("grade")
+
+    @property
+    def created(self):
+        """Returns the created property"""
+        return parser.parse(self.json.get('created'))
+
+    @property
+    def modified(self):
+        """Returns the modified property"""
+        return parser.parse(self.json.get('modified'))
+
+    @property
+    def is_passing(self):
+        """Returns the is_passing property"""
+        return self.json.get("is_passing")
