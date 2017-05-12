@@ -1,0 +1,7 @@
+{
+  "id": 9,
+  "username": "staff",
+  "email": "staff@example.com",
+  "name": "name",
+  "course_enrollments": "http://172.20.0.1:18000/api/mobile/v0.5/users/staff/course_enrollments/"
+}

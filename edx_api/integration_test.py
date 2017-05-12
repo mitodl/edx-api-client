@@ -259,3 +259,16 @@ def test_get_current_grade():
     course_grades = api.current_grades.get_student_current_grades('staff')
     assert len(course_grades.all_course_ids) >= 1
     assert 'course-v1:edX+DemoX+Demo_Course' in course_grades.all_course_ids
+
+
+@require_integration_settings
+def test_user_info():
+    """
+    Gets information about the logged in user
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    info = api.user_info.get_user_info()
+    assert info.username == 'staff'
+    assert info.name == ''
+    assert info.email == 'staff@example.com'
+    assert isinstance(info.id, int)

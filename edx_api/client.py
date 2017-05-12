@@ -8,6 +8,7 @@ from .course_detail import CourseDetails
 from .course_structure import CourseStructure
 from .enrollments import CourseEnrollments
 from .grades import UserCurrentGrades
+from .user_info import UserInfo
 
 
 class EdxApi(object):
@@ -66,3 +67,8 @@ class EdxApi(object):
     def current_grades(self):
         """Current Grades API"""
         return UserCurrentGrades(self.get_requester(), self.base_url)
+
+    @property
+    def user_info(self):
+        """User info API"""
+        return UserInfo(self.get_requester(), self.base_url)
