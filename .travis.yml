@@ -7,6 +7,18 @@ matrix:
       env: TOX_ENV=py34
     - python: "3.5"
       env: TOX_ENV=py35
+    - install:
+      - git clone https://github.com/edx/devstack.git
+      - cd devstack
+      - make dev.clone
+      - make dev.provision
+      script: (make dev.up &); sleep 5;
+      env:
+        - ACCESS_TOKEN=token
+        - BASE_URL=http://localhost:18000/
+      services:
+        - docker
+
 install: pip install tox codecov
 script: tox -e $TOX_ENV
 after_success: codecov
