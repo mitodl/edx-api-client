@@ -19,7 +19,7 @@ class InfoTests(TestCase):
 
     def test_str(self):
         """Test the __str__"""
-        assert str(self.info) == "<Current Grades for user bob>"
+        assert str(self.info) == "<User info for user staff>"
 
     def test_properties(self):
         """Test properties on Info model"""
