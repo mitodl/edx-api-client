@@ -199,8 +199,7 @@ def test_get_certificate_500_error():
         """
         if '/api/certificates/v0/certificates/' in url:
             return FakeErroredResponse(status_code=500)
-        else:
-            return old_requester_get(url, *args, **kwargs)
+        return old_requester_get(url, *args, **kwargs)
 
     with patch.object(certificates.requester, 'get', autospec=True) as get:
         get.side_effect = mocked_get
@@ -232,8 +231,7 @@ def test_get_certificate_404_error():
         """
         if '/api/certificates/v0/certificates/' in url:
             return FakeErroredResponse(status_code=404)
-        else:
-            return old_requester_get(url, *args, **kwargs)
+        return old_requester_get(url, *args, **kwargs)
 
     with patch.object(certificates.requester, 'get', autospec=True) as get:
         get.side_effect = mocked_get
@@ -244,7 +242,7 @@ def test_get_certificate_404_error():
 
         # Note no error here, just empty list
         certs = certificates.get_student_certificates(username)
-        assert len(certs.all_courses_certs) == 0
+        assert certs.all_courses_certs
 
 
 @require_integration_settings
