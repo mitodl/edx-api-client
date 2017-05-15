@@ -8,10 +8,16 @@ matrix:
       - git clone https://github.com/edx/devstack.git
       - cd devstack
       - make dev.clone
-      - make dev.provision
+      - docker-compose up -d mysql mongo
+      - sleep 10
+      - docker exec -i edx.devstack.mysql mysql -uroot mysql < provision.sql
+      - docker exec -i edx.devstack.mongo mongo < mongo-provision.js
+      - bash ./provision-lms.sh
+      - cat ../provision-devstack.sh | docker exec -i edx.devstack.lms bash -i
       - cd ..
       script:
-        - (make dev.up &); sleep 5;
+        - make dev.up
+        - sleep 60 # Wait for LMS to start
         - tox -e py35 ./edx_api/integration_test.py
       env:
         - ACCESS_TOKEN=token
