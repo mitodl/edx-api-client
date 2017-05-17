@@ -40,7 +40,7 @@ class Enrollments(object):
         Returns:
             generator of Enrollment objects
         """
-        if not (isinstance(course_id_list, list) or isinstance(course_id_list, tuple)):
+        if not isinstance(course_id_list, (list, tuple)):
             raise ValueError('course_id_list should be an instance of list or tuple')
         for course_id in course_id_list:
             yield self.enrollments.get(course_id)
