@@ -242,7 +242,7 @@ def test_get_certificate_404_error():
 
         # Note no error here, just empty list
         certs = certificates.get_student_certificates(username)
-        assert certs.all_courses_certs
+        assert not certs.all_courses_certs
 
 
 @require_integration_settings
