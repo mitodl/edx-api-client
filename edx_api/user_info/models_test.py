@@ -26,13 +26,13 @@ class InfoTests(TestCase):
         assert self.info.name == self.user_info_json['name']
         assert self.info.username == self.user_info_json['username']
         assert self.info.email == self.user_info_json['email']
-        assert self.info.id == self.user_info_json['id']
+        assert self.info.user_id == self.user_info_json['id']
 
-    def test_missing(self):
+    def test_missing(self):  # pylint: disable=no-self-use
         """Missing properties shouldn't cause a problem"""
         info = Info({})
 
         assert info.name is None
         assert info.username is None
         assert info.email is None
-        assert info.id is None
+        assert info.user_id is None

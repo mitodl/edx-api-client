@@ -271,4 +271,4 @@ def test_user_info():
     assert info.username == 'staff'
     assert info.name == ''
     assert info.email == 'staff@example.com'
-    assert isinstance(info.id, int)
+    assert isinstance(info.user_id, int)

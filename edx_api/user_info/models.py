@@ -31,6 +31,6 @@ class Info(object):
         return self.json.get('name')
 
     @property
-    def id(self):
+    def user_id(self):
         """Id for the user"""
         return self.json.get('id')
