@@ -1,6 +1,18 @@
 Release Notes
 =============
 
+Version 0.4.0
+-------------
+
+- Specify pylint version
+- Lint
+- Fix test
+- Added user_info client
+- Fix lint
+- Lint
+- Fix code coverage
+- Updated client with edX newly added attributes in certificates api (#31)
+
 Version 0.3.0
 -------------
 
