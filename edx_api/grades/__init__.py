@@ -67,10 +67,6 @@ class UserCurrentGrades(object):
 
         all_current_grades = []
         for course_id in course_ids:
-            try:
-                all_current_grades.append(self.get_student_current_grade(username, course_id))
-            except HTTPError as error:
-                if error.response.status_code >= 500:
-                    raise
+            all_current_grades.append(self.get_student_current_grade(username, course_id))
 
         return CurrentGrades(all_current_grades)
