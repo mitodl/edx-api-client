@@ -31,10 +31,7 @@ GeneratedCertificateFactory.create(
 """
 import os
 
-from mock import patch
 import pytest
-from requests.exceptions import HTTPError
-from requests import Response
 from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
 from .client import EdxApi
@@ -163,86 +160,6 @@ def test_get_certificate():
     assert len(certificates.all_courses_certs) >= 1
     assert 'course-v1:edX+DemoX+Demo_Course' in certificates.all_courses_certs
     assert 'course-v1:edX+DemoX+Demo_Course' in certificates.all_courses_verified_certs
-
-
-class FakeErroredResponse(object):
-    """Fake requests response"""
-    def __init__(self, status_code):
-        """
-        Build a fake error response
-        """
-        self.error = HTTPError(response=Response())
-        self.error.response = Response()
-        self.error.response.status_code = status_code
-
-    def raise_for_status(self):
-        """Raise an HTTPError"""
-        raise self.error
-
-
-@require_integration_settings
-def test_get_certificate_500_error():
-    """
-    Asserts that a 500 error returned from EDX will be propagated
-    """
-
-    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
-    username = 'staff'
-    course_key = 'course-v1:edX+DemoX+Demo_Course'
-
-    certificates = api.certificates
-    old_requester_get = certificates.requester.get
-
-    def mocked_get(url, *args, **kwargs):
-        """
-        Return an error for specific URLs
-        """
-        if '/api/certificates/v0/certificates/' in url:
-            return FakeErroredResponse(status_code=500)
-        return old_requester_get(url, *args, **kwargs)
-
-    with patch.object(certificates.requester, 'get', autospec=True) as get:
-        get.side_effect = mocked_get
-        with pytest.raises(HTTPError):
-            certificates.get_student_certificate(
-                username, course_key
-            )
-
-        with pytest.raises(HTTPError):
-            certificates.get_student_certificates(username)
-
-
-@require_integration_settings
-def test_get_certificate_404_error():
-    """
-    Asserts that a 404 returned from EDX will be silenced for get_student_certificates
-    """
-
-    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
-    username = 'staff'
-    course_key = 'course-v1:edX+DemoX+Demo_Course'
-
-    certificates = api.certificates
-    old_requester_get = certificates.requester.get
-
-    def mocked_get(url, *args, **kwargs):
-        """
-        Return an error for specific URLs
-        """
-        if '/api/certificates/v0/certificates/' in url:
-            return FakeErroredResponse(status_code=404)
-        return old_requester_get(url, *args, **kwargs)
-
-    with patch.object(certificates.requester, 'get', autospec=True) as get:
-        get.side_effect = mocked_get
-        with pytest.raises(HTTPError):
-            certificates.get_student_certificate(
-                username, course_key
-            )
-
-        # Note no error here, just empty list
-        certs = certificates.get_student_certificates(username)
-        assert not certs.all_courses_certs
 
 
 @require_integration_settings
