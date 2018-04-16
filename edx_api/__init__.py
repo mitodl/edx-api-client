@@ -4,3 +4,4 @@ edX python REST API client
 """
 
 __version__ = '0.4.0'  # pragma: no cover
+DEFAULT_TIME_OUT = 25
