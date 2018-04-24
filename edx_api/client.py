@@ -41,6 +41,9 @@ class EdxApi(object):
         old_request = session.request
 
         def patched_request(*args, **kwargs):
+            """
+            adds timeout param to session.request
+            """
             return old_request(*args, timeout=self.timeout, **kwargs)
 
         session.request = patched_request
