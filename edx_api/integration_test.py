@@ -134,7 +134,7 @@ def test_enrollments():
 
     # the enrollment will be done manually until
     # a client to enroll the student is implemented
-    requester = api.get_requester
+    requester = api.get_requester()
     requester.post(
         urljoin(BASE_URL, '/api/enrollment/v1/enrollment'),
         json={"course_details": {"course_id": 'course-v1:edX+DemoX+Demo_Course'}}
