@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.5.0
+-------------
+
+- Added timeout in edx requests (#40)
+
 Version 0.4.0
 -------------
 
