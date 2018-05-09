@@ -2,6 +2,7 @@
 # pylint: disable=fixme
 import requests
 
+from . import DEFAULT_TIME_OUT
 from .ccx import CCX
 from .certificates import UserCertificates
 from .course_detail import CourseDetails
@@ -15,7 +16,7 @@ class EdxApi(object):
     """
     A client for speaking with edX.
     """
-    def __init__(self, credentials, base_url='https://courses.edx.org/'):
+    def __init__(self, credentials, base_url='https://courses.edx.org/', timeout=DEFAULT_TIME_OUT):
         if 'access_token' not in credentials:
             raise AttributeError(
                 "Due to a lack of support for Client Credentials Grant in edX,"
@@ -24,11 +25,11 @@ class EdxApi(object):
 
         self.base_url = base_url
         self.credentials = credentials
+        self.timeout = timeout
 
     def get_requester(self):
         """
-        Returns an object to make authenticated requests. See python `requests` for
-        the API.
+        Returns an object to make authenticated requests. See python `requests` for the API.
         """
         # TODO(abrahms): Perhaps pull this out into a factory function for
         # generating an EdxApi instance with the proper requester & credentials.
@@ -36,6 +37,16 @@ class EdxApi(object):
         session.headers.update({
             'Authorization': 'Bearer {}'.format(self.credentials['access_token'])
         })
+
+        old_request = session.request
+
+        def patched_request(*args, **kwargs):
+            """
+            adds timeout param to session.request
+            """
+            return old_request(*args, timeout=self.timeout, **kwargs)
+
+        session.request = patched_request
         return session
 
     @property
