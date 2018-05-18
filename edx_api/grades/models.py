@@ -46,6 +46,32 @@ class CurrentGrades(object):
 
 
 @python_2_unicode_compatible
+class CurrentGradesForCourse(object):
+    """
+    Current Grades object for a course run
+    """
+    def __init__(self, current_grade_list):
+        if not isinstance(current_grade_list, Iterable):
+            raise TypeError('CurrentGrades needs a Iterable object')
+        self.current_grades = {}
+
+        for current_grade in current_grade_list:
+            if not isinstance(current_grade, CurrentGrade):
+                raise ValueError("Only CurrentGrade objects are allowed")
+
+        self.current_grades[current_grade.username] = current_grade
+
+    @property
+    def all_users(self):
+        """Helper property to return all the users that have current grades for this course"""
+        return self.current_grades.keys()
+
+    def get_current_grade(self, username):
+        """Returns the current grade for the given username"""
+        return self.current_grades.get(username)
+
+
+@python_2_unicode_compatible
 class CurrentGrade(object):
     """
     Single current grade object representation

@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
 from edx_api.enrollments import CourseEnrollments
-from .models import CurrentGrade, CurrentGrades
+from .models import CurrentGrade, CurrentGrades, CurrentGradesForCourse
 
 
 class UserCurrentGrades(object):
@@ -74,3 +74,22 @@ class UserCurrentGrades(object):
                     raise
 
         return CurrentGrades(all_current_grades)
+
+    def get_all_current_grades_for_course(self, course_id):
+        """
+        Returns a CurrentGradesForCourse object for given edX course id
+
+        Args:
+            course_id (str): an edX course id
+        """
+        resp = self.requester.get(
+            urljoin(
+                self.base_url,
+                '/api/grades/v1/courses/{course_id}'.format(
+                    course_id=course_id
+                )
+            )
+        )
+        resp.raise_for_status()
+
+        return CurrentGradesForCourse(resp.json())
