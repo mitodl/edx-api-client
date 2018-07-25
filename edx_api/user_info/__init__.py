@@ -36,3 +36,23 @@ class UserInfo(object):
         resp.raise_for_status()
 
         return Info(resp.json())
+
+    def get_user_account_info(self, username):
+        """
+        Returns a UserInfo object for the logged in user.
+
+        Returns:
+            UserInfo: object representing the student current grades
+        """
+        # the request is done in behalf of the current logged in user
+        resp = self.requester.get(
+            urljoin(
+                self.base_url,
+                '/api/user/v1/accounts/{username}'.format(username=username)
+            )
+        )
+
+        resp.raise_for_status()
+
+        return Info(resp.json())
+

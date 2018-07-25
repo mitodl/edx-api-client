@@ -1,0 +1,14 @@
+{
+  "id": 9,
+  "username": "staff",
+  "email": "staff@example.com",
+  "name": "name",
+  "bio":null,
+  "requires_parental_consent":true,
+  "level_of_education":null,
+  "accomplishments_shared":false,
+  "goals":"",
+  "language_proficiencies":[],
+  "gender":null,
+  "is_active":true
+}
