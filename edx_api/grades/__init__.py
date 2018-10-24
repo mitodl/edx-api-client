@@ -37,7 +37,7 @@ class UserCurrentGrades(object):
         resp = self.requester.get(
             urljoin(
                 self.base_url,
-                '/api/grades/v0/course_grade/{course_key}/users/?username={username}'.format(
+                '/api/grades/v1/courses/{course_key}/?username={username}'.format(
                     username=username,
                     course_key=course_id
                 )

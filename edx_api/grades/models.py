@@ -62,7 +62,12 @@ class CurrentGrade(object):
     @property
     def course_id(self):
         """Shortcut for a nested property"""
-        return self.json.get('course_key')
+        return self.json.get('course_id')
+
+    @property
+    def email(self):
+        """Returns email of the user"""
+        return self.json.get('email')
 
     @property
     def username(self):

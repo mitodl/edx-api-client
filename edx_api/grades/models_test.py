@@ -80,6 +80,10 @@ class CurrentGradeTests(TestCase):
         """Test for course_id property"""
         assert self.current_grade.course_id == "course-v1:edX+DemoX+Demo_Course"
 
+    def test_email(self):
+        """Test for email property"""
+        assert self.current_grade.email == "bob@example.com"
+
     def test_username(self):
         """Test for user property"""
         assert self.current_grade.username == "bob"
