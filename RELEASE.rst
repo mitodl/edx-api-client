@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+Version 0.6.0
+-------------
+
+- Update grades API to v1 (#45)
+- Update six version to latest (#46)
+
 Version 0.5.0
 -------------
 
