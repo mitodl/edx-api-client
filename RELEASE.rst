@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.6.1
+-------------
+
+- loosen requirements (#48)
+
 Version 0.6.0 (Released October 29, 2018)
 -------------
 
