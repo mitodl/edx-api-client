@@ -1,0 +1,30 @@
+[
+    {
+        "course_id": "course-v1:OpenCraft+OC101+2018_T2",
+        "created": "2019-04-04T19:44:31.802434Z",
+        "is_active": true,
+        "mode": "audit",
+        "user": "staff"
+    },
+    {
+        "course_id": "course-v1:OpenCraft+OC101+2018_T2",
+        "created": "2019-04-04T19:44:31.802434Z",
+        "is_active": true,
+        "mode": "audit",
+        "user": "username"
+    },
+    {
+        "course_id": "course-v1:edX+DemoX+Demo_Course",
+        "created": "2019-04-04T19:44:31.802434Z",
+        "is_active": true,
+        "mode": "audit",
+        "user": "staff"
+    },
+    {
+        "course_id": "course-v1:edX+DemoX+Demo_Course",
+        "created": "2019-04-04T19:44:31.802434Z",
+        "is_active": true,
+        "mode": "audit",
+        "user": "username"
+    }
+]
