@@ -11,6 +11,7 @@ This means that you need:
 - the course having the ccx enabled in the advanced settings
 - a valid access token for the user "staff"
 - another course is available with enrollment open and "staff" NOT enrolled
+- the user staff is enrolled in, at least, two courses
 - you run the following code in a python shell inside your devstack
   instance to create a certificate:
 ```
@@ -395,3 +396,28 @@ def test_user_info_timeout():
         get.side_effect = mocked_timeout
         with pytest.raises(Timeout):
             user_info.get_user_info()
+
+
+@require_integration_settings
+def test_enrollments_list():
+    """
+    Enrolls the user in a course and then pulls down the enrollments for the user.
+    This assumes that the course in the edX instance is available for enrollment.
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    enrollments = api.enrollments.get_enrollments()
+
+    cnt = 0
+    for enrollment in enrollments:
+        assert enrollment.course_id
+        assert enrollment.created
+        assert enrollment.mode
+        assert enrollment.is_active
+        assert enrollment.user
+        if enrollment.mode != u'verified':
+            assert not enrollment.is_verified
+        else:
+            assert enrollment.is_verified
+        cnt += 1
+
+    assert cnt >= 2

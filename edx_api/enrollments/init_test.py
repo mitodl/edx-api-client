@@ -4,6 +4,10 @@ Tests for the content of the __init__ module
 import json
 import os
 from unittest import TestCase
+try:
+    from mock import patch
+except ImportError:
+    from unittest.mock import patch
 
 import requests_mock
 from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
@@ -23,6 +27,10 @@ class EnrollmentsTest(TestCase):
                                'fixtures/user_enrollments.json')) as file_obj:
             cls.enrollments_json = json.loads(file_obj.read())
 
+        with open(os.path.join(os.path.dirname(__file__),
+                               'fixtures/enrollments_list.json')) as file_obj:
+            cls.enrollments_list_json = json.loads(file_obj.read())
+
         cls.enrollment_json = cls.enrollments_json[0]
         base_edx_url = 'http://edx.example.com'
         cls.base_url = urljoin(base_edx_url, CourseEnrollments.enrollment_url)
@@ -40,3 +48,43 @@ class EnrollmentsTest(TestCase):
             self.enrollment_json['course_details']['course_id'])
         for key, val in enrollment.json.items():
             assert self.enrollment_json.get(key) == val
+
+    @patch('edx_api.enrollments.CourseEnrollments._get_enrollments_list_page')
+    def test_get_enrollments(self, mock_get_enrollments_list_page):
+        """
+        Test get_enrollments return all enrollments.
+        """
+        mock_get_enrollments_list_page.side_effect = [
+            ([{}, {}], 'cursor'),
+            ([{}, {}], 'cursor'),
+            ([{}, {}], 'cursor'),
+            ([{}, {}], None)
+        ]
+        enrollments = list(self.enrollment_client.get_enrollments())
+        assert len(enrollments) == 8
+
+    @requests_mock.mock()
+    def test_get_enrollments_list(self, mock_req):
+        """
+        Test get enrollments call with pagination.
+        """
+        mock_req.register_uri(
+            'GET',
+            CourseEnrollments.enrollment_list_url,
+            text=json.dumps({
+                'previous': None,
+                'results': self.enrollments_list_json[:2],
+                'next': 'http://base_url/enrl/?cursor=next-cursor'
+            }),
+        )
+        mock_req.register_uri(
+            'GET',
+            '{url}?cursor=next-cursor'.format(url=CourseEnrollments.enrollment_list_url),
+            text=json.dumps({
+                'previous': 'http://base_url/enrl/?cursor=next-cursor',
+                'results': self.enrollments_list_json[2:],
+                'next': None,
+            })
+        )
+        enrollments = list(self.enrollment_client.get_enrollments())
+        assert len(enrollments) == 4
