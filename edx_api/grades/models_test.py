@@ -7,45 +7,56 @@ from unittest import TestCase
 
 from .models import (
     CurrentGrade,
-    CurrentGrades,
+    CurrentGradesByCourse,
+    CurrentGradesByUser,
 )
 
 
-class CurrentGradesTests(TestCase):
-    """Tests for current grades object"""
+class CurrentGradesByCourseTests(TestCase):
+    """
+    Tests for CurrentGradesByCourse
+    """
     @classmethod
     def setUpClass(cls):
         with open(os.path.join(os.path.dirname(__file__),
-                               'fixtures/current_grades.json')) as file_obj:
+                               'fixtures/course_grades_hawthorn.json')) as file_obj:
             cls.grades_json = json.loads(file_obj.read())
 
-        cls.current_grades = CurrentGrades([CurrentGrade(json_obj) for json_obj in cls.grades_json])
-
-    def test_str(self):
-        """Test the __str__"""
-        assert str(self.current_grades) == "<Current Grades for user bob>"
+        cls.current_grades = CurrentGradesByCourse(
+            [CurrentGrade(json_obj) for json_obj in cls.grades_json]
+        )
 
     def test_expected_iterable(self):
-        """CurrentGrades expects an iterable as input"""
+        """CurrentGradesByCourse expects an iterable as input"""
         with self.assertRaises(TypeError):
-            CurrentGrades(123)
+            CurrentGradesByCourse(123)
 
-    def test_only_same_user_grades(self):
-        """CurrentGrades can contain only grades for the same user"""
+    def test_cgbycourse_objects(self):
+        """CurrentGradesByCourse can contain only CurrentGrade objects"""
+        with self.assertRaises(ValueError):
+            CurrentGradesByCourse([{'foo': 'bar'}])
+
+    def test_only_same_course_grades(self):
+        """
+        CurrentGradesByCourse should only contain grades from a single course_id.
+        """
         grades_json = deepcopy(self.grades_json)
-        grades_json[0]['username'] = 'other_random_string'
+        grades_json[0]['course_id'] = "course-v1:A:Nonreal:Course"
         with self.assertRaises(ValueError):
-            CurrentGrades([CurrentGrade(json_obj) for json_obj in grades_json])
+            CurrentGradesByCourse(
+                [CurrentGrade(json_obj) for json_obj in grades_json],
+            )
 
-    def test_currentgrade_objects(self):
-        """CurrentGrades can contain only CurrentGrade objects"""
-        with self.assertRaises(ValueError):
-            CurrentGrades([{'foo': 'bar'}])
-
-    def test_all_course_ids(self):
-        """Test for all_course_ids property"""
-        assert sorted(list(self.current_grades.all_course_ids)) == sorted(
-            ["course-v1:edX+DemoX+Demo_Course", "course-v1:MITx+8.MechCX+2014_T1"])
+    def test_different_usernames(self):
+        """Grades can have different users."""
+        grades_json = deepcopy(self.grades_json)
+        for grade in grades_json:
+            grade['course_id'] = grades_json[0]['course_id']
+        grades_json[0]['username'] = 'different_username'
+        # No exception raised
+        CurrentGradesByCourse(
+            [CurrentGrade(json_obj) for json_obj in grades_json],
+        )
 
     def test_all_current_grades(self):
         """Test for all_current_grades property"""
@@ -54,11 +65,56 @@ class CurrentGradesTests(TestCase):
         for grade in all_grades:
             assert isinstance(grade, CurrentGrade)
 
+
+class CurrentGradesByUserTests(TestCase):
+    """
+    Tests for CurrentGradesByUser
+    """
+    @classmethod
+    def setUpClass(cls):
+        with open(os.path.join(os.path.dirname(__file__),
+                               'fixtures/current_grades.json')) as file_obj:
+            cls.grades_json = json.loads(file_obj.read())
+
+        cls.current_grades = CurrentGradesByUser(
+            [CurrentGrade(json_obj) for json_obj in cls.grades_json]
+        )
+
+    def test_expected_iterable(self):
+        """CurrentGradesByUser expects an iterable as input"""
+        with self.assertRaises(TypeError):
+            CurrentGradesByUser(123)
+
+    def test_cgbyuser_objects(self):
+        """CurrentGradesByUser can contain only CurrentGrade objects"""
+        with self.assertRaises(ValueError):
+            CurrentGradesByUser([{'foo': 'bar'}])
+
+    def test_all_course_ids(self):
+        """Test for all_course_ids property"""
+        assert set(self.current_grades.all_course_ids) == {
+            "course-v1:edX+DemoX+Demo_Course", "course-v1:MITx+8.MechCX+2014_T1"
+        }
+
+    def test_only_same_user_grades(self):
+        """CurrentGradesByUser can contain only grades for the same user"""
+        grades_json = deepcopy(self.grades_json)
+        grades_json[0]['username'] = 'other_random_string'
+        with self.assertRaises(ValueError):
+            CurrentGradesByUser([CurrentGrade(json_obj) for json_obj in grades_json])
+
     def test_get_current_grade(self):
         """Test for get_current_grade method"""
         course_grade = self.current_grades.get_current_grade("course-v1:edX+DemoX+Demo_Course")
         assert isinstance(course_grade, CurrentGrade)
         assert course_grade.course_id == "course-v1:edX+DemoX+Demo_Course"
+
+    def test_all_current_grades(self):
+        """Test for all_current_grades property"""
+        all_grades = self.current_grades.all_current_grades
+        assert len(all_grades) == 2
+        for grade in all_grades:
+            assert isinstance(grade, CurrentGrade)
 
 
 class CurrentGradeTests(TestCase):

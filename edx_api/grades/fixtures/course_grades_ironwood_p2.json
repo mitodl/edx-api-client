@@ -1,0 +1,22 @@
+{
+	"next": null,
+	"previous": "https://edx.example.com/api/v1/grades/?page=1",
+	"results": [
+		{
+			"course_id": "course-v1:edX+DemoX+Demo_Course",
+			"email": "wayne@example.com",
+			"passed": true,
+			"percent": 0.97,
+			"letter_grade": "Pass",
+			"username": "wayne"
+		},
+		{
+			"course_id": "course-v1:edX+DemoX+Demo_Course",
+			"email": "sefiri@example.com",
+			"passed": false,
+			"percent": 0.03,
+			"letter_grade": null,
+			"username": "sefiri"
+		}
+	]
+}

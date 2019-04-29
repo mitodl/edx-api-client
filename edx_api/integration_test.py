@@ -354,9 +354,13 @@ def test_get_current_grade():
         'staff', 'course-v1:edX+DemoX+Demo_Course')
     assert course_grade.username == 'staff'
 
-    course_grades = api.current_grades.get_student_current_grades('staff')
-    assert len(course_grades.all_course_ids) >= 1
-    assert 'course-v1:edX+DemoX+Demo_Course' in course_grades.all_course_ids
+    student_grades = api.current_grades.get_student_current_grades('staff')
+    assert len(student_grades.all_course_ids) >= 1
+    assert 'course-v1:edX+DemoX+Demo_Course' in student_grades.all_course_ids
+
+    course_grades = api.current_grades.get_course_current_grades('course-v1:edX+DemoX+Demo_Course')
+    assert len(course_grades.all_usernames) >= 1
+    assert 'honor' in course_grades.all_usernames
 
 
 @require_integration_settings
