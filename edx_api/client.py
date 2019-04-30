@@ -35,7 +35,8 @@ class EdxApi(object):
         # generating an EdxApi instance with the proper requester & credentials.
         session = requests.session()
         session.headers.update({
-            'Authorization': 'Bearer {}'.format(self.credentials['access_token'])
+            'Authorization': 'Bearer {}'.format(self.credentials['access_token']),
+            'x-edx-api-key': self.credentials['access_token'],
         })
 
         old_request = session.request
