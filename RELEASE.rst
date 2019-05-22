@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+Version 0.7.0
+-------------
+
+- Allow to specify enrollment mode when creating enrollment for student
+- Add functionality to query grades by course_id.
+- Implement interface to call enrollments list from edx-platform. The new `edx_api.enrollments.CourseEnrollments.get_enrollments` method will return all the enrollments for one or multiple course_ids.
+
 Version 0.6.1 (Released November 05, 2018)
 -------------
 

@@ -95,7 +95,7 @@ class Enrollment(object):
     @property
     def course_id(self):
         """Shortcut for a nested property"""
-        return self.course_details.course_id
+        return self.course_details.course_id or self.json.get('course_id')
 
     @property
     def created(self):

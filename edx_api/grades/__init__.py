@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
 from edx_api.enrollments import CourseEnrollments
-from .models import CurrentGrade, CurrentGrades
+from .models import CurrentGrade, CurrentGradesByUser, CurrentGradesByCourse
 
 
 class UserCurrentGrades(object):
@@ -50,14 +50,14 @@ class UserCurrentGrades(object):
 
     def get_student_current_grades(self, username, course_ids=None):
         """
-        Returns a CurrentGrades object with the user current grades.
+        Returns a CurrentGradesByUser object with the user current grades.
 
         Args:
             username (str): an edx user's username
             course_ids (list): a list of edX course ids.
 
         Returns:
-            CurrentGrades: object representing the student current grades
+            CurrentGradesByUser: object representing the student current grades
         """
         # if no course ids are provided, let's get the user enrollments
         if course_ids is None:
@@ -73,4 +73,38 @@ class UserCurrentGrades(object):
                 if error.response.status_code >= 500:
                     raise
 
-        return CurrentGrades(all_current_grades)
+        return CurrentGradesByUser(all_current_grades)
+
+    def get_course_current_grades(self, course_id):
+        """
+        Returns a CurrentGradesByCourse object for all users in the specified course.
+
+        Args:
+            course_id (str): an edX course ids.
+
+        Returns:
+            CurrentGradesByCourse: object representing the student current grades
+
+        Authorization:
+            The authenticated user must have staff permissions to see grades for all users
+            in a course.
+        """
+        resp = self.requester.get(
+            urljoin(
+                self.base_url,
+                '/api/grades/v1/courses/{course_key}/'.format(course_key=course_id)
+            )
+        )
+        resp.raise_for_status()
+        resp_json = resp.json()
+        if 'results' in resp_json:
+            grade_entries = [CurrentGrade(entry) for entry in resp_json["results"]]
+            while resp_json['next'] is not None:
+                resp = self.requester.get(resp_json['next'])
+                resp.raise_for_status()
+                resp_json = resp.json()
+                grade_entries.extend((CurrentGrade(entry) for entry in resp_json["results"]))
+        else:
+            grade_entries = [CurrentGrade(entry) for entry in resp_json]
+
+        return CurrentGradesByCourse(grade_entries)
