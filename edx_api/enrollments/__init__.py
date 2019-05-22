@@ -1,6 +1,8 @@
 """
 edX Enrollment REST API client class
 """
+from edx_api.constants import ENROLLMENT_MODE_AUDIT
+
 try:
     from urlparse import urlparse, parse_qs
 except ImportError:
@@ -118,20 +120,38 @@ class CourseEnrollments(object):
         resp.raise_for_status()
         return Enrollments(resp.json())
 
-    def create_audit_student_enrollment(self, course_id):
+    def create_student_enrollment(
+            self,
+            course_id,
+            mode=ENROLLMENT_MODE_AUDIT,
+            username=None,
+            enrollment_attributes=None
+    ):
         """
-        Creates an audit enrollment for the user in a given course
+        Creates an enrollment for the user in a given course
 
         Args:
-            course_id (str): an edX course id
+            course_id (str): an edX course id.
+            mode (str): Enrollment mode.
+            username (str): Username.
+            enrollment_attributes (dict): Enrollment attributes, which are added directly to
+                                            the request body.
+                                          If specified, the following keys are expected:
+                                          - namespace,
+                                          - name,
+                                          - value.
 
         Returns:
             Enrollment: object representing the student enrollment in the provided course
         """
         audit_enrollment = {
-            "mode": "audit",
+            "mode": mode,
             "course_details": {"course_id": course_id}
         }
+        if username:
+            audit_enrollment['user'] = username
+        if enrollment_attributes:
+            audit_enrollment['enrollment_attributes'] = enrollment_attributes
         # the request is done in behalf of the current logged in user
         resp = self.requester.post(
             urljoin(self.base_url, self.enrollment_url),
@@ -139,3 +159,20 @@ class CourseEnrollments(object):
         )
         resp.raise_for_status()
         return Enrollment(resp.json())
+
+    def create_audit_student_enrollment(self, course_id, username=None):
+        """
+        Creates an audit enrollment for the user in a given course
+
+        Args:
+            course_id (str): An edX course id.
+            username (str): Username.
+
+        Returns:
+            Enrollment: object representing the student enrollment in the provided course
+        """
+        return self.create_student_enrollment(
+            course_id,
+            mode=ENROLLMENT_MODE_AUDIT,
+            username=username
+        )

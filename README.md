@@ -33,6 +33,11 @@ validation which is required by the OAuth spec.
 Your edx demo course (course id `course-v1:edX+DemoX+Demo_Course`)
 must be enabled for CCX.
 
+The Course Enrollment integration tests have the following requirements:
+- The `ACCESS_TOKEN` value must match the `settings.EDX_API_TOKEN` value in LMS
+- The user assigned to that `ACCESS_TOKEN` must be an admin in the edX demo course.
+  Adding a user as an admin can be done in Studio (url: `<studio_url>/course_team/course-v1:edX+DemoX+Demo_Course`
+
 ## Release Notes
 
 See the RELEASE.rst file

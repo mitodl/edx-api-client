@@ -12,6 +12,8 @@ This means that you need:
 - a valid access token for the user "staff"
 - another course is available with enrollment open and "staff" NOT enrolled
 - the user staff is enrolled in, at least, two courses
+- make sure LMS's settings.EDX_API_TOKEN value is the same as the token used here
+- make sure user staff is admin in the demo course
 - you run the following code in a python shell inside your devstack
   instance to create a certificate:
 ```
@@ -38,6 +40,7 @@ from requests.exceptions import HTTPError
 from requests import Response, Timeout
 from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
+from edx_api.constants import ENROLLMENT_MODE_AUDIT, ENROLLMENT_MODE_VERIFIED
 from .client import EdxApi
 
 
@@ -152,13 +155,33 @@ def test_enrollments():
 
 
 @require_integration_settings_course_id
-def test_create_enrollment():
+def test_create_verified_enrollment():
     """
-    Integration test to enroll the user in a course
+    Integration test to enroll the user in a course with `verified` mode
     """
     api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
-    enrollment = api.enrollments.create_audit_student_enrollment(ENROLLMENT_CREATION_COURSE_ID)
+    enrollment = api.enrollments.create_student_enrollment(
+        course_id=ENROLLMENT_CREATION_COURSE_ID,
+        mode=ENROLLMENT_MODE_VERIFIED,
+        username="staff"
+    )
     assert enrollment.course_id == ENROLLMENT_CREATION_COURSE_ID
+    assert enrollment.mode == ENROLLMENT_MODE_VERIFIED
+
+
+@require_integration_settings_course_id
+def test_create_audit_enrollment():
+    """
+    Integration test to enroll the user in a course with `audit` mode
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    enrollment = api.enrollments.create_student_enrollment(
+        course_id=ENROLLMENT_CREATION_COURSE_ID,
+        mode=ENROLLMENT_MODE_AUDIT,
+        username="staff"
+    )
+    assert enrollment.course_id == ENROLLMENT_CREATION_COURSE_ID
+    assert enrollment.mode == ENROLLMENT_MODE_AUDIT
 
 
 @require_integration_settings_course_id
@@ -171,7 +194,7 @@ def test_create_enrollment_timeout():
     with patch.object(enrollments.requester, 'post', autospec=True) as post:
         post.side_effect = mocked_timeout
         with pytest.raises(Timeout):
-            enrollments.create_audit_student_enrollment(ENROLLMENT_CREATION_COURSE_ID)
+            enrollments.create_student_enrollment(ENROLLMENT_CREATION_COURSE_ID)
 
 
 @require_integration_settings
@@ -418,7 +441,7 @@ def test_enrollments_list():
         assert enrollment.mode
         assert enrollment.is_active
         assert enrollment.user
-        if enrollment.mode != u'verified':
+        if enrollment.mode != ENROLLMENT_MODE_VERIFIED:
             assert not enrollment.is_verified
         else:
             assert enrollment.is_verified

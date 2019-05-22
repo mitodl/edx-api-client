@@ -14,4 +14,7 @@ def test_request_id_credential():
 
 def test_instantiation_happypath():
     """instantiatable with correct args"""
-    EdxApi({'access_token': 'asdf'})
+    token = 'asdf'
+    client = EdxApi({'access_token': token})
+    assert client.get_requester().headers['Authorization'] == 'Bearer {token}'.format(token=token)
+    assert client.get_requester().headers['x-edx-api-key'] == token
