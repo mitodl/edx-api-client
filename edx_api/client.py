@@ -36,7 +36,7 @@ class EdxApi(object):
         session = requests.session()
         session.headers.update({
             'Authorization': 'Bearer {}'.format(self.credentials['access_token']),
-            'x-edx-api-key': self.credentials['access_token'],
+            'X-EdX-Api-Key': self.credentials.get('api_key'),
         })
 
         old_request = session.request
