@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.7.1
+-------------
+
+- Allow for setting api_key to the edX API key
+
 Version 0.7.0
 -------------
 
