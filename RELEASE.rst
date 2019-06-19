@@ -1,12 +1,12 @@
 Release Notes
 =============
 
-Version 0.7.1
+Version 0.7.1 (Released June 19, 2019)
 -------------
 
 - Allow for setting api_key to the edX API key
 
-Version 0.7.0
+Version 0.7.0 (Released May 22, 2019)
 -------------
 
 - Allow to specify enrollment mode when creating enrollment for student
