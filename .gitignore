@@ -13,3 +13,6 @@ htmlcov/
 .cache/
 .idea/
 .pytest_cache/
+#Ipython/Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
