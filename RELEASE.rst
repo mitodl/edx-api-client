@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.8.0
+-------------
+
+- Added unenrollment functionality
+
 Version 0.7.1 (Released June 19, 2019)
 -------------
 
