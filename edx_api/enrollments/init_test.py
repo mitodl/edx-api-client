@@ -39,8 +39,8 @@ class EnrollmentsTest(TestCase):
         ]
 
         base_edx_url = 'http://edx.example.com'
-        cls.base_url = urljoin(base_edx_url, CourseEnrollments.enrollment_url)
-        cls.client = EdxApi({'access_token': 'foobar'}, cls.base_url)
+        cls.enrollment_url = urljoin(base_edx_url, CourseEnrollments.enrollment_url)
+        cls.client = EdxApi({'access_token': 'foobar'}, cls.enrollment_url)
         cls.enrollment_client = cls.client.enrollments
 
     @requests_mock.mock()
@@ -49,7 +49,7 @@ class EnrollmentsTest(TestCase):
         Tests the post request to create an enrollment.
         This just tests that the client expects a JSON object representing the enrollment.
         """
-        mock_req.register_uri('POST', self.base_url, self.enrollment_responses)
+        mock_req.register_uri('POST', self.enrollment_url, self.enrollment_responses)
         course_id = 'dummy_course_id'
         returned_enrollments = [
             self.enrollment_client.create_student_enrollment(course_id),
@@ -62,7 +62,7 @@ class EnrollmentsTest(TestCase):
         """
         Tests the post body crafted to create an enrollment.
         """
-        request_mock.post(self.base_url, json=self.enrollments_json[0])
+        request_mock.post(self.enrollment_url, json=self.enrollments_json[0])
         course_id = 'course_id'
         user = 'user'
         enrollment_attributes = {
@@ -163,3 +163,23 @@ class EnrollmentsTest(TestCase):
         )
         enrollments = list(self.enrollment_client.get_enrollments())
         assert len(enrollments) == 4
+
+    @requests_mock.mock()
+    def test_deactivate_enrollment(self, request_mock):
+        """
+        Test that deactivate_enrollment calls the enrollment endpoint with the correct request
+        body and returns the deactivated enrollment
+        """
+        request_mock.post(self.enrollment_url, json=self.enrollments_json[0])
+        course_id = 'course_id'
+        returned_enrollment = self.enrollment_client.deactivate_enrollment(course_id=course_id)
+        self.assertDictEqual(
+            request_mock.last_request.json(),
+            {
+                'course_details': {
+                    'course_id': course_id
+                },
+                'is_active': False
+            }
+        )
+        assert returned_enrollment.json == self.enrollments_json[0]

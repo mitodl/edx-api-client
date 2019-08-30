@@ -46,7 +46,7 @@ from edx_api.client import EdxApi
 
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 API_KEY = os.getenv('API_KEY')
-BASE_URL = os.getenv('BASE_URL', 'http://localhost:8000/')
+BASE_URL = os.getenv('BASE_URL', 'http://localhost:18000/')
 ENROLLMENT_CREATION_COURSE_ID = os.getenv('ENROLLMENT_CREATION_COURSE_ID')
 
 # pylint: disable=invalid-name
@@ -183,6 +183,23 @@ def test_create_audit_enrollment():
     )
     assert enrollment.course_id == ENROLLMENT_CREATION_COURSE_ID
     assert enrollment.mode == ENROLLMENT_MODE_AUDIT
+
+
+@require_integration_settings_course_id
+def test_deactivate_enrollment():
+    """
+    Integration test to enroll then deactivate a user in a course
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api.enrollments.create_student_enrollment(
+        course_id=ENROLLMENT_CREATION_COURSE_ID,
+        mode=ENROLLMENT_MODE_AUDIT
+    )
+    deactivated_enrollment = api.enrollments.deactivate_enrollment(
+        course_id=ENROLLMENT_CREATION_COURSE_ID
+    )
+    assert deactivated_enrollment.course_id == ENROLLMENT_CREATION_COURSE_ID
+    assert deactivated_enrollment.is_active is False
 
 
 @require_integration_settings_course_id

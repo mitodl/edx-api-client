@@ -1,7 +1,7 @@
 coverage
 fabric
 flake8
-ipdb
+pdbpp
 mixer
 mock
 tox

@@ -109,12 +109,12 @@ class CourseEnrollments(object):
 
     def get_student_enrollments(self):
         """
-        Returns an Enrollments object with the user enrollments
+        Returns an Enrollments object with the user enrollments for the user
+        whose access token was provided to the API client.
 
         Returns:
             Enrollments: object representing the student enrollments
         """
-        # the request is done in behalf of the current logged in user
         resp = self.requester.get(
             urljoin(self.base_url, self.enrollment_url))
         resp.raise_for_status()
@@ -144,18 +144,18 @@ class CourseEnrollments(object):
         Returns:
             Enrollment: object representing the student enrollment in the provided course
         """
-        audit_enrollment = {
+        enrollment_data = {
             "mode": mode,
             "course_details": {"course_id": course_id}
         }
         if username:
-            audit_enrollment['user'] = username
+            enrollment_data['user'] = username
         if enrollment_attributes:
-            audit_enrollment['enrollment_attributes'] = enrollment_attributes
+            enrollment_data['enrollment_attributes'] = enrollment_attributes
         # the request is done in behalf of the current logged in user
         resp = self.requester.post(
             urljoin(self.base_url, self.enrollment_url),
-            json=audit_enrollment
+            json=enrollment_data
         )
         resp.raise_for_status()
         return Enrollment(resp.json())
@@ -176,3 +176,25 @@ class CourseEnrollments(object):
             mode=ENROLLMENT_MODE_AUDIT,
             username=username
         )
+
+    def deactivate_enrollment(self, course_id):
+        """
+        Deactivates an enrollment in the given course for the user
+        whose access token was provided to the API client (in other words, the
+        user will be unenrolled)
+
+        Args:
+            course_id (str): An edX course id.
+
+        Returns:
+            Enrollment: object representing the deactivated student enrollment
+        """
+        resp = self.requester.post(
+            urljoin(self.base_url, self.enrollment_url),
+            json={
+                "course_details": {"course_id": course_id},
+                "is_active": False,
+            }
+        )
+        resp.raise_for_status()
+        return Enrollment(resp.json())
