@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 0.9.0
+Version 0.9.0 (Released December 19, 2019)
 -------------
 
 - Update CourseDetails client to pass username
