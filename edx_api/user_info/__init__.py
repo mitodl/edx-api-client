@@ -37,18 +37,18 @@ class UserInfo(object):
 
         return Info(resp.json())
 
-    def update_user_name(self, username, user_full_name):
+    def update_user_name(self, username, full_name):
         """
-        Updates Full-Name of the user
+        Updates full name of the user
 
         Args:
-            username (user.models.User): Username of the Application user
-            user_full_name: Full name to be replace/updated with old full name
+            username (str): Username of the Application user
+            full_name (str): Full name that will replace the user's existing full name
 
         Returns:
-            UserInfo: Object with user details for whom the name is updated
+            UserInfo: Object representing the edX user
         """
-        user_name_data = dict(name=user_full_name)
+        request_data = dict(name=full_name)
 
         # the request is done on behalf of the current logged in user
         self.requester.headers.update(
@@ -63,7 +63,7 @@ class UserInfo(object):
                 self.base_url,
                 '/api/user/v1/accounts/{username}'.format(username=username)
             ),
-            json=user_name_data)
+            json=request_data)
         resp.raise_for_status()
 
         return Info(resp.json())
