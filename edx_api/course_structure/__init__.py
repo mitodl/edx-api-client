@@ -1,7 +1,7 @@
 """Course Structure API"""
 from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
 
-from .models import Structure, Block
+from .models import Structure
 
 
 class CourseStructure(object):

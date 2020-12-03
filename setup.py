@@ -23,6 +23,7 @@ def read(filename):
     except IOError:
         return ''
 
+
 setup(
     name="edx-api-client",
     version=edx_api.__version__,

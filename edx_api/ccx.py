@@ -48,7 +48,7 @@ class CCX(object):
 
         try:
             resp.raise_for_status()
-        except:
+        except Exception:
             log.error(resp.json())
             raise
 

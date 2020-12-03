@@ -466,3 +466,15 @@ def test_enrollments_list():
         cnt += 1
 
     assert cnt >= 2
+
+
+@require_integration_settings
+def test_user_name_update():
+    """
+    Asserts that update user's name api updates the full name of the user correctly.
+    """
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
+    user_name = 'Test Name'
+    updated_user = api.user_info.update_user_name('staff', user_name)
+    assert updated_user.username == 'staff'
+    assert updated_user.name == user_name

@@ -39,8 +39,9 @@ class CertificatesTests(TestCase):
 
     def test_courses_verified_cert(self):
         """Test for all_courses_verified_certs"""
-        assert (list(self.certificates.all_courses_verified_certs) ==
-                ["course-v1:edX+DemoX+Demo_Course"])
+        assert list(self.certificates.all_courses_verified_certs) == [
+            "course-v1:edX+DemoX+Demo_Course"
+        ]
 
     def test_all_cert(self):
         """Test for all_certs"""
