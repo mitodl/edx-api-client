@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.10.0
+--------------
+
+- Added API to update user name and removed pep8
+
 Version 0.9.0 (Released December 19, 2019)
 -------------
 
