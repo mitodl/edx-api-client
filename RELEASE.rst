@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.11.0
+--------------
+
+- Replace Travis with Github actions (#73)
+
 Version 0.10.0 (Released December 03, 2020)
 --------------
 
