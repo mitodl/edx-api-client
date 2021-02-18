@@ -27,13 +27,8 @@ jobs:
       - name: Install test dependencies
         run: pip install codecov && pip install -r requirements.txt -r test_requirements.txt
 
-      - name: Tests for python 2.7
-        if: ${{ matrix.python }} == '2.7.18'
-        run: tox -e py27
-
-      - name: Tests for python 3.5
-        if: ${{ matrix.python }} == '3.5.10'
-        run: tox -e py35
+      - name: Tests for python ${{ matrix.python }}
+        run: tox
 
       - name: Collect coverage info
         run: coverage xml
