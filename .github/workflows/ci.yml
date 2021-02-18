@@ -6,7 +6,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [2.7.18, 3.4.4, 3.5.10]
+        python: [2.7.18, 3.5.10]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,10 +30,6 @@ jobs:
       - name: Tests for python 2.7
         if: "contains(${{ matrix.python }},2.7.18)"
         run: tox -e py27
-
-      - name: Tests for python 3.4
-        if: "contains(${{ matrix.python }},3.4.4)"
-        run: tox -e py34
 
       - name: Tests for python 3.5
         if: "contains(${{ matrix.python }},3.5.10)"
