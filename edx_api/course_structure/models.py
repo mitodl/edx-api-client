@@ -48,9 +48,9 @@ class Block(object):
     def children(self):
         """Returns blocks for each of this blocks children"""
         children = []
-        if 'children' in self._get_block():
-            for child in self._get_block()['children']:
-                children.append(Block(child, self.json))
+        # if 'children' in self._get_block():
+        for child in self._get_block()['children']:
+            children.append(Block(child, self.json))
         return children
 
     @property
