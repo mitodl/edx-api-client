@@ -6,7 +6,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [2.7.0, 3.4.0, 3.5.0]
+        python: [2.7, 3.4, 3.5]
 
     steps:
       - uses: actions/checkout@v2
@@ -17,26 +17,26 @@ jobs:
           python-version: ${{ matrix.python }}
 
 
-      - id: cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/test_requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+      # - id: cache
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.cache/pip
+      #     key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/test_requirements.txt') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pip-
       - name: Install test dependencies
         run: pip install codecov && pip install -r requirements.txt -r test_requirements.txt
 
       - name: Tests for python 2.7
-        if: "contains(${{ matrix.python }},2.7.0)"
+        if: "contains(${{ matrix.python }},2.7)"
         run: tox -e py27
 
       - name: Tests for python 3.4
-        if: "contains(${{ matrix.python }},3.4.0)"
+        if: "contains(${{ matrix.python }},3.4)"
         run: tox -e py34
 
       - name: Tests for python 3.5
-        if: "contains(${{ matrix.python }},3.5.0)"
+        if: "contains(${{ matrix.python }},3.5)"
         run: tox -e py35
 
       - name: Collect coverage info
