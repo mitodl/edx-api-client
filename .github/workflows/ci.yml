@@ -3,14 +3,17 @@ on: [push]
 jobs:
   python-tests:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix: [2.7, 3.4, 3.5]
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
-          python-version: "3.5"
+          python-version: ${{ matrix.python }}
+
 
       - id: cache
         uses: actions/cache@v1
@@ -22,8 +25,17 @@ jobs:
       - name: Install test dependencies
         run: pip install codecov && pip install -r requirements.txt -r test_requirements.txt
 
-      - name: Tests
-        run: tox
+      - name: Tests for python 2.7
+        if: "contains(${{ matrix.python }},2.7)"
+        run: tox -e py27
+
+      - name: Tests for python 3.4
+        if: "contains(${{ matrix.python }},3.4)"
+        run: tox -e py34
+
+      - name: Tests for python 3.5
+        if: "contains(${{ matrix.python }},3.5)"
+        run: tox -e py35
 
       - name: Collect coverage info
         run: coverage xml

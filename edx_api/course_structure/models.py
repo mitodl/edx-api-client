@@ -48,6 +48,7 @@ class Block(object):
     def children(self):
         """Returns blocks for each of this blocks children"""
         children = []
+        # Just for testing
         # if 'children' in self._get_block():
         for child in self._get_block()['children']:
             children.append(Block(child, self.json))
