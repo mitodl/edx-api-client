@@ -2,7 +2,6 @@ coverage
 fabric
 flake8
 pdbpp
-mixer
 mock
 tox
 pylint==1.6.5
