@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 0.12.0
+--------------
+
+- removing mixer package (#76)
+
 Version 0.11.0 (Released December 17, 2020)
 --------------
 
