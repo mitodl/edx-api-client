@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 0.12.0
+Version 0.12.0 (Released February 23, 2021)
 --------------
 
 - removing mixer package (#76)
