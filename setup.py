@@ -2,7 +2,6 @@
 """
 Python setup file for the eds_api app.
 """
-from __future__ import unicode_literals
 import os
 from setuptools import setup, find_packages
 

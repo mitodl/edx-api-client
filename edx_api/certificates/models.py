@@ -2,10 +2,8 @@
 Business objects for the certificates API
 """
 from dateutil import parser
-from six import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Certificates(object):
     """
     The certificates object
@@ -58,7 +56,6 @@ class Certificates(object):
         return course_id in self.verified_certificates
 
 
-@python_2_unicode_compatible
 class Certificate(object):
     """
     The certificate object

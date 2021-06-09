@@ -2,12 +2,10 @@
 Business objects for the enrollments API
 """
 from dateutil import parser
-from six import python_2_unicode_compatible
 
 # pylint: disable=too-few-public-methods
 
 
-@python_2_unicode_compatible
 class Enrollments(object):
     """
     The enrollments object
@@ -78,7 +76,6 @@ class Enrollments(object):
         return self.enrollments.get(course_id)
 
 
-@python_2_unicode_compatible
 class Enrollment(object):
     """
     Single enrollment object representation
@@ -102,7 +99,7 @@ class Enrollment(object):
         """Returns a datetime object of the enrollment timestamp"""
         try:
             return parser.parse(self.json.get('created'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -133,7 +130,6 @@ class Enrollment(object):
         return self.mode == 'verified'
 
 
-@python_2_unicode_compatible
 class CourseDetails(object):
     """
     Course enrollment info
@@ -157,7 +153,7 @@ class CourseDetails(object):
         """
         try:
             return parser.parse(self.json.get('course_start'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -168,7 +164,7 @@ class CourseDetails(object):
         """
         try:
             return parser.parse(self.json.get('course_end'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -179,7 +175,7 @@ class CourseDetails(object):
         """
         try:
             return parser.parse(self.json.get('enrollment_start'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -190,7 +186,7 @@ class CourseDetails(object):
         """
         try:
             return parser.parse(self.json.get('enrollment_end'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -211,7 +207,6 @@ class CourseDetails(object):
             yield CourseMode(course_mode_json)
 
 
-@python_2_unicode_compatible
 class CourseMode(object):
     """
     Course enrollment mode
@@ -240,7 +235,7 @@ class CourseMode(object):
         """
         try:
             return parser.parse(self.json.get('expiration_datetime'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property

@@ -1,13 +1,10 @@
 coverage
 fabric
 flake8
-pdbpp
 mock
 tox
-pylint==1.6.5
-pytest>0, <4.6.11
+pytest
 pytest-flake8
-pytest-pylint==0.6.0
 pytest-cov
 ipython
 wheel

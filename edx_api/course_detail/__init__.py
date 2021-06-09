@@ -1,5 +1,5 @@
 """Course Detail API"""
-from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
+from urllib.parse import urljoin
 
 from .models import CourseDetail
 

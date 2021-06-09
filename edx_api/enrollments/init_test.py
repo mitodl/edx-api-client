@@ -11,7 +11,7 @@ except ImportError:
     from unittest.mock import patch
 
 import requests_mock
-from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
+from urllib.parse import urljoin
 
 from edx_api.client import EdxApi
 from edx_api.constants import ENROLLMENT_MODE_AUDIT, ENROLLMENT_MODE_VERIFIED

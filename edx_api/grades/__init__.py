@@ -2,7 +2,7 @@
 edX Grades REST API client class
 """
 from requests.exceptions import HTTPError
-from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
+from urllib.parse import urljoin
 
 from edx_api.enrollments import CourseEnrollments
 from .models import CurrentGrade, CurrentGradesByUser, CurrentGradesByCourse
