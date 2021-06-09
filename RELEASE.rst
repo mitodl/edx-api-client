@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.0.0
+-------------
+
+- Update dependencies, support only newer python
+
 Version 0.12.0 (Released February 23, 2021)
 --------------
 
