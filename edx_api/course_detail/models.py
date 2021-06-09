@@ -4,12 +4,9 @@ Business objects for the course detail API
 from collections import namedtuple
 
 from dateutil import parser
-from six import python_2_unicode_compatible
-
 Media = namedtuple('Media', ['type', 'url'])
 
 
-@python_2_unicode_compatible
 class CourseDetail(object):
     """
     The course detail object
@@ -38,7 +35,7 @@ class CourseDetail(object):
         """Date the course ends"""
         try:
             return parser.parse(self.json.get('end'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -46,7 +43,7 @@ class CourseDetail(object):
         """Date enrollment begins"""
         try:
             return parser.parse(self.json.get('enrollment_start'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -54,7 +51,7 @@ class CourseDetail(object):
         """Date enrollment ends"""
         try:
             return parser.parse(self.json.get('enrollment_end'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property
@@ -90,7 +87,7 @@ class CourseDetail(object):
         """Date the course begins"""
         try:
             return parser.parse(self.json.get('start'))
-        except AttributeError:
+        except (AttributeError, TypeError):
             return None
 
     @property

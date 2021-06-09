@@ -1,8 +1,6 @@
 """Business objects for the course structure API"""
-from six import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Structure(object):
     """
     The course structure object, which represents a tree of nodes.
@@ -30,7 +28,6 @@ class Structure(object):
         return 'Structure for {}'.format(self._root_id)
 
 
-@python_2_unicode_compatible
 class Block(object):
     """
     Represents a single block within the course structure.

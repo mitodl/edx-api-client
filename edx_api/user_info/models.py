@@ -1,8 +1,6 @@
 """Models for user_info client"""
-from six import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Info(object):
     """
     Information about user

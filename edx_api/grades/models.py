@@ -1,16 +1,7 @@
 """
 Business objects for the Grades API
 """
-
-from __future__ import unicode_literals
-from six import PY2, python_2_unicode_compatible
-
-# pylint: disable=no-name-in-module, import-error
-if PY2:
-    from collections import Iterable
-else:
-    from collections.abc import Iterable
-# pylint: enable=no-name-in-module, import-error
+from collections.abc import Iterable
 # pylint: disable=too-few-public-methods
 
 
@@ -28,7 +19,6 @@ class CurrentGrades(object):
         return self.current_grades.values()  # pylint: disable=no-member
 
 
-@python_2_unicode_compatible
 class CurrentGradesByCourse(CurrentGrades):
     """
     Represents the current grades for a specific course
@@ -61,7 +51,6 @@ class CurrentGradesByCourse(CurrentGrades):
         return self.current_grades.keys()
 
 
-@python_2_unicode_compatible
 class CurrentGradesByUser(CurrentGrades):
     """
     Represents the current grades for a specific user
@@ -98,7 +87,6 @@ class CurrentGradesByUser(CurrentGrades):
         return self.current_grades.get(course_id)
 
 
-@python_2_unicode_compatible
 class CurrentGrade(object):
     """
     Single current grade object representation

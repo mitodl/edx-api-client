@@ -2,7 +2,7 @@
 API Client for interacting w/ CCXs
 """
 import logging
-from six.moves.urllib import parse
+from urllib import parse
 
 
 log = logging.getLogger(__name__)

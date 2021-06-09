@@ -38,7 +38,7 @@ from mock import patch
 import pytest
 from requests.exceptions import HTTPError
 from requests import Response, Timeout
-from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
+from urllib.parse import urljoin
 
 from edx_api.constants import ENROLLMENT_MODE_AUDIT, ENROLLMENT_MODE_VERIFIED
 from edx_api.client import EdxApi

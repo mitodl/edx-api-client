@@ -1,5 +1,5 @@
 """Client for user_info API"""
-from six.moves.urllib.parse import urljoin  # pylint: disable=import-error
+from urllib.parse import urljoin
 
 from .models import Info
 

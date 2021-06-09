@@ -5,9 +5,9 @@ Test handling of responses from grades api.
 import json
 import os
 from unittest import TestCase
+from urllib.parse import urljoin
 
 import requests_mock
-import six
 
 from edx_api import enrollments, grades
 from edx_api.client import EdxApi
@@ -30,7 +30,7 @@ class GradesApiTestCase(TestCase):
             )
         ) as file:  # pylint: disable=redefined-builtin
             self.enrollment_data = json.load(file)
-        self.enrollment_url = six.moves.urllib.parse.urljoin(
+        self.enrollment_url = urljoin(
             "https://edx.example.com", enrollments.CourseEnrollments.enrollment_url
         )
         self.client = EdxApi({"access_token": "opensesame"}, "https://edx.example.com")
