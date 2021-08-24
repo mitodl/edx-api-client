@@ -96,12 +96,11 @@ class CurrentGradesByUserTests(TestCase):
             "course-v1:edX+DemoX+Demo_Course", "course-v1:MITx+8.MechCX+2014_T1"
         }
 
-    def test_only_same_user_grades(self):
-        """CurrentGradesByUser can contain only grades for the same user"""
+    def test_username_is_different(self):
+        """CurrentGradesByUser can contain grades for the user with different username"""
         grades_json = deepcopy(self.grades_json)
         grades_json[0]['username'] = 'other_random_string'
-        with self.assertRaises(ValueError):
-            CurrentGradesByUser([CurrentGrade(json_obj) for json_obj in grades_json])
+        CurrentGradesByUser([CurrentGrade(json_obj) for json_obj in grades_json])
 
     def test_get_current_grade(self):
         """Test for get_current_grade method"""
