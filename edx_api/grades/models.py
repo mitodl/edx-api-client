@@ -66,10 +66,6 @@ class CurrentGradesByUser(CurrentGrades):
         for current_grade in current_grade_list:
             if not isinstance(current_grade, CurrentGrade):
                 raise ValueError("Only CurrentGrade objects are allowed")
-            if self.username is None:
-                self.username = current_grade.username
-            if self.username is not None and current_grade.username != self.username:
-                raise ValueError("Only CurrentGrade objects for the same user are allowed")
             self.current_grades[current_grade.course_id] = current_grade
 
     def __str__(self):
