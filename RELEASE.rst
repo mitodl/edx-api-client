@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.0.1
+-------------
+
+- Remove the check for username to match the grade username (#81)
+
 Version 1.0.0 (Released June 09, 2021)
 -------------
 
