@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.1.0
+-------------
+
+- add api client for edx change email settings
+
 Version 1.0.1 (Released August 25, 2021)
 -------------
 
