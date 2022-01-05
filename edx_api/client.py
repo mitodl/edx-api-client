@@ -8,6 +8,7 @@ from .certificates import UserCertificates
 from .course_detail import CourseDetails
 from .course_structure import CourseStructure
 from .enrollments import CourseEnrollments
+from .email_settings import EmailSettings
 from .grades import UserCurrentGrades
 from .user_info import UserInfo
 
@@ -69,6 +70,11 @@ class EdxApi(object):
     def ccx(self):
         """CCX API"""
         return CCX(self.get_requester(), self.base_url)
+
+    @property
+    def email_settings(self):
+        """Email Settings API"""
+        return EmailSettings(self.get_requester(), self.base_url)
 
     @property
     def certificates(self):
