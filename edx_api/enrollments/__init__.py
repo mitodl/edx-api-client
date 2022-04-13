@@ -188,6 +188,8 @@ class CourseEnrollments(object):
         Returns:
             Enrollment: object representing the student enrollment in the provided course
         """
+        # Note: The Verified enrollment can be created only by Staff or any user that has API keys level access.
+        # So this function should only be called on behalf of a Staff user
         return self.create_student_enrollment(
             course_id,
             mode=ENROLLMENT_MODE_VERIFIED,
