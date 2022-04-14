@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.2.0
+-------------
+
+- feat: add Verified mode enrollment creation (#85)
+
 Version 1.1.0 (Released January 05, 2022)
 -------------
 
