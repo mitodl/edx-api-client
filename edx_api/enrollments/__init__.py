@@ -1,7 +1,7 @@
 """
 edX Enrollment REST API client class
 """
-from edx_api.constants import ENROLLMENT_MODE_AUDIT
+from edx_api.constants import ENROLLMENT_MODE_AUDIT, ENROLLMENT_MODE_VERIFIED
 
 try:
     from urlparse import urlparse, parse_qs
@@ -174,6 +174,25 @@ class CourseEnrollments(object):
         return self.create_student_enrollment(
             course_id,
             mode=ENROLLMENT_MODE_AUDIT,
+            username=username
+        )
+
+    def create_verified_student_enrollment(self, course_id, username=None):
+        """
+        Creates a Verified enrollment for the user in a given course
+
+        Args:
+            course_id (str): An edX course id.
+            username (str): Username.
+
+        Returns:
+            Enrollment: object representing the student enrollment in the provided course
+        """
+        # Note: The Verified enrollment can be created only by Staff or any user that has API keys level access.
+        # So this function should only be called on behalf of a Staff user
+        return self.create_student_enrollment(
+            course_id,
+            mode=ENROLLMENT_MODE_VERIFIED,
             username=username
         )
 
