@@ -155,10 +155,7 @@ class CourseMode(object):
     @property
     def min_price(self):
         """The minimum price for which a user can enroll in this mode."""
-        try:
-            return parser.parse(self.json.get("min_price"))
-        except (AttributeError, TypeError):
-            return None
+        return self.json.get("min_price")
 
     @property
     def currency(self):
