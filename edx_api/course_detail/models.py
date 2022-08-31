@@ -133,6 +133,11 @@ class CourseMode(object):
 
     def __repr__(self):
         return self.__str__()
+    
+    @property
+    def course_id(self):
+        """The course ID associated with the course mode."""
+        return self.json.get('course_id')
 
     @property
     def mode_slug(self):
