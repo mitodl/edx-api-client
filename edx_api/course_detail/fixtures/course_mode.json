@@ -1,4 +1,4 @@
-{
+[{
     "course_id": "string",
     "mode_slug": "string",
     "mode_display_name": "string",
@@ -9,4 +9,4 @@
     "description": "string",
     "sku": "string",
     "bulk_sku": "string"
-  }
+}]

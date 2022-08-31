@@ -140,34 +140,34 @@ class CourseMode(object):
     @property
     def course_id(self):
         """The course ID associated with the course mode."""
-        return self.json.get('course_id')
+        return self.json[0].get('course_id')
 
     @property
     def mode_slug(self):
         """The short name for the course mode."""
-        return self.json.get("mode_slug")
+        return self.json[0].get("mode_slug")
 
     @property
     def mode_display_name(self):
         """The verbose name for the course mode."""
-        return self.json.get("mode_display_name")
+        return self.json[0].get("mode_display_name")
 
     @property
     def min_price(self):
         """The minimum price for which a user can enroll in this mode."""
-        return self.json.get("min_price")
+        return self.json[0].get("min_price")
 
     @property
     def currency(self):
         """The currency of the listed prices."""
-        return self.json.get("currency")
+        return self.json[0].get("currency")
 
     @property
     def expiration_datetime(self):
         """The date and time after which users cannot enroll in the course in this mode"""
         try:
             return parser.parse(self.json[0].get("expiration_datetime"))
-        except (AttributeError, TypeError, IndexError):
+        except (AttributeError, TypeError, IndexError, KeyError):
             return None
 
     @property
@@ -176,9 +176,9 @@ class CourseMode(object):
         Whether the expiration_datetime field was
         explicitly set
         """
-        return self.json.get("expiration_datetime_is_explicit")
+        return self.json[0].get("expiration_datetime_is_explicit")
 
     @property
     def description(self):
         """A description of this mode"""
-        return self.json.get("description")
+        return self.json[0].get("description")
