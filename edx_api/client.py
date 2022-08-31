@@ -60,7 +60,7 @@ class EdxApi(object):
     def course_detail(self):
         """Course Detail API"""
         return CourseDetails(self.get_requester(), self.base_url)
-    
+
     @property
     def course_mode(self):
         """Course Detail API"""
