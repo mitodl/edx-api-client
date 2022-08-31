@@ -138,6 +138,11 @@ class CourseMode(object):
         return self.__str__()
 
     @property
+    def course_id(self):
+        """The course ID associated with the course mode."""
+        return self.json.get('course_id')
+
+    @property
     def mode_slug(self):
         """The short name for the course mode."""
         return self.json.get("mode_slug")
@@ -174,15 +179,9 @@ class CourseMode(object):
         Whether the expiration_datetime field was
         explicitly set
         """
-        try:
-            return parser.parse(self.json.get("expiration_datetime_is_explicit"))
-        except (AttributeError, TypeError):
-            return None
+        return self.json.get("expiration_datetime_is_explicit")
 
     @property
     def description(self):
         """A description of this mode"""
-        try:
-            return parser.parse(self.json.get("description"))
-        except (AttributeError, TypeError):
-            return None
+        return self.json.get("description")
