@@ -138,11 +138,6 @@ class CourseMode(object):
         return self.__str__()
 
     @property
-    def course_id(self):
-        """The course ID associated with the course mode."""
-        return self.json.get("course_id")
-
-    @property
     def mode_slug(self):
         """The short name for the course mode."""
         return self.json.get("mode_slug")
@@ -156,7 +151,7 @@ class CourseMode(object):
     def min_price(self):
         """The minimum price for which a user can enroll in this mode."""
         try:
-            return self.json.get("min_price")
+            return parser.parse(self.json.get("min_price"))
         except (AttributeError, TypeError):
             return None
 
@@ -169,8 +164,8 @@ class CourseMode(object):
     def expiration_datetime(self):
         """The date and time after which users cannot enroll in the course in this mode"""
         try:
-            return parser.parse(self.json.get("expiration_datetime"))
-        except (AttributeError, TypeError):
+            return parser.parse(self.json[0].get("expiration_datetime"))
+        except (AttributeError, TypeError, IndexError):
             return None
 
     @property
@@ -180,7 +175,7 @@ class CourseMode(object):
         explicitly set
         """
         try:
-            return self.json.get("expiration_datetime_is_explicit")
+            return parser.parse(self.json.get("expiration_datetime_is_explicit"))
         except (AttributeError, TypeError):
             return None
 
@@ -188,6 +183,6 @@ class CourseMode(object):
     def description(self):
         """A description of this mode"""
         try:
-            return self.json.get("description")
+            return parser.parse(self.json.get("description"))
         except (AttributeError, TypeError):
             return None

@@ -5,7 +5,7 @@ import requests
 from . import DEFAULT_TIME_OUT
 from .ccx import CCX
 from .certificates import UserCertificates
-from .course_detail import CourseDetails
+from .course_detail import CourseDetails, CourseModes
 from .course_structure import CourseStructure
 from .enrollments import CourseEnrollments
 from .email_settings import EmailSettings
@@ -60,6 +60,11 @@ class EdxApi(object):
     def course_detail(self):
         """Course Detail API"""
         return CourseDetails(self.get_requester(), self.base_url)
+    
+    @property
+    def course_mode(self):
+        """Course Detail API"""
+        return CourseModes(self.get_requester(), self.base_url)
 
     @property
     def enrollments(self):

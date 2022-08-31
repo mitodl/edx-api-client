@@ -60,7 +60,7 @@ class CourseModes(object):
         self._requester = requester
         self._base_url = base_url
 
-    def get_detail(self, course_id):
+    def get_mode(self, course_id):
         """
         Fetches course mode details.
 
