@@ -113,11 +113,11 @@ class CourseModeTests(TestCase):
 
     def test_str(self):
         """Test the __str__"""
-        assert str(self.detail) == "<Course detail for string>"
+        assert str(self.detail) == "<Course mode for string>"
 
     def test_repr(self):
         """Test the __repr__"""
-        assert self.detail.__repr__() == "<Course detail for string>"
+        assert self.detail.__repr__() == "<Course mode for string>"
 
     def test_mode_slug(self):
         """Test for mode_slug property"""
