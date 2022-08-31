@@ -153,7 +153,7 @@ class CourseMode(object):
     def min_price(self):
         """The minimum price for which a user can enroll in this mode."""
         try:
-            return parser.parse(self.json.get('min_price'))
+            return self.json.get('min_price')
         except (AttributeError, TypeError):
             return None
 
@@ -177,7 +177,7 @@ class CourseMode(object):
         explicitly set 
         """
         try:
-            return parser.parse(self.json.get('expiration_datetime_is_explicit'))
+            return self.json.get('expiration_datetime_is_explicit')
         except (AttributeError, TypeError):
             return None
 
@@ -185,6 +185,6 @@ class CourseMode(object):
     def description(self):
         """A description of this mode"""
         try:
-            return parser.parse(self.json.get('description'))
+            return self.json.get('description')
         except (AttributeError, TypeError):
             return None
