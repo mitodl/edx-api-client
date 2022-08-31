@@ -28,8 +28,7 @@ class CourseDetailTests(TestCase):
     def test_repr(self):
         """Test the __repr__"""
         assert (
-            self.detail.__repr__()
-            == "<Course detail for course-v1:edX+DemoX+Demo_Course>"
+            self.detail.__repr__() == "<Course detail for course-v1:edX+DemoX+Demo_Course>"
         )
 
     def test_blocks_url(self):
@@ -147,7 +146,7 @@ class CourseModeTests(TestCase):
 
     def test_expiration_datetime(self):
         """Test for expiration_datetime property"""
-        assert self.detail.expiration_datetime == "2022-08-30T17:28:48.151Z"
+        assert self.detail.expiration_datetime == parser.parse("2022-08-30T17:28:48.151Z")
 
     def test_expiration_datetime_is_explicit(self):
         """Test for course_id property"""
