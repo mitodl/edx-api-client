@@ -119,3 +119,67 @@ class CourseDetail(object):
         """Contains named media items"""
         for media_type, url_dict in self.json.get('media', {}).items():
             yield Media(type=media_type, url=url_dict.get('uri'))
+
+
+class CourseMode(object):
+    """
+    The course mode object
+    """
+    def __init__(self, payload):
+        self.json = payload
+
+    def __str__(self):
+        return "<Course mode for {}>".format(self.course_id)
+
+    def __repr__(self):
+        return self.__str__()
+
+    @property
+    def mode_slug(self):
+        """The short name for the course mode."""
+        return self.json.get('mode_slug')
+
+    @property
+    def mode_display_name(self):
+        """The verbose name for the course mode."""
+        return self.json.get('mode_display_name')
+
+    @property
+    def min_price(self):
+        """The minimum price for which a user can enroll in this mode."""
+        try:
+            return parser.parse(self.json.get('min_price'))
+        except (AttributeError, TypeError):
+            return None
+
+    @property
+    def currency(self):
+        """The currency of the listed prices."""
+        return self.json.get('currency')
+
+    @property
+    def expiration_datetime(self):
+        """The date and time after which users cannot enroll in the course in this mode"""
+        try:
+            return parser.parse(self.json.get('expiration_datetime'))
+        except (AttributeError, TypeError):
+            return None
+
+    @property
+    def expiration_datetime_is_explicit(self):
+        """
+        Whether the expiration_datetime field was
+        explicitly set 
+        """
+        try:
+            return parser.parse(self.json.get('expiration_datetime_is_explicit'))
+        except (AttributeError, TypeError):
+            return None
+
+    @property
+    def description(self):
+        """A description of this mode"""
+        try:
+            return parser.parse(self.json.get('description'))
+        except (AttributeError, TypeError):
+            return None

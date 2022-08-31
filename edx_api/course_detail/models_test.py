@@ -8,6 +8,7 @@ from dateutil import parser
 
 from .models import (
     CourseDetail,
+    CourseMode,
     Media,
 )
 
@@ -98,3 +99,50 @@ class CourseDetailTests(TestCase):
             url="/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg"
         ) in list_media
         assert Media(type="course_video", url=None) in list_media
+
+
+class CourseModeTests(TestCase):
+    """Tests for course mode object"""
+    @classmethod
+    def setUpClass(cls):
+        with open(os.path.join(os.path.dirname(__file__),
+                               'fixtures/course_mode.json')) as file_obj:
+            cls.detail_json = json.loads(file_obj.read())
+
+        cls.detail = CourseMode(cls.detail_json)
+
+    def test_str(self):
+        """Test the __str__"""
+        assert str(self.detail) == "<Course detail for string>"
+
+    def test_repr(self):
+        """Test the __repr__"""
+        assert self.detail.__repr__() == "<Course detail for string>"
+
+    def test_mode_slug(self):
+        """Test for mode_slug property"""
+        assert self.detail.mode_slug == ("string")
+
+    def test_mode_display_name(self):
+        """Test for mode_display_name property"""
+        assert self.detail.mode_display_name == "string"
+
+    def test_min_price(self):
+        """Test for min_price property"""
+        assert self.detail.min_price == 0
+
+    def test_currency(self):
+        """Test for currency property"""
+        assert self.detail.currency == "string"
+
+    def test_expiration_datetime(self):
+        """Test for expiration_datetime property"""
+        assert self.detail.expiration_datetime == "2022-08-30T17:28:48.151Z"
+
+    def test_expiration_datetime_is_explicit(self):
+        """Test for course_id property"""
+        assert self.detail.expiration_datetime_is_explicit is True
+
+    def test_description(self):
+        """Test for description property"""
+        assert self.detail.description == "string"

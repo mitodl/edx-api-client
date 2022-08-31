@@ -1,7 +1,7 @@
 """Course Detail API"""
 from urllib.parse import urljoin
 
-from .models import CourseDetail
+from .models import CourseDetail, CourseMode
 
 
 # pylint: disable=too-few-public-methods
@@ -43,3 +43,30 @@ class CourseDetails(object):
         resp.raise_for_status()
 
         return CourseDetail(resp.json())
+    
+class CourseModes(object):
+    """
+    API Client to interface with the course modes API.
+    """
+    def __init__(self, requester, base_url):
+        self._requester = requester
+        self._base_url = base_url
+
+    def get_detail(self, course_id):
+        """
+        Fetches course mode details.
+
+        Args:
+            course_id (str): An edx course id.
+
+        Returns:
+            CourseMode
+        """
+        resp = self._requester.get(urljoin
+                                    (self._base_url,
+                                    '/api/course_modes/v1/courses/{course_key}'
+                                    .format(course_key=course_id)))
+
+        resp.raise_for_status()
+
+        return CourseMode(resp.json())
