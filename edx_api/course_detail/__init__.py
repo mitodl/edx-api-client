@@ -9,6 +9,7 @@ class CourseDetails(object):
     """
     API Client to interface with the course detail API.
     """
+
     def __init__(self, requester, base_url):
         self._requester = requester
         self._base_url = base_url
@@ -28,26 +29,33 @@ class CourseDetails(object):
         # set to staff, otherwise you need to pass in a username with
         # permissions.
         if not username:
-            resp = self._requester.get(urljoin
-                                       (self._base_url,
-                                        '/api/courses/v1/courses/{course_key}'
-                                        .format(course_key=course_id)))
+            resp = self._requester.get(
+                urljoin(
+                    self._base_url,
+                    "/api/courses/v1/courses/{course_key}".format(course_key=course_id),
+                )
+            )
         else:
-            resp = self._requester.get(urljoin
-                                       (self._base_url,
-                                        '/api/courses/v1/courses/{course_key}/'
-                                        '?username={username}'
-                                        .format(course_key=course_id,
-                                                username=username)))
+            resp = self._requester.get(
+                urljoin(
+                    self._base_url,
+                    "/api/courses/v1/courses/{course_key}/"
+                    "?username={username}".format(
+                        course_key=course_id, username=username
+                    ),
+                )
+            )
 
         resp.raise_for_status()
 
         return CourseDetail(resp.json())
-    
+
+
 class CourseModes(object):
     """
     API Client to interface with the course modes API.
     """
+
     def __init__(self, requester, base_url):
         self._requester = requester
         self._base_url = base_url
@@ -62,10 +70,14 @@ class CourseModes(object):
         Returns:
             CourseMode
         """
-        resp = self._requester.get(urljoin
-                                    (self._base_url,
-                                    '/api/course_modes/v1/courses/{course_key}'
-                                    .format(course_key=course_id)))
+        resp = self._requester.get(
+            urljoin(
+                self._base_url,
+                "/api/course_modes/v1/courses/{course_key}".format(
+                    course_key=course_id
+                ),
+            )
+        )
 
         resp.raise_for_status()
 

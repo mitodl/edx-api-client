@@ -1,24 +1,22 @@
 """Models Tests for the Course Detail API"""
 
-import os.path
 import json
+import os.path
 from unittest import TestCase
 
 from dateutil import parser
 
-from .models import (
-    CourseDetail,
-    CourseMode,
-    Media,
-)
+from .models import CourseDetail, CourseMode, Media
 
 
 class CourseDetailTests(TestCase):
     """Tests for course detail object"""
+
     @classmethod
     def setUpClass(cls):
-        with open(os.path.join(os.path.dirname(__file__),
-                               'fixtures/course_detail.json')) as file_obj:
+        with open(
+            os.path.join(os.path.dirname(__file__), "fixtures/course_detail.json")
+        ) as file_obj:
             cls.detail_json = json.loads(file_obj.read())
 
         cls.detail = CourseDetail(cls.detail_json)
@@ -29,12 +27,17 @@ class CourseDetailTests(TestCase):
 
     def test_repr(self):
         """Test the __repr__"""
-        assert self.detail.__repr__() == "<Course detail for course-v1:edX+DemoX+Demo_Course>"
+        assert (
+            self.detail.__repr__()
+            == "<Course detail for course-v1:edX+DemoX+Demo_Course>"
+        )
 
     def test_blocks_url(self):
         """Test for blocks_url property"""
-        assert self.detail.blocks_url == ("http://192.168.33.10:8000/api/courses/v1/blocks/"
-                                          "?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course")
+        assert self.detail.blocks_url == (
+            "http://192.168.33.10:8000/api/courses/v1/blocks/"
+            "?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course"
+        )
 
     def test_effort(self):
         """Test for effort property"""
@@ -86,27 +89,34 @@ class CourseDetailTests(TestCase):
 
     def test_overview(self):
         """Test for overview property"""
-        assert self.detail.overview == ("<h2>About This Course</h2>\n   <p>Include your long course"
-                                        " description here. The long course description should "
-                                        "contain 150-400 words.</p>\n")
+        assert self.detail.overview == (
+            "<h2>About This Course</h2>\n   <p>Include your long course"
+            " description here. The long course description should "
+            "contain 150-400 words.</p>\n"
+        )
 
     def test_media(self):
         """Test for media property"""
         list_media = list(self.detail.media)
         assert len(list_media) == 2
-        assert Media(
-            type="course_image",
-            url="/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg"
-        ) in list_media
+        assert (
+            Media(
+                type="course_image",
+                url="/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg",
+            )
+            in list_media
+        )
         assert Media(type="course_video", url=None) in list_media
 
 
 class CourseModeTests(TestCase):
     """Tests for course mode object"""
+
     @classmethod
     def setUpClass(cls):
-        with open(os.path.join(os.path.dirname(__file__),
-                               'fixtures/course_mode.json')) as file_obj:
+        with open(
+            os.path.join(os.path.dirname(__file__), "fixtures/course_mode.json")
+        ) as file_obj:
             cls.detail_json = json.loads(file_obj.read())
 
         cls.detail = CourseMode(cls.detail_json)
