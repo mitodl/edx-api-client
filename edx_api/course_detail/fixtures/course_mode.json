@@ -1,0 +1,12 @@
+[{
+    "course_id": "string",
+    "mode_slug": "string",
+    "mode_display_name": "string",
+    "min_price": 0,
+    "currency": "string",
+    "expiration_datetime": "2022-08-30T17:28:48.151Z",
+    "expiration_datetime_is_explicit": true,
+    "description": "string",
+    "sku": "string",
+    "bulk_sku": "string"
+}]

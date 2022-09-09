@@ -1,23 +1,22 @@
 """Models Tests for the Course Detail API"""
 
-import os.path
 import json
+import os.path
 from unittest import TestCase
 
 from dateutil import parser
 
-from .models import (
-    CourseDetail,
-    Media,
-)
+from .models import CourseDetail, CourseMode, Media
 
 
 class CourseDetailTests(TestCase):
     """Tests for course detail object"""
+
     @classmethod
     def setUpClass(cls):
-        with open(os.path.join(os.path.dirname(__file__),
-                               'fixtures/course_detail.json')) as file_obj:
+        with open(
+            os.path.join(os.path.dirname(__file__), "fixtures/course_detail.json")
+        ) as file_obj:
             cls.detail_json = json.loads(file_obj.read())
 
         cls.detail = CourseDetail(cls.detail_json)
@@ -28,12 +27,16 @@ class CourseDetailTests(TestCase):
 
     def test_repr(self):
         """Test the __repr__"""
-        assert self.detail.__repr__() == "<Course detail for course-v1:edX+DemoX+Demo_Course>"
+        assert (
+            self.detail.__repr__() == "<Course detail for course-v1:edX+DemoX+Demo_Course>"
+        )
 
     def test_blocks_url(self):
         """Test for blocks_url property"""
-        assert self.detail.blocks_url == ("http://192.168.33.10:8000/api/courses/v1/blocks/"
-                                          "?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course")
+        assert self.detail.blocks_url == (
+            "http://192.168.33.10:8000/api/courses/v1/blocks/"
+            "?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course"
+        )
 
     def test_effort(self):
         """Test for effort property"""
@@ -85,16 +88,70 @@ class CourseDetailTests(TestCase):
 
     def test_overview(self):
         """Test for overview property"""
-        assert self.detail.overview == ("<h2>About This Course</h2>\n   <p>Include your long course"
-                                        " description here. The long course description should "
-                                        "contain 150-400 words.</p>\n")
+        assert self.detail.overview == (
+            "<h2>About This Course</h2>\n   <p>Include your long course"
+            " description here. The long course description should "
+            "contain 150-400 words.</p>\n"
+        )
 
     def test_media(self):
         """Test for media property"""
         list_media = list(self.detail.media)
         assert len(list_media) == 2
-        assert Media(
-            type="course_image",
-            url="/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg"
-        ) in list_media
+        assert (
+            Media(
+                type="course_image",
+                url="/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg",
+            )
+            in list_media
+        )
         assert Media(type="course_video", url=None) in list_media
+
+
+class CourseModeTests(TestCase):
+    """Tests for course mode object"""
+
+    @classmethod
+    def setUpClass(cls):
+        with open(
+            os.path.join(os.path.dirname(__file__), "fixtures/course_mode.json")
+        ) as file_obj:
+            cls.detail_json = json.loads(file_obj.read())
+
+        cls.detail = CourseMode(cls.detail_json)
+
+    def test_str(self):
+        """Test the __str__"""
+        assert str(self.detail) == "<Course mode for string>"
+
+    def test_repr(self):
+        """Test the __repr__"""
+        assert self.detail.__repr__() == "<Course mode for string>"
+
+    def test_mode_slug(self):
+        """Test for mode_slug property"""
+        assert self.detail.mode_slug == ("string")
+
+    def test_mode_display_name(self):
+        """Test for mode_display_name property"""
+        assert self.detail.mode_display_name == "string"
+
+    def test_min_price(self):
+        """Test for min_price property"""
+        assert self.detail.min_price == 0
+
+    def test_currency(self):
+        """Test for currency property"""
+        assert self.detail.currency == "string"
+
+    def test_expiration_datetime(self):
+        """Test for expiration_datetime property"""
+        assert self.detail.expiration_datetime == parser.parse("2022-08-30T17:28:48.151Z")
+
+    def test_expiration_datetime_is_explicit(self):
+        """Test for course_id property"""
+        assert self.detail.expiration_datetime_is_explicit is True
+
+    def test_description(self):
+        """Test for description property"""
+        assert self.detail.description == "string"

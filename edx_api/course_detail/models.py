@@ -4,13 +4,15 @@ Business objects for the course detail API
 from collections import namedtuple
 
 from dateutil import parser
-Media = namedtuple('Media', ['type', 'url'])
+
+Media = namedtuple("Media", ["type", "url"])
 
 
 class CourseDetail(object):
     """
     The course detail object
     """
+
     def __init__(self, payload):
         self.json = payload
 
@@ -23,18 +25,18 @@ class CourseDetail(object):
     @property
     def blocks_url(self):
         """Used to fetch the course blocks"""
-        return self.json.get('blocks_url')
+        return self.json.get("blocks_url")
 
     @property
     def effort(self):
         """A textual description of the weekly hours of effort expected in the course."""
-        return self.json.get('effort')
+        return self.json.get("effort")
 
     @property
     def end(self):
         """Date the course ends"""
         try:
-            return parser.parse(self.json.get('end'))
+            return parser.parse(self.json.get("end"))
         except (AttributeError, TypeError):
             return None
 
@@ -42,7 +44,7 @@ class CourseDetail(object):
     def enrollment_start(self):
         """Date enrollment begins"""
         try:
-            return parser.parse(self.json.get('enrollment_start'))
+            return parser.parse(self.json.get("enrollment_start"))
         except (AttributeError, TypeError):
             return None
 
@@ -50,7 +52,7 @@ class CourseDetail(object):
     def enrollment_end(self):
         """Date enrollment ends"""
         try:
-            return parser.parse(self.json.get('enrollment_end'))
+            return parser.parse(self.json.get("enrollment_end"))
         except (AttributeError, TypeError):
             return None
 
@@ -60,40 +62,40 @@ class CourseDetail(object):
         A unique identifier of the course; a serialized representation
         of the opaque key identifying the course.
         """
-        return self.json.get('id')
+        return self.json.get("id")
 
     @property
     def name(self):
         """Name of the course"""
-        return self.json.get('name')
+        return self.json.get("name")
 
     @property
     def number(self):
         """Catalog number of the course"""
-        return self.json.get('number')
+        return self.json.get("number")
 
     @property
     def org(self):
         """Name of the organization that owns the course"""
-        return self.json.get('org')
+        return self.json.get("org")
 
     @property
     def short_description(self):
         """A textual description of the course"""
-        return self.json.get('short_description')
+        return self.json.get("short_description")
 
     @property
     def start(self):
         """Date the course begins"""
         try:
-            return parser.parse(self.json.get('start'))
+            return parser.parse(self.json.get("start"))
         except (AttributeError, TypeError):
             return None
 
     @property
     def start_display(self):
         """Readably formatted start of the course"""
-        return self.json.get('start_display')
+        return self.json.get("start_display")
 
     @property
     def start_type(self):
@@ -103,7 +105,7 @@ class CourseDetail(object):
             * `"timestamp"`: generated form `start` timestamp
             * `"empty"`: the start date should not be shown
         """
-        return self.json.get('start_type')
+        return self.json.get("start_type")
 
     @property
     def overview(self):
@@ -112,10 +114,71 @@ class CourseDetail(object):
         Note: this field is only included in the Course Detail view, not
         the Course List view.
         """
-        return self.json.get('overview')
+        return self.json.get("overview")
 
     @property
     def media(self):
         """Contains named media items"""
-        for media_type, url_dict in self.json.get('media', {}).items():
-            yield Media(type=media_type, url=url_dict.get('uri'))
+        for media_type, url_dict in self.json.get("media", {}).items():
+            yield Media(type=media_type, url=url_dict.get("uri"))
+
+
+class CourseMode(object):
+    """
+    The course mode object
+    """
+
+    def __init__(self, payload):
+        self.json = payload
+
+    def __str__(self):
+        return "<Course mode for {}>".format(self.course_id)
+
+    def __repr__(self):
+        return self.__str__()
+
+    @property
+    def course_id(self):
+        """The course ID associated with the course mode."""
+        return self.json[0].get('course_id')
+
+    @property
+    def mode_slug(self):
+        """The short name for the course mode."""
+        return self.json[0].get("mode_slug")
+
+    @property
+    def mode_display_name(self):
+        """The verbose name for the course mode."""
+        return self.json[0].get("mode_display_name")
+
+    @property
+    def min_price(self):
+        """The minimum price for which a user can enroll in this mode."""
+        return self.json[0].get("min_price")
+
+    @property
+    def currency(self):
+        """The currency of the listed prices."""
+        return self.json[0].get("currency")
+
+    @property
+    def expiration_datetime(self):
+        """The date and time after which users cannot enroll in the course in this mode"""
+        try:
+            return parser.parse(self.json[0].get("expiration_datetime"))
+        except (AttributeError, TypeError, IndexError, KeyError):
+            return None
+
+    @property
+    def expiration_datetime_is_explicit(self):
+        """
+        Whether the expiration_datetime field was
+        explicitly set
+        """
+        return self.json[0].get("expiration_datetime_is_explicit")
+
+    @property
+    def description(self):
+        """A description of this mode"""
+        return self.json[0].get("description")
