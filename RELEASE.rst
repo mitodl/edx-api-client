@@ -1,6 +1,21 @@
 Release Notes
 =============
 
+Version 1.3.0
+-------------
+
+- format
+- Try test
+- Update cost test
+- Fix test
+- Update
+- Fix test
+- format
+- cleanup
+- fix 2
+- Fix test
+- Working hold
+
 Version 1.2.0 (Released April 14, 2022)
 -------------
 
