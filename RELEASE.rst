@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.3.0
+Version 1.3.0 (Released September 09, 2022)
 -------------
 
 - format
