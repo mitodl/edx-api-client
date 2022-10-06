@@ -68,7 +68,7 @@ class CourseModes(object):
             course_id (str): An edx course id.
 
         Returns:
-            CourseMode
+            List of CourseMode
         """
         resp = self._requester.get(
             urljoin(
