@@ -81,6 +81,6 @@ class CourseModes(object):
 
         resp.raise_for_status()
         course_mode_list = []
-        for course_mode_json in resp.json:
+        for course_mode_json in resp.json():
             course_mode_list.append(CourseMode(course_mode_json))
         return course_mode_list
