@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+Version 1.4.0
+-------------
+
+- Fix test?
+- Update comment
+- Fix and return array of CourseMode objects
+
 Version 1.3.0 (Released September 09, 2022)
 -------------
 
