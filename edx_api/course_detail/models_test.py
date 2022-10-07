@@ -118,7 +118,7 @@ class CourseModeTests(TestCase):
         ) as file_obj:
             cls.detail_json = json.loads(file_obj.read())
 
-        cls.detail = CourseMode(cls.detail_json)
+        cls.detail = CourseMode(cls.detail_json[0])
 
     def test_str(self):
         """Test the __str__"""
