@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.4.1
+-------------
+
+- parentheses
+
 Version 1.4.0 (Released October 07, 2022)
 -------------
 
