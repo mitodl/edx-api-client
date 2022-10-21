@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.5.0
+-------------
+
+- feat: add course pacing property (#93)
+
 Version 1.4.1 (Released October 07, 2022)
 -------------
 
