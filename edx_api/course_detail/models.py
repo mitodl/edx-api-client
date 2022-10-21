@@ -122,6 +122,20 @@ class CourseDetail(object):
         for media_type, url_dict in self.json.get("media", {}).items():
             yield Media(type=media_type, url=url_dict.get("uri"))
 
+    @property
+    def pacing(self):
+        """
+        Pacing of a course. Possible values are ("self" or "instructor")
+        """
+        return self.json.get("pacing")
+
+    def is_self_paced(self):
+        """
+        Helper function to check if a course is self paced
+        Note: This property is not part of course detail API, It's calculated on base of course pacing
+        """
+        return self.pacing == "self"
+
 
 class CourseMode(object):
     """

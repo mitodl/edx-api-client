@@ -107,6 +107,14 @@ class CourseDetailTests(TestCase):
         )
         assert Media(type="course_video", url=None) in list_media
 
+    def test_pacing(self):
+        """Test for pacing property"""
+        assert self.detail.pacing == "self"
+
+    def test_is_self_paced(self):
+        """Test for is_self_paced helper function"""
+        assert self.detail.is_self_paced() is True
+
 
 class CourseModeTests(TestCase):
     """Tests for course mode object"""
@@ -130,7 +138,7 @@ class CourseModeTests(TestCase):
 
     def test_mode_slug(self):
         """Test for mode_slug property"""
-        assert self.detail.mode_slug == ("string")
+        assert self.detail.mode_slug == "string"
 
     def test_mode_display_name(self):
         """Test for mode_display_name property"""

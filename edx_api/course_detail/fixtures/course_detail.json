@@ -21,5 +21,6 @@
     "start_display": "March 25, 2016",
     "start_type": "timestamp",
     "course_id": "course-v1:edX+DemoX+Demo_Course",
-    "overview": "<h2>About This Course</h2>\n   <p>Include your long course description here. The long course description should contain 150-400 words.</p>\n"
+    "overview": "<h2>About This Course</h2>\n   <p>Include your long course description here. The long course description should contain 150-400 words.</p>\n",
+    "pacing": "self"
 }
