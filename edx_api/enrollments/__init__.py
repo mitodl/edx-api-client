@@ -125,7 +125,8 @@ class CourseEnrollments(object):
             course_id,
             mode=ENROLLMENT_MODE_AUDIT,
             username=None,
-            enrollment_attributes=None
+            enrollment_attributes=None,
+            force_enrollment=False
     ):
         """
         Creates an enrollment for the user in a given course
@@ -140,6 +141,8 @@ class CourseEnrollments(object):
                                           - namespace,
                                           - name,
                                           - value.
+            force_enrollment (bool): If True, Enforces Enrollment after the enrollment end date
+                                        has been passed or upgrade_deadline is ended
 
         Returns:
             Enrollment: object representing the student enrollment in the provided course
@@ -153,6 +156,8 @@ class CourseEnrollments(object):
         if enrollment_attributes:
             enrollment_data['enrollment_attributes'] = enrollment_attributes
         # the request is done in behalf of the current logged in user
+        if force_enrollment:
+            enrollment_data['force_enrollment'] = True
         resp = self.requester.post(
             urljoin(self.base_url, self.enrollment_url),
             json=enrollment_data
