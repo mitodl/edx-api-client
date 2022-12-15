@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.6.0
+-------------
+
+- added support for force enrollment on openedx (#96)
+
 Version 1.5.0 (Released October 21, 2022)
 -------------
 
