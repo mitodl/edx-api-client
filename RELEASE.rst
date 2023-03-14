@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.7.0
+-------------
+
+- feat: add certificate_available_date in course detail (#98)
+
 Version 1.6.0 (Released December 15, 2022)
 -------------
 
