@@ -57,6 +57,14 @@ class CourseDetail(object):
             return None
 
     @property
+    def certificate_available_date(self):
+        """Date certificates are made available"""
+        try:
+            return parser.parse(self.json.get("certificate_available_date"))
+        except (AttributeError, TypeError):
+            return None
+
+    @property
     def course_id(self):
         """
         A unique identifier of the course; a serialized representation
