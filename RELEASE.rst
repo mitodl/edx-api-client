@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.7.0
+Version 1.7.0 (Released March 14, 2023)
 -------------
 
 - feat: add certificate_available_date in course detail (#98)
