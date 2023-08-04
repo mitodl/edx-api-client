@@ -12,7 +12,7 @@ class BulkUserRetirement(object):
     API client for interacting with user retirement API
     """
 
-    api_url = "api/v1/accounts/bulk_retire_users"
+    api_url = "v1/accounts/bulk_retire_users"
 
     def __init__(self, requester, base_url):
         self.requester = requester
