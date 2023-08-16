@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.8.0
+Version 1.8.0 (Released August 16, 2023)
 -------------
 
 - feat: add bulk retirement api (#100)
