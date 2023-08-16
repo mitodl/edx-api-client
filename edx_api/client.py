@@ -3,6 +3,7 @@
 import requests
 
 from . import DEFAULT_TIME_OUT
+from .bulk_user_retirement import BulkUserRetirement
 from .ccx import CCX
 from .certificates import UserCertificates
 from .course_detail import CourseDetails, CourseModes
@@ -17,8 +18,11 @@ class EdxApi(object):
     """
     A client for speaking with edX.
     """
-    def __init__(self, credentials, base_url='https://courses.edx.org/', timeout=DEFAULT_TIME_OUT):
-        if 'access_token' not in credentials:
+
+    def __init__(
+        self, credentials, base_url="https://courses.edx.org/", timeout=DEFAULT_TIME_OUT
+    ):
+        if "access_token" not in credentials:
             raise AttributeError(
                 "Due to a lack of support for Client Credentials Grant in edX,"
                 " you must specify the access token."
@@ -28,17 +32,21 @@ class EdxApi(object):
         self.credentials = credentials
         self.timeout = timeout
 
-    def get_requester(self):
+    def get_requester(self, token_type="Bearer"):
         """
         Returns an object to make authenticated requests. See python `requests` for the API.
         """
         # TODO(abrahms): Perhaps pull this out into a factory function for
         # generating an EdxApi instance with the proper requester & credentials.
         session = requests.session()
-        session.headers.update({
-            'Authorization': 'Bearer {}'.format(self.credentials['access_token']),
-            'X-EdX-Api-Key': self.credentials.get('api_key'),
-        })
+        session.headers.update(
+            {
+                "Authorization": "{} {}".format(
+                    token_type, self.credentials["access_token"]
+                ),
+                "X-EdX-Api-Key": self.credentials.get("api_key"),
+            }
+        )
 
         old_request = session.request
 
@@ -95,3 +103,8 @@ class EdxApi(object):
     def user_info(self):
         """User info API"""
         return UserInfo(self.get_requester(), self.base_url)
+
+    @property
+    def bulk_user_retirement(self):
+        """Bulk user retirement API"""
+        return BulkUserRetirement(self.get_requester(token_type="jwt"), self.base_url)
