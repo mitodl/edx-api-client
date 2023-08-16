@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+Version 1.8.0
+-------------
+
+- feat: add bulk retirement api (#100)
+- Delete PR Template
+
 Version 1.7.0 (Released March 14, 2023)
 -------------
 
