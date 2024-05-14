@@ -43,8 +43,7 @@ class EdxApi(object):
             {
                 "Authorization": "{} {}".format(
                     token_type, self.credentials["access_token"]
-                ),
-                "X-EdX-Api-Key": self.credentials.get("api_key"),
+                )
             }
         )
 
