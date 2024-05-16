@@ -172,14 +172,18 @@ class EnrollmentsTest(TestCase):
         """
         request_mock.post(self.enrollment_url, json=self.enrollments_json[0])
         course_id = 'course_id'
-        returned_enrollment = self.enrollment_client.deactivate_enrollment(course_id=course_id)
+        user = 'user'
+        returned_enrollment = self.enrollment_client.deactivate_enrollment(
+            course_id=course_id, username=user
+        )
         self.assertDictEqual(
             request_mock.last_request.json(),
             {
                 'course_details': {
                     'course_id': course_id
                 },
-                'is_active': False
+                'is_active': False,
+                'user': user
             }
         )
         assert returned_enrollment.json == self.enrollments_json[0]

@@ -201,24 +201,27 @@ class CourseEnrollments(object):
             username=username
         )
 
-    def deactivate_enrollment(self, course_id):
+    def deactivate_enrollment(self, course_id, username=None):
         """
         Deactivates an enrollment in the given course for the user
-        whose access token was provided to the API client (in other words, the
-        user will be unenrolled)
 
         Args:
             course_id (str): An edX course id.
+            username (str): Username.
 
         Returns:
             Enrollment: object representing the deactivated student enrollment
         """
+
+        params = {
+            "course_details": {"course_id": course_id},
+            "is_active": False,
+        }
+        if username:
+            params['user'] = username
         resp = self.requester.post(
             urljoin(self.base_url, self.enrollment_url),
-            json={
-                "course_details": {"course_id": course_id},
-                "is_active": False,
-            }
+            json=params
         )
         resp.raise_for_status()
         return Enrollment(resp.json())
