@@ -45,7 +45,6 @@ from edx_api.client import EdxApi
 
 
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
-API_KEY = os.getenv('API_KEY')
 BASE_URL = os.getenv('BASE_URL', 'http://localhost:18000/')
 ENROLLMENT_CREATION_COURSE_ID = os.getenv('ENROLLMENT_CREATION_COURSE_ID')
 
@@ -111,7 +110,7 @@ def test_course_structure():
     Pull down the course structure and validate it has the correct entries.
     This test assumes that the used user can access the course.
     """
-    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
     structure = api.course_structure.course_blocks('course-v1:edX+DemoX+Demo_Course', 'staff')
 
     titles = [
@@ -135,7 +134,7 @@ def test_enrollments():
     Enrolls the user in a course and then pulls down the enrollments for the user.
     This assumes that the course in the edX instance is available for enrollment.
     """
-    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
 
     # the enrollment will be done manually until
     # a client to enroll the student is implemented
@@ -160,7 +159,7 @@ def test_create_verified_enrollment():
     """
     Integration test to enroll the user in a course with `verified` mode
     """
-    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
     enrollment = api.enrollments.create_student_enrollment(
         course_id=ENROLLMENT_CREATION_COURSE_ID,
         mode=ENROLLMENT_MODE_VERIFIED,
@@ -175,7 +174,7 @@ def test_create_audit_enrollment():
     """
     Integration test to enroll the user in a course with `audit` mode
     """
-    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
     enrollment = api.enrollments.create_student_enrollment(
         course_id=ENROLLMENT_CREATION_COURSE_ID,
         mode=ENROLLMENT_MODE_AUDIT,
@@ -190,7 +189,7 @@ def test_deactivate_enrollment():
     """
     Integration test to enroll then deactivate a user in a course
     """
-    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
     api.enrollments.create_student_enrollment(
         course_id=ENROLLMENT_CREATION_COURSE_ID,
         mode=ENROLLMENT_MODE_AUDIT
@@ -207,7 +206,7 @@ def test_create_enrollment_timeout():
     """
      Asserts request timeout error on enrollment api
     """
-    api = EdxApi({'access_token': ACCESS_TOKEN, 'api_key': API_KEY}, base_url=BASE_URL)
+    api = EdxApi({'access_token': ACCESS_TOKEN}, base_url=BASE_URL)
     enrollments = api.enrollments
     with patch.object(enrollments.requester, 'post', autospec=True) as post:
         post.side_effect = mocked_timeout
