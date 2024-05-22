@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.9.0
+Version 1.9.0 (Released May 22, 2024)
 -------------
 
 - refactor: remove X-EdX-Api-Key usage (#104)
