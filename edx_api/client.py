@@ -14,7 +14,7 @@ from .grades import UserCurrentGrades
 from .user_info import UserInfo
 
 
-class EdxApi(object):
+class EdxApi:
     """
     A client for speaking with edX.
     """
@@ -41,9 +41,7 @@ class EdxApi(object):
         session = requests.session()
         session.headers.update(
             {
-                "Authorization": "{} {}".format(
-                    token_type, self.credentials["access_token"]
-                )
+                "Authorization": f"{token_type} {self.credentials['access_token']}"
             }
         )
 

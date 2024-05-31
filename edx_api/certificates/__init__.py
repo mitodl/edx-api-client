@@ -8,7 +8,7 @@ from edx_api.enrollments import CourseEnrollments
 from .models import Certificate, Certificates
 
 
-class UserCertificates(object):
+class UserCertificates:
     """
     edX student certificates client
     """
@@ -37,10 +37,7 @@ class UserCertificates(object):
         resp = self.requester.get(
             urljoin(
                 self.base_url,
-                '/api/certificates/v0/certificates/{username}/courses/{course_key}/'.format(
-                    username=username,
-                    course_key=course_id
-                )
+                f'/api/certificates/v0/certificates/{username}/courses/{course_id}/'
             )
         )
 

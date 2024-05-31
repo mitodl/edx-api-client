@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 from .models import Structure
 
 
-class CourseStructure(object):
+class CourseStructure:
     """
     API Client to interface with the course structure API.
     """

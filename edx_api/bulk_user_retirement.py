@@ -7,7 +7,7 @@ from urllib import parse
 log = logging.getLogger(__name__)
 
 
-class BulkUserRetirement(object):
+class BulkUserRetirement:
     """
     API client for interacting with user retirement API
     """

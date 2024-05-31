@@ -1,7 +1,7 @@
 """Models for user_info client"""
 
 
-class Info(object):
+class Info:
     """
     Information about user
     """
@@ -9,9 +9,7 @@ class Info(object):
         self.json = json
 
     def __str__(self):
-        return "<User info for user {user}>".format(
-            user=self.username,
-        )
+        return f"<User info for user {self.username}>"
 
     @property
     def username(self):

@@ -21,7 +21,7 @@ class GradesApiTestCase(TestCase):
     base_url = "https://edx.example.com"
 
     def setUp(self):
-        super(GradesApiTestCase, self).setUp()
+        super().setUp()
 
         with open(
             os.path.join(

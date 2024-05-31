@@ -8,7 +8,7 @@ from edx_api.enrollments import CourseEnrollments
 from .models import CurrentGrade, CurrentGradesByUser, CurrentGradesByCourse
 
 
-class UserCurrentGrades(object):
+class UserCurrentGrades:
     """
     edX student certificates client
     """
@@ -37,10 +37,7 @@ class UserCurrentGrades(object):
         resp = self.requester.get(
             urljoin(
                 self.base_url,
-                '/api/grades/v1/courses/{course_key}/?username={username}'.format(
-                    username=username,
-                    course_key=course_id
-                )
+                f'/api/grades/v1/courses/{course_id}/?username={username}'
             )
         )
 
@@ -92,7 +89,7 @@ class UserCurrentGrades(object):
         resp = self.requester.get(
             urljoin(
                 self.base_url,
-                '/api/grades/v1/courses/{course_key}/'.format(course_key=course_id)
+                f'/api/grades/v1/courses/{course_id}/'
             )
         )
         resp.raise_for_status()
@@ -103,7 +100,7 @@ class UserCurrentGrades(object):
                 resp = self.requester.get(resp_json['next'])
                 resp.raise_for_status()
                 resp_json = resp.json()
-                grade_entries.extend((CurrentGrade(entry) for entry in resp_json["results"]))
+                grade_entries.extend(CurrentGrade(entry) for entry in resp_json["results"])
         else:
             grade_entries = [CurrentGrade(entry) for entry in resp_json]
 

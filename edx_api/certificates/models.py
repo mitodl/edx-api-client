@@ -4,7 +4,7 @@ Business objects for the certificates API
 from dateutil import parser
 
 
-class Certificates(object):
+class Certificates:
     """
     The certificates object
     This assumes that there can be only one certificate
@@ -56,7 +56,7 @@ class Certificates(object):
         return course_id in self.verified_certificates
 
 
-class Certificate(object):
+class Certificate:
     """
     The certificate object
     """
@@ -64,10 +64,7 @@ class Certificate(object):
         self.json = json
 
     def __str__(self):
-        return "<Certificate for user {username} for course {course_id}>".format(
-            username=self.username,
-            course_id=self.course_id
-        )
+        return f"<Certificate for user {self.username} for course {self.course_id}>"
 
     @property
     def is_verified(self):

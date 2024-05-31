@@ -8,7 +8,7 @@ from dateutil import parser
 Media = namedtuple("Media", ["type", "url"])
 
 
-class CourseDetail(object):
+class CourseDetail:
     """
     The course detail object
     """
@@ -17,7 +17,7 @@ class CourseDetail(object):
         self.json = payload
 
     def __str__(self):
-        return "<Course detail for {}>".format(self.course_id)
+        return f"<Course detail for {self.course_id}>"
 
     def __repr__(self):
         return self.__str__()
@@ -145,7 +145,7 @@ class CourseDetail(object):
         return self.pacing == "self"
 
 
-class CourseMode(object):
+class CourseMode:
     """
     The course mode object
     """
@@ -154,7 +154,7 @@ class CourseMode(object):
         self.json = payload
 
     def __str__(self):
-        return "<Course mode for {}>".format(self.course_id)
+        return f"<Course mode for {self.course_id}>"
 
     def __repr__(self):
         return self.__str__()

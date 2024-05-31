@@ -5,7 +5,7 @@ from collections.abc import Iterable
 # pylint: disable=too-few-public-methods
 
 
-class CurrentGrades(object):
+class CurrentGrades:
     """
     Current Grades object representation
     """
@@ -28,7 +28,7 @@ class CurrentGradesByCourse(CurrentGrades):
         Args:
             current_grade_list (list): A list of the CurrentGrade objects
         """
-        super(CurrentGradesByCourse, self).__init__(current_grade_list)
+        super().__init__(current_grade_list)
         self.course_id = None
         self.current_grades = {}
         for current_grade in current_grade_list:
@@ -41,9 +41,7 @@ class CurrentGradesByCourse(CurrentGrades):
             self.current_grades[current_grade.username] = current_grade
 
     def __str__(self):
-        return "<Current Grades for course {course_id}>".format(
-            course_id=self.course_id
-        )
+        return f"<Current Grades for course {self.course_id}>"
 
     @property
     def all_usernames(self):
@@ -60,7 +58,7 @@ class CurrentGradesByUser(CurrentGrades):
         Args:
             current_grade_list (list): A list of the CurrentGrade objects
         """
-        super(CurrentGradesByUser, self).__init__(current_grade_list)
+        super().__init__(current_grade_list)
         self.username = None
         self.current_grades = {}
         for current_grade in current_grade_list:
@@ -69,9 +67,7 @@ class CurrentGradesByUser(CurrentGrades):
             self.current_grades[current_grade.course_id] = current_grade
 
     def __str__(self):
-        return "<Current Grades for user {username}>".format(
-            username=self.username
-        )
+        return f"<Current Grades for user {self.username}>"
 
     @property
     def all_course_ids(self):
@@ -83,7 +79,7 @@ class CurrentGradesByUser(CurrentGrades):
         return self.current_grades.get(course_id)
 
 
-class CurrentGrade(object):
+class CurrentGrade:
     """
     Single current grade object representation
     """
@@ -91,10 +87,7 @@ class CurrentGrade(object):
         self.json = json
 
     def __str__(self):
-        return "<Current Grade for user {user} in course {course}>".format(
-            user=self.username,
-            course=self.course_id
-        )
+        return f"<Current Grade for user {self.username} in course {self.course_id}>"
 
     @property
     def course_id(self):
