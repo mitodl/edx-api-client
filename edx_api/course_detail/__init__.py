@@ -39,8 +39,7 @@ class CourseDetails:
             resp = self._requester.get(
                 urljoin(
                     self._base_url,
-                    f"/api/courses/v1/courses/{course_id}/"
-                    "?username={username}"
+                    f"/api/courses/v1/courses/{course_id}/?username={username}"
                 )
             )
 
