@@ -11,8 +11,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.9"
-        env:
-          PIP_TRUSTED_HOST: "pypi.python.org pypi.org files.pythonhosted.org"
 
       - id: cache
         uses: actions/cache@v1
