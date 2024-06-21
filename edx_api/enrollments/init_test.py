@@ -5,10 +5,7 @@ import json
 import os
 from unittest import TestCase
 
-try:
-    from unittest.mock import patch
-except ImportError:
-    from unittest.mock import patch
+from unittest.mock import patch
 
 import requests_mock
 from urllib.parse import urljoin
