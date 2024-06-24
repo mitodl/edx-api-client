@@ -3,7 +3,7 @@ import json
 import os.path
 import requests
 
-from mock import create_autospec
+from unittest.mock import create_autospec
 from .ccx import CCX
 
 

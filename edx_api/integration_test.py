@@ -34,7 +34,7 @@ GeneratedCertificateFactory.create(
 """
 import os
 
-from mock import patch
+from unittest.mock import patch
 import pytest
 from requests.exceptions import HTTPError
 from requests import Response, Timeout
@@ -60,7 +60,7 @@ require_integration_settings_course_id = pytest.mark.skipif(
 )
 
 
-class FakeErroredResponse(object):
+class FakeErroredResponse:
     """Fake requests response"""
     def __init__(self, status_code):
         """
@@ -75,7 +75,7 @@ class FakeErroredResponse(object):
         raise self.error
 
 
-class FakeTimeoutResponse(object):
+class FakeTimeoutResponse:
     """Fake requests response"""
     def __init__(self, status_code):
         """

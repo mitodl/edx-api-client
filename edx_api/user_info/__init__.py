@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 from .models import Info
 
 
-class UserInfo(object):
+class UserInfo:
     """
     edX user info client
     """
@@ -61,7 +61,7 @@ class UserInfo(object):
         resp = self.requester.patch(
             urljoin(
                 self.base_url,
-                '/api/user/v1/accounts/{username}'.format(username=username)
+                f'/api/user/v1/accounts/{username}'
             ),
             json=request_data)
         resp.raise_for_status()

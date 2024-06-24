@@ -5,7 +5,7 @@ from .models import CourseDetail, CourseMode
 
 
 # pylint: disable=too-few-public-methods
-class CourseDetails(object):
+class CourseDetails:
     """
     API Client to interface with the course detail API.
     """
@@ -32,17 +32,14 @@ class CourseDetails(object):
             resp = self._requester.get(
                 urljoin(
                     self._base_url,
-                    "/api/courses/v1/courses/{course_key}".format(course_key=course_id),
+                    f"/api/courses/v1/courses/{course_id}",
                 )
             )
         else:
             resp = self._requester.get(
                 urljoin(
                     self._base_url,
-                    "/api/courses/v1/courses/{course_key}/"
-                    "?username={username}".format(
-                        course_key=course_id, username=username
-                    ),
+                    f"/api/courses/v1/courses/{course_id}/?username={username}"
                 )
             )
 
@@ -51,7 +48,7 @@ class CourseDetails(object):
         return CourseDetail(resp.json())
 
 
-class CourseModes(object):
+class CourseModes:
     """
     API Client to interface with the course modes API.
     """
@@ -73,9 +70,7 @@ class CourseModes(object):
         resp = self._requester.get(
             urljoin(
                 self._base_url,
-                "/api/course_modes/v1/courses/{course_key}".format(
-                    course_key=course_id
-                ),
+                f"/api/course_modes/v1/courses/{course_id}",
             )
         )
 

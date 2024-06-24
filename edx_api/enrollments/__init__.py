@@ -13,7 +13,7 @@ from .models import Enrollment, Enrollments
 
 
 # pylint: disable=too-few-public-methods
-class CourseEnrollments(object):
+class CourseEnrollments:
     """
     edX student enrollments client
     """

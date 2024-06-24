@@ -6,7 +6,7 @@ from dateutil import parser
 # pylint: disable=too-few-public-methods
 
 
-class Enrollments(object):
+class Enrollments:
     """
     The enrollments object
     """
@@ -76,7 +76,7 @@ class Enrollments(object):
         return self.enrollments.get(course_id)
 
 
-class Enrollment(object):
+class Enrollment:
     """
     Single enrollment object representation
     """
@@ -84,10 +84,7 @@ class Enrollment(object):
         self.json = json
 
     def __str__(self):
-        return "<Enrollment for user {user} in course {course}>".format(
-            user=self.user,
-            course=self.course_id
-        )
+        return f"<Enrollment for user {self.user} in course {self.course_id}>"
 
     @property
     def course_id(self):
@@ -130,7 +127,7 @@ class Enrollment(object):
         return self.mode == 'verified'
 
 
-class CourseDetails(object):
+class CourseDetails:
     """
     Course enrollment info
     """
@@ -138,7 +135,7 @@ class CourseDetails(object):
         self.json = json
 
     def __str__(self):
-        return "<Enrollment details for course {}>".format(self.course_id)
+        return f"<Enrollment details for course {self.course_id}>"
 
     @property
     def course_id(self):
@@ -207,7 +204,7 @@ class CourseDetails(object):
             yield CourseMode(course_mode_json)
 
 
-class CourseMode(object):
+class CourseMode:
     """
     Course enrollment mode
     """
@@ -215,7 +212,7 @@ class CourseMode(object):
         self.json = json
 
     def __str__(self):
-        return "<Enrollment mode {}>".format(self.slug)
+        return f"<Enrollment mode {self.slug}>"
 
     @property
     def currency(self):

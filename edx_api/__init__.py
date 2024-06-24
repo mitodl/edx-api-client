@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 edX python REST API client
 """

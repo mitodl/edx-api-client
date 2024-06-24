@@ -1,7 +1,7 @@
 """Business objects for the course structure API"""
 
 
-class Structure(object):
+class Structure:
     """
     The course structure object, which represents a tree of nodes.
     """
@@ -25,10 +25,10 @@ class Structure(object):
         return Block(root_id, self.payload)
 
     def __str__(self):
-        return 'Structure for {}'.format(self._root_id)
+        return f'Structure for {self._root_id}'
 
 
-class Block(object):
+class Block:
     """
     Represents a single block within the course structure.
     """

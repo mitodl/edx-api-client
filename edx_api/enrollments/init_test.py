@@ -5,10 +5,7 @@ import json
 import os
 from unittest import TestCase
 
-try:
-    from mock import patch
-except ImportError:
-    from unittest.mock import patch
+from unittest.mock import patch
 
 import requests_mock
 from urllib.parse import urljoin
@@ -154,7 +151,7 @@ class EnrollmentsTest(TestCase):
         )
         mock_req.register_uri(
             'GET',
-            '{url}?cursor=next-cursor'.format(url=CourseEnrollments.enrollment_list_url),
+            f'{CourseEnrollments.enrollment_list_url}?cursor=next-cursor',
             text=json.dumps({
                 'previous': 'http://base_url/enrl/?cursor=next-cursor',
                 'results': self.enrollments_list_json[2:],

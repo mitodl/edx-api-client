@@ -8,7 +8,7 @@ from urllib import parse
 log = logging.getLogger(__name__)
 
 
-class CCX(object):
+class CCX:
     """
     API Client for interacting w/ CCXs
     """

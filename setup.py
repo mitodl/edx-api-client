@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 """
 Python setup file for the eds_api app.
 """
@@ -19,7 +18,7 @@ def read(filename):
     """Helper function to read bytes from file"""
     try:
         return open(os.path.join(os.path.dirname(__file__), filename)).read()
-    except IOError:
+    except OSError:
         return ''
 
 

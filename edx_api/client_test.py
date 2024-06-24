@@ -16,4 +16,4 @@ def test_instantiation_happypath():
     """instantiatable with correct args"""
     token = 'asdf'
     client = EdxApi({'access_token': token})
-    assert client.get_requester().headers['Authorization'] == 'Bearer {token}'.format(token=token)
+    assert client.get_requester().headers['Authorization'] == f'Bearer {token}'
