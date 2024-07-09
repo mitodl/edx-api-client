@@ -67,32 +67,3 @@ class UserInfo:
         resp.raise_for_status()
 
         return Info(resp.json())
-
-    def validate_user_registration(self, data=None):
-        """
-        Validate information about user data during registration.
-
-        Expects data in the form
-        ```
-        {
-            "name": "Dan the Validator",
-            "username": "mslm",
-            "email": "mslm@gmail.com",
-            "confirm_email": "mslm@gmail.com",
-            "password": "password123",
-            "country": "PK"
-        }
-        ```
-        where one may enter individual inputs if needed. Some inputs
-        can get extra verification checks if entered along with others,
-        like when the password may not equal the username.
-        """
-        resp = self.requester.post(
-            urljoin(
-                self.base_url,
-                '/api/user/v1/validation/registration'
-            ),
-            data=data)
-        resp.raise_for_status()
-
-        return resp.json()

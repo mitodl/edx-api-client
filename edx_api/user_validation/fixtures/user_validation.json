@@ -1,0 +1,24 @@
+{
+  "validation_responses": {
+    "valid_name": {
+      "validation_decisions": {
+        "name": ""
+      }
+    },
+    "invalid_name": {
+      "validation_decisions": {
+        "name": "Invalid name"
+      }
+    },
+    "valid_username": {
+      "validation_decisions": {
+        "username": ""
+      }
+    },
+    "invalid_username": {
+      "validation_decisions": {
+        "username": "Invalid username"
+      }
+    }
+  }
+}
