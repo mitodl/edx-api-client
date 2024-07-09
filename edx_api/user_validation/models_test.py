@@ -21,7 +21,7 @@ class ValidationTests(TestCase):
         """Test the __str__"""
         self.assertEqual(str(self.get_validation_instance('valid_name')), "<User validation>")
 
-    def test_properties(self, key, expected_name):
+    def test_properties(self):
         """Test properties on Validation model"""
         test_cases = [
             ('invalid_name', 'Invalid name', 'name'),
