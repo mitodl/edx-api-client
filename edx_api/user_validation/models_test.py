@@ -3,11 +3,11 @@ import json
 import os
 from unittest import TestCase
 
-from .models import Validation
+from .models import UserValidationResult
 
 
-class ValidationTests(TestCase):
-    """Tests for Validation"""
+class UserValidationResultTests(TestCase):
+    """Tests for UserValidationResult"""
 
     @classmethod
     def setUpClass(cls):
@@ -22,7 +22,7 @@ class ValidationTests(TestCase):
         self.assertEqual(str(self.get_validation_instance('valid_name')), "<User validation>")
 
     def test_properties(self):
-        """Test properties on Validation model"""
+        """Test properties on UserValidationResult model"""
         test_cases = [
             ('invalid_name', 'Invalid name', 'name'),
             ('valid_name', '', 'name'),
@@ -39,4 +39,4 @@ class ValidationTests(TestCase):
                     self.assertEqual(validation.username, expected_value)
 
     def get_validation_instance(self, key):
-        return Validation(self.validation_responses.get(key, {}))
+        return UserValidationResult(self.validation_responses.get(key, {}))

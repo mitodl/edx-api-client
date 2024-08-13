@@ -10,7 +10,7 @@ from urllib.parse import urljoin
 import requests_mock
 
 from edx_api.client import EdxApi
-from .models import Validation
+from .models import UserValidationResult
 
 
 class UserValidationTestCase(TestCase):
@@ -39,9 +39,9 @@ class UserValidationTestCase(TestCase):
         return self.validation_data['validation_responses'].get(key, {})
 
     @requests_mock.Mocker()
-    def test_validate_user_registration(self, mock_req):
+    def test_validate_user_registration_info(self, mock_req):
         """
-        Test that validate_user_registration validates name and username.
+        Test that validate_user_registration_info validates name and username.
         """
         test_cases = [
             ('valid_name', {'name': ''}, {'name': 'test_name'}),
@@ -56,6 +56,6 @@ class UserValidationTestCase(TestCase):
                     urljoin(self.base_url, '/api/user/v1/validation/registration'),
                     json=self.get_mock_response(key)
                 )
-                validation_response = self.client.user_validation.validate_user_registration(request_data)
-                self.assertIsInstance(validation_response, Validation)
+                validation_response = self.client.user_validation.validate_user_registration_info(request_data)
+                self.assertIsInstance(validation_response, UserValidationResult)
                 self.assertDictEqual(validation_response.validation_decisions, expected_validation_decisions)
