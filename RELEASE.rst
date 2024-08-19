@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.10.0
+Version 1.10.0 (Released August 19, 2024)
 --------------
 
 - feat: validate user registration api (#106)
