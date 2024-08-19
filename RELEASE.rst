@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+Version 1.10.0
+--------------
+
+- feat: validate user registration api (#106)
+- chore: bump python to 3.9 (#107)
+- Add renovate.json
+
 Version 1.9.0 (Released May 22, 2024)
 -------------
 
