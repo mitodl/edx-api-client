@@ -12,6 +12,7 @@ from .enrollments import CourseEnrollments
 from .email_settings import EmailSettings
 from .grades import UserCurrentGrades
 from .user_info import UserInfo
+from .user_validation import UserValidation
 
 
 class EdxApi:
@@ -105,3 +106,8 @@ class EdxApi:
     def bulk_user_retirement(self):
         """Bulk user retirement API"""
         return BulkUserRetirement(self.get_requester(token_type="jwt"), self.base_url)
+
+    @property
+    def user_validation(self):
+        """User validation API"""
+        return UserValidation(self.get_requester(), self.base_url)
