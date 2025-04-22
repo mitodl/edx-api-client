@@ -22,9 +22,13 @@ class CourseList:
         self._requester = requester
         self._base_url = base_url
 
-    def get_courses(self, username=None, org=None, search_term=None, 
-                   mobile_available=None, active_only=None, 
-                   course_keys=None, page=None, page_size=None, **kwargs):
+    def get_courses(
+            self,
+            username=None,
+            search_term=None,
+            active_only=None,
+            course_keys=None,
+    ):
         """
         Get a list of courses visible to the specified user
 
@@ -48,8 +52,6 @@ class CourseList:
             params['active_only'] = active_only
         if course_keys is not None:
             params['course_keys'] = course_keys
-
-        params.update(kwargs)
 
         resp = self._requester.get(
             urljoin(self._base_url, self.course_list_url),
