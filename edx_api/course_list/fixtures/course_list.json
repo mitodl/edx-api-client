@@ -1,0 +1,71 @@
+[
+    {
+        "blocks_url": "https://courses.edx.org/api/courses/v1/blocks/?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course",
+        "course_id": "course-v1:edX+DemoX+Demo_Course",
+        "effort": "6 hours",
+        "end": null,
+        "enrollment_end": null,
+        "enrollment_start": "2013-02-05T05:00:01Z",
+        "id": "course-v1:edX+DemoX+Demo_Course",
+        "media": {
+            "course_image": {
+                "uri": "/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg"
+            },
+            "course_video": {
+                "uri": null
+            }
+        },
+        "name": "Demo Course",
+        "number": "DemoX",
+        "org": "edX",
+        "pacing": "self",
+        "short_description": "This is a demonstration course.",
+        "start": "2013-02-05T05:00:00Z",
+        "start_display": "February 5, 2013",
+        "start_type": "timestamp"
+    },
+    {
+        "blocks_url": "https://courses.edx.org/api/courses/v1/blocks/?course_id=course-v1%3AMITx%2BDigital-Learning-100%2BR2",
+        "course_id": "course-v1:MITx+Digital-Learning-100+R2",
+        "effort": "8 hours",
+        "end": "2023-12-15T23:59:00Z",
+        "enrollment_end": "2023-10-15T23:59:00Z",
+        "enrollment_start": "2023-08-01T00:00:00Z",
+        "id": "course-v1:MITx+Digital-Learning-100+R2",
+        "media": {
+            "course_image": {
+                "uri": "/asset-v1:MITx+Digital-Learning-100+R2+type@asset+block@course_image.jpg"
+            }
+        },
+        "name": "Digital Learning 100",
+        "number": "Digital-Learning-100",
+        "org": "MITx",
+        "pacing": "instructor",
+        "short_description": "Introduction to digital learning.",
+        "start": "2023-09-15T00:00:00Z",
+        "start_display": "September 15, 2023",
+        "start_type": "timestamp"
+    },
+    {
+        "blocks_url": "https://courses.edx.org/api/courses/v1/blocks/?course_id=course-v1%3AMITx%2BAnalog-Learning-100%2BR1",
+        "course_id": "course-v1:MITx+Analog-Learning-100+R1",
+        "effort": "7 hours",
+        "end": "2024-01-31T23:59:00Z",
+        "enrollment_end": "2023-11-01T23:59:00Z",
+        "enrollment_start": "2023-09-01T00:00:00Z",
+        "id": "course-v1:MITx+Analog-Learning-100+R1",
+        "media": {
+            "course_image": {
+                "uri": "/asset-v1:MITx+Analog-Learning-100+R1+type@asset+block@course_image.jpg"
+            }
+        },
+        "name": "Analog Learning 100",
+        "number": "Analog-Learning-100",
+        "org": "MITx",
+        "pacing": "self",
+        "short_description": "Introduction to analog learning methods.",
+        "start": "2023-10-01T00:00:00Z",
+        "start_display": "October 1, 2023",
+        "start_type": "timestamp"
+    }
+]
