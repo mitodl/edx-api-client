@@ -6,6 +6,7 @@ from . import DEFAULT_TIME_OUT
 from .bulk_user_retirement import BulkUserRetirement
 from .ccx import CCX
 from .certificates import UserCertificates
+from .course_list import CourseList
 from .course_detail import CourseDetails, CourseModes
 from .course_structure import CourseStructure
 from .enrollments import CourseEnrollments
@@ -56,6 +57,11 @@ class EdxApi:
 
         session.request = patched_request
         return session
+
+    @property
+    def course_list(self):
+        """Course List API"""
+        return CourseList(self.get_requester(), self.base_url)
 
     @property
     def course_structure(self):
