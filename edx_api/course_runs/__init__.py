@@ -2,6 +2,7 @@
 from requests.exceptions import HTTPError
 from urllib import parse
 from .exceptions import CourseRunAPIError
+from .models import CourseRun
 
 
 # pylint: disable=too-few-public-methods
@@ -43,13 +44,13 @@ class CourseRuns:
                 f"Failed to clone course run: {e.response.status_code} - {e.response.text}"
             ) from e
 
-    def create_course_run(self, org, number, run, title):
+    def create_course_run(self, org, number, run, title, pacing_type=None, start=None, end=None, enrollment_start=None, enrollment_end=None):
         """
         Creates a new canonical course run in Open edX.
 
         Args:
             org (str): Organization for the new course run.
-            number (str): Course number for the new course run.
+            number (str): Course number for the new course run. (Without 'course-v1')
             run (str): The run id for the new course run.
             title (str): The title of the new course run.
 
@@ -64,14 +65,22 @@ class CourseRuns:
             "number": number,
             "run": run,
             "title": title,
-
+            "schedule": {
+                "start": start.isoformat() if start else None,
+                "end": end.isoformat() if end else None,
+                "enrollment_start": enrollment_start.isoformat() if enrollment_start else None,
+                "enrollment_end": enrollment_end.isoformat() if enrollment_end else None,
+            },
         }
+        if pacing_type:
+            payload["pacing_type"] = pacing_type
+        
         resp = self._requester.post(
             parse.urljoin(self._base_url, "api/v1/course_runs/"), json=payload
         )
         try:
             resp.raise_for_status()
-            return resp.json()
+            return CourseRun(resp.json())
         except HTTPError as e:
             raise CourseRunAPIError(
                 f"Failed to create course run: {e.response.status_code} - {e.response.text}"
