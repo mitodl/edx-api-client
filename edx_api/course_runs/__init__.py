@@ -2,7 +2,7 @@
 from requests.exceptions import HTTPError
 from urllib import parse
 from .exceptions import CourseRunAPIError
-from .models import CourseRun
+from .models import CourseRun, CourseRunList
 
 
 # pylint: disable=too-few-public-methods
@@ -165,4 +165,49 @@ class CourseRuns:
         except HTTPError as e:
             raise CourseRunAPIError(
                 f"Failed to update course run: {e.response.status_code} - {e.response.text}"
+            ) from e
+
+    def get_course_runs_list(self, page_url=None):
+        """
+        Returns a list of course runs in Open edX.
+
+        Args:
+            page_url (str, optional): The URL for the next or previous page of course runs. Defaults to None.
+            If not provided, the first page of course runs will be fetched.
+
+        Returns:
+            list: A list of course run objects.
+        Raises:
+            CourseRunError: If the request to clone the course run fails.
+        """
+        resp = self._requester.get(
+            page_url or parse.urljoin(self._base_url, "api/v1/course_runs/")
+        )
+        try:
+            resp.raise_for_status()
+            return CourseRunList(resp.json())
+        except HTTPError as e:
+            raise CourseRunAPIError(
+                f"Failed to get course run list: {e.response.status_code} - {e.response.text}"
+            ) from e
+
+    def get_course_run(self, course_id):
+        """
+        Returns a course run object in Open edX.
+        Args:
+            course_id (str): The course id for the course run to get.
+        Returns:
+            CourseRun: The course run object.
+        Raises:
+            CourseRunError: If the request to clone the course run fails.
+        """
+        resp = self._requester.get(
+            parse.urljoin(self._base_url, f"api/v1/course_runs/{course_id}/")
+        )
+        try:
+            resp.raise_for_status()
+            return CourseRun(resp.json())
+        except HTTPError as e:
+            raise CourseRunAPIError(
+                f"Failed to get course run: {e.response.status_code} - {e.response.text}"
             ) from e

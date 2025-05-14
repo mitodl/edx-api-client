@@ -23,7 +23,7 @@ class CourseRun:
     def schedule(self):
         """Used to fetch the course schedule"""
         return self.json.get("schedule")
-    
+
     @property
     def start(self):
         """Date the course run begins"""
@@ -97,3 +97,59 @@ class CourseRun:
         return self.json.get("run")
 
 
+class CourseRunList:
+    """
+    A list of course runs
+    """
+
+    def __init__(self, payload):
+        self.json = payload
+
+    @property
+    def next(self):
+        """
+        Returns the next page of course runs list
+        """
+        return self.json.get("next", None)
+
+    @property
+    def previous(self):
+        """
+        Returns the previous page of course runs list
+        """
+        return self.json.get("previous", None)
+
+    @property
+    def count(self):
+        """
+        Returns the number of course runs
+        """
+        return self.json.get("count", 0)
+
+    @property
+    def num_pages(self):
+        """
+        Returns the number of pages of course runs list
+        """
+        return self.json.get("num_pages", 0)
+
+    @property
+    def current_page(self):
+        """
+        Returns the current page of course runs list
+        """
+        return self.json.get("current_page", 0)
+
+    @property
+    def start(self):
+        """
+        Returns the start of the pagination
+        """
+        return self.json.get("start", None)
+
+    @property
+    def results(self):
+        """
+        Returns a list of course runs
+        """
+        return [CourseRun(course_run) for course_run in self.json.get("results", [])]
