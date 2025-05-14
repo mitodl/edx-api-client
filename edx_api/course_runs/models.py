@@ -4,7 +4,6 @@ Business objects for the course run API
 from dateutil import parser
 
 
-
 class CourseRun:
     """
     The course run object
@@ -44,7 +43,7 @@ class CourseRun:
     def enrollment_start(self):
         """Date enrollment begins"""
         try:
-            return parser.parse(self.json.schedule("enrollment_start"))
+            return parser.parse(self.schedule.get("enrollment_start"))
         except (AttributeError, TypeError):
             return None
 
