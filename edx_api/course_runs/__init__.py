@@ -1,15 +1,18 @@
 """Course Runs API"""
-from requests.exceptions import HTTPError
+
 from urllib import parse
+
+from requests.exceptions import HTTPError
+
 from .exceptions import CourseRunAPIError
 from .models import CourseRun, CourseRunList
 
 
-# pylint: disable=too-few-public-methods
 class CourseRuns:
     """
     API Client to interact with the course runs API in Open edX CMS.
     """
+
     course_run_url = "api/v1/course_runs/"
     course_run_clone_url = "api/v1/course_runs/clone/"
 
@@ -17,9 +20,11 @@ class CourseRuns:
         self._requester = requester
         self._base_url = base_url
 
-    def _verify_and_generate_schedule(self, start, end, enrollment_start, enrollment_end):
+    def _verify_and_generate_schedule(
+        self, start, end, enrollment_start, enrollment_end
+    ):
         """
-        Verifies and builds the schedule dictionary for course run creation.
+        Verifies and builds the schedule dictionary for course run create/update payload.
 
         Args:
             start (datetime): The start date for the course run.
@@ -28,15 +33,15 @@ class CourseRuns:
             enrollment_end (datetime): The enrollment end date for the course run.
 
         Returns:
-            dict: A dictionary containing the schedule information.
+            dict or None: A dictionary containing the schedule information or None.
         """
 
-        # All the date fields will be added in a sub-dictionary named "schedule".
-        # If we want to update the schedule of the course, the start and end dates
-        # are required by the API.
+        # It is required by the Open edX that start and end dates are both present when a reschedule is requested.
         if start or end:
             if not (start and end):
-                raise ValueError("Both start and end dates must be provided if one is provided.")
+                raise ValueError(
+                    "Both start and end dates must be provided if one is provided."
+                )
 
             schedule = {
                 "start": start.isoformat(),
@@ -55,14 +60,14 @@ class CourseRuns:
 
         Args:
             source_course_id (str): An edx course id from which to clone the new run.
-            destination_course_id (str): A course id to which to clone the new run from the destination.
+            destination_course_id (str): A course id for the new course run to be created.
 
         Returns:
             Response: The response from the Open edX API.
         Raises:
             CourseRunError: If the request to clone the course run fails.
         """
-        # the request is done on behalf of the staff user
+
         payload = {
             "source_course_id": source_course_id,
             "destination_course_id": destination_course_id,
@@ -72,13 +77,24 @@ class CourseRuns:
         )
         try:
             resp.raise_for_status()
-            return resp.json()
+            return resp
         except HTTPError as ex:
             raise CourseRunAPIError(
                 f"Failed to clone course run: {ex.response.status_code} - {ex.response.text}"
             ) from ex
 
-    def create_course_run(self, org, number, run, title, pacing_type=None, start=None, end=None, enrollment_start=None, enrollment_end=None):
+    def create_course_run(
+        self,
+        org,
+        number,
+        run,
+        title,
+        pacing_type=None,
+        start=None,
+        end=None,
+        enrollment_start=None,
+        enrollment_end=None,
+    ):
         """
         Creates a new canonical course run in Open edX.
 
@@ -94,11 +110,10 @@ class CourseRuns:
             enrollment_end (datetime, optional): The enrollment end date for the new course run. Defaults to None.
 
         Returns:
-            CourseRun: The course run fields from the Open edX API.
+            CourseRun: The course run response keys from the Open edX API.
         Raises:
-            CourseRunError: If the request to clone the course run fails.
+            CourseRunError: If the request to create the course run fails.
         """
-        # the request is done on behalf of the staff user
         payload = {
             "org": org,
             "number": number,
@@ -126,12 +141,24 @@ class CourseRuns:
                 f"Failed to create course run: {ex.response.status_code} - {ex.response.text}"
             ) from ex
 
-    def update_course_run(self, course_id, title=None, pacing_type=None, start=None, end=None, enrollment_start=None, enrollment_end=None):
+    def update_course_run(
+        self,
+        course_id,
+        title=None,
+        pacing_type=None,
+        start=None,
+        end=None,
+        enrollment_start=None,
+        enrollment_end=None,
+    ):
         """
-        Creates a new canonical course run in Open edX.
+        Updates a course run in Open edX based on course_id.
 
         Args:
-            course_id (str): Course Id for the course run to update.
+            course_id (str): Course Id for the course run to update. (Used for lookup)
+
+            The following parameters are optional and can be used to update the course run:
+
             title (str, optional): The title of the new course run.
             pacing_type (str, optional): The pacing type for the new course run. Defaults to None.
             start (datetime, optional): The start date for the new course run. Defaults to None.
@@ -140,11 +167,10 @@ class CourseRuns:
             enrollment_end (datetime, optional): The enrollment end date for the new course run. Defaults to None.
 
         Returns:
-            CourseRun: The course run object containing the fields data from the Open edX API.
+            CourseRun: The course run object containing the fields from the Open edX API.
         Raises:
-            CourseRunError: If the request to clone the course run fails.
+            CourseRunError: If the request to update the course run fails.
         """
-        # the request is done on behalf of the staff user
         payload = {}
         if title:
             payload["title"] = title
@@ -158,7 +184,8 @@ class CourseRuns:
         if schedule:
             payload["schedule"] = schedule
         resp = self._requester.put(
-            parse.urljoin(self._base_url, f"{self.course_run_url}/{course_id}/"), json=payload
+            parse.urljoin(self._base_url, f"{self.course_run_url}/{course_id}/"),
+            json=payload,
         )
         try:
             resp.raise_for_status()
@@ -171,12 +198,13 @@ class CourseRuns:
     def get_course_run(self, course_id):
         """
         Returns a course run object in Open edX.
+
         Args:
             course_id (str): The course id for the course run to get.
         Returns:
             CourseRun: The course run object.
         Raises:
-            CourseRunError: If the request to clone the course run fails.
+            CourseRunError: If the request to get the course run fails.
         """
         resp = self._requester.get(
             parse.urljoin(self._base_url, f"{self.course_run_url}{course_id}/")
@@ -200,7 +228,7 @@ class CourseRuns:
         Returns:
             list: A list of course run objects.
         Raises:
-            CourseRunError: If the request to clone the course run fails.
+            CourseRunError: If the request to get the course runs list fails.
         """
         resp = self._requester.get(
             page_url or parse.urljoin(self._base_url, self.course_run_url)

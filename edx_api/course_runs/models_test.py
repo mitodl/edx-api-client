@@ -1,4 +1,4 @@
-"""Models Tests for the Course Detail API"""
+"""Models Tests for the Course Runs API models"""
 
 import json
 import os.path
@@ -28,7 +28,8 @@ class CourseRunTests(TestCase):
     def test_repr(self):
         """Test the __repr__"""
         assert (
-            self.detail.__repr__() == "<Course run details for course-v1:ORG+NUMBER+RUN>"
+            self.detail.__repr__()
+            == "<Course run details for course-v1:ORG+NUMBER+RUN>"
         )
 
     def test_schedule(self):
@@ -39,7 +40,7 @@ class CourseRunTests(TestCase):
             "enrollment_start": "2025-01-02T00:00:00Z",
             "enrollment_end": None,
         }
-        
+
     def test_start(self):
         """Test for start property"""
         assert self.detail.start == parser.parse("2025-01-01T00:00:00Z")
@@ -59,11 +60,11 @@ class CourseRunTests(TestCase):
     def test_pacing_type(self):
         """Test for pacing_type property"""
         assert self.detail.pacing_type == "instructor_paced"
-    
+
     def test_course_id(self):
         """Test for course_id property"""
         assert self.detail.course_id == "course-v1:ORG+NUMBER+RUN"
-    
+
     def test_title(self):
         """Test for title property"""
         assert self.detail.title == "Test Course"
@@ -73,7 +74,7 @@ class CourseRunTests(TestCase):
         assert self.detail.card_image == (
             "http://studio.local.openedx.io:8001/asset-v1:ORG+NUMBER+RUN+type@asset+block@images_course_image.jpg"
         )
- 
+
     def test_org(self):
         """Test for org property"""
         assert self.detail.org == "ORG"
@@ -116,7 +117,7 @@ class CourseRunListTests(TestCase):
     def test_num_pages(self):
         """Test for num_pages property"""
         assert self.list_detail.num_pages == 5
-    
+
     def test_current_page(self):
         """Test for current_page property"""
         assert self.list_detail.current_page == 1
