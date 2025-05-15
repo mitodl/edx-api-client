@@ -1,0 +1,18 @@
+{
+    "schedule": {
+        "start": "2025-01-01T00:00:00Z",
+        "end": "2030-01-01T00:05:00Z",
+        "enrollment_start": "2025-01-02T00:00:00Z",
+        "enrollment_end": null
+    },
+    "pacing_type": "instructor_paced",
+    "team": [],
+    "id": "course-v1:ORG+NUMBER+RUN",
+    "title": "Test Course",
+    "images": {
+        "card_image": "http://studio.local.openedx.io:8001/asset-v1:ORG+NUMBER+RUN+type@asset+block@images_course_image.jpg"
+    },
+    "org": "ORG",
+    "number": "NUMBER",
+    "run": "RUN"
+}
