@@ -10,6 +10,8 @@ class CourseRuns:
     """
     API Client to interact with the course runs API in Open edX CMS.
     """
+    course_run_url = "api/v1/course_runs/"
+    course_run_clone_url = "api/v1/course_runs/clone/"
 
     def __init__(self, requester, base_url):
         self._requester = requester
@@ -66,15 +68,15 @@ class CourseRuns:
             "destination_course_id": destination_course_id,
         }
         resp = self._requester.post(
-            parse.urljoin(self._base_url, "api/v1/course_runs/clone/"), json=payload
+            parse.urljoin(self._base_url, self.course_run_clone_url), json=payload
         )
         try:
             resp.raise_for_status()
             return resp.json()
-        except HTTPError as e:
+        except HTTPError as ex:
             raise CourseRunAPIError(
-                f"Failed to clone course run: {e.response.status_code} - {e.response.text}"
-            ) from e
+                f"Failed to clone course run: {ex.response.status_code} - {ex.response.text}"
+            ) from ex
 
     def create_course_run(self, org, number, run, title, pacing_type=None, start=None, end=None, enrollment_start=None, enrollment_end=None):
         """
@@ -114,15 +116,15 @@ class CourseRuns:
             payload["schedule"] = schedule
 
         resp = self._requester.post(
-            parse.urljoin(self._base_url, "api/v1/course_runs/"), json=payload
+            parse.urljoin(self._base_url, self.course_run_url), json=payload
         )
         try:
             resp.raise_for_status()
             return CourseRun(resp.json())
-        except HTTPError as e:
+        except HTTPError as ex:
             raise CourseRunAPIError(
-                f"Failed to create course run: {e.response.status_code} - {e.response.text}"
-            ) from e
+                f"Failed to create course run: {ex.response.status_code} - {ex.response.text}"
+            ) from ex
 
     def update_course_run(self, course_id, title=None, pacing_type=None, start=None, end=None, enrollment_start=None, enrollment_end=None):
         """
@@ -155,17 +157,37 @@ class CourseRuns:
         )
         if schedule:
             payload["schedule"] = schedule
-
         resp = self._requester.put(
-            parse.urljoin(self._base_url, f"api/v1/course_runs/{course_id}/"), json=payload
+            parse.urljoin(self._base_url, f"{self.course_run_url}/{course_id}/"), json=payload
         )
         try:
             resp.raise_for_status()
             return CourseRun(resp.json())
-        except HTTPError as e:
+        except HTTPError as ex:
             raise CourseRunAPIError(
-                f"Failed to update course run: {e.response.status_code} - {e.response.text}"
-            ) from e
+                f"Failed to update course run: {ex.response.status_code} - {ex.response.text}"
+            ) from ex
+
+    def get_course_run(self, course_id):
+        """
+        Returns a course run object in Open edX.
+        Args:
+            course_id (str): The course id for the course run to get.
+        Returns:
+            CourseRun: The course run object.
+        Raises:
+            CourseRunError: If the request to clone the course run fails.
+        """
+        resp = self._requester.get(
+            parse.urljoin(self._base_url, f"{self.course_run_url}{course_id}/")
+        )
+        try:
+            resp.raise_for_status()
+            return CourseRun(resp.json())
+        except HTTPError as ex:
+            raise CourseRunAPIError(
+                f"Failed to get course run: {ex.response.status_code} - {ex.response.text}"
+            ) from ex
 
     def get_course_runs_list(self, page_url=None):
         """
@@ -181,33 +203,12 @@ class CourseRuns:
             CourseRunError: If the request to clone the course run fails.
         """
         resp = self._requester.get(
-            page_url or parse.urljoin(self._base_url, "api/v1/course_runs/")
+            page_url or parse.urljoin(self._base_url, self.course_run_url)
         )
         try:
             resp.raise_for_status()
             return CourseRunList(resp.json())
-        except HTTPError as e:
+        except HTTPError as ex:
             raise CourseRunAPIError(
-                f"Failed to get course run list: {e.response.status_code} - {e.response.text}"
-            ) from e
-
-    def get_course_run(self, course_id):
-        """
-        Returns a course run object in Open edX.
-        Args:
-            course_id (str): The course id for the course run to get.
-        Returns:
-            CourseRun: The course run object.
-        Raises:
-            CourseRunError: If the request to clone the course run fails.
-        """
-        resp = self._requester.get(
-            parse.urljoin(self._base_url, f"api/v1/course_runs/{course_id}/")
-        )
-        try:
-            resp.raise_for_status()
-            return CourseRun(resp.json())
-        except HTTPError as e:
-            raise CourseRunAPIError(
-                f"Failed to get course run: {e.response.status_code} - {e.response.text}"
-            ) from e
+                f"Failed to get course runs list: {ex.response.status_code} - {ex.response.text}"
+            ) from ex
