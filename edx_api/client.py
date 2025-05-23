@@ -7,6 +7,7 @@ from .bulk_user_retirement import BulkUserRetirement
 from .ccx import CCX
 from .certificates import UserCertificates
 from .course_detail import CourseDetails, CourseModes
+from .course_runs import CourseRuns
 from .course_structure import CourseStructure
 from .enrollments import CourseEnrollments
 from .email_settings import EmailSettings
@@ -111,3 +112,8 @@ class EdxApi:
     def user_validation(self):
         """User validation API"""
         return UserValidation(self.get_requester(), self.base_url)
+
+    @property
+    def course_runs(self):
+        """Course runs management API (Works with CMS)"""
+        return CourseRuns(self.get_requester(token_type="jwt"), self.base_url)

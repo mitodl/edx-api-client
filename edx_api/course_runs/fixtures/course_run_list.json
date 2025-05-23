@@ -1,0 +1,58 @@
+{
+    "next": "http://studio.local.openedx.io:8001/api/v1/course_runs/?page=2",
+    "previous": null,
+    "count": 10,
+    "num_pages": 5,
+    "current_page": 1,
+    "start": 0,
+    "results": [
+       {
+            "schedule": {
+                "start": "2021-01-01T00:00:00Z",
+                "end": null,
+                "enrollment_start": null,
+                "enrollment_end": null
+            },
+            "pacing_type": "self_paced",
+            "team": [
+                {
+                    "user": "edx",
+                    "role": "instructor"
+                },
+                {
+                    "user": "edx",
+                    "role": "staff"
+                }
+            ],
+            "id": "course-v1:ORG+NUMBER+RUN",
+            "title": "Test Course",
+            "images": {
+                "card_image": "http://studio.local.openedx.io:8001/asset-v1:ORG+NUMBER+RUN+type@asset+block@images_course_image.jpg"
+            }
+        },
+        {
+            "schedule": {
+                "start": "2021-01-01T00:00:00Z",
+                "end": "2026-01-01T00:05:00Z",
+                "enrollment_start": null,
+                "enrollment_end": null
+            },
+            "pacing_type": "instructor_paced",
+            "team": [
+                {
+                    "user": "edx",
+                    "role": "instructor"
+                },
+                {
+                    "user": "edx",
+                    "role": "staff"
+                }
+            ],
+            "id": "course-v1:ORG+NUMBER+RUN1",
+            "title": "Test Course",
+            "images": {
+                "card_image": "http://studio.local.openedx.io:8001/asset-v1:ORG+NUMBER+RUN1+type@asset+block@images_course_image.jpg"
+            }
+        }
+    ]
+}
