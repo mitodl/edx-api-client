@@ -1,6 +1,15 @@
 Release Notes
 =============
 
+Version 1.11.0
+--------------
+
+- feat: Add course runs API management (#121)
+- chore(deps): update actions/checkout action to v4 (#111)
+- chore(deps): update actions/setup-python action to v5 (#112)
+- chore(deps): update dependency python to 3.13 (#118)
+- ci: update ubuntu runner and cache action (#120)
+
 Version 1.10.0 (Released August 19, 2024)
 --------------
 
