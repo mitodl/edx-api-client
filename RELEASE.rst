@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.11.0
+Version 1.11.0 (Released May 27, 2025)
 --------------
 
 - feat: Add course runs API management (#121)
