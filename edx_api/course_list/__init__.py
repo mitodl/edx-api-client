@@ -4,7 +4,7 @@ edX Course List REST API client class
 from urllib.parse import urljoin
 
 from .constants import PAGE_SIZE, BATCH_SIZE
-from ..course_detail.models import CourseDetail
+from edx_api.course_detail.models import CourseDetail
 
 
 class CourseList:
@@ -17,7 +17,7 @@ class CourseList:
     def __init__(self, requester, base_url):
         """
         Args:
-            requester (Requester): an authenticated objects for requests to edX
+            requester (Requester): an authenticated client for requests to edX
             base_url (str): string representing the base URL of an edX LMS instance
         """
         self._requester = requester
@@ -53,41 +53,43 @@ class CourseList:
                 break
 
     def get_courses(self, course_keys=None, org=None, search_term=None,
-                    username=None, active_only=None, **kwargs):
+                    username=None, active_only=None, page_size=PAGE_SIZE, batch_size=BATCH_SIZE, **kwargs):
         """
-        Get a list of courses visible to the specified user
+        Get a list of courses
+
+        Retrieves course information from the edX Course List API with support for
+        filtering, batching, and pagination. Returns courses as a generator to
+        handle large datasets efficiently
 
         Args:
-            course_keys (list): Optional. List of course keys to retrieve
-            org (str): Optional. Filter by organization code (e.g., "HarvardX")
-            search_term (str): Optional. Search term to filter courses
-            username (str): Optional. The username whose visible courses to return
-            active_only (bool): Optional. Only return non-ended courses
+            course_keys (list, optional): List of course keys to retrieve. Defaults to None.
+            org (str, optional): Filter by organization code (e.g., "HarvardX"). Defaults to None.
+            search_term (str, optional): Search term to filter courses. Defaults to None.
+            username (str, optional): The username whose visible courses to return. Defaults to None.
+            active_only (bool, optional): Only return non-ended courses. Defaults to None.
+            page_size (int, optional): Number of courses per page. Defaults to PAGE_SIZE.
+            batch_size (int, optional): Number of course keys per batch. Defaults to BATCH_SIZE.
             **kwargs: Additional query parameters
-
-        Notes:
-            - Handles batching and pagination automatically
-            - Returns a generator to process courses one at a time
 
         Returns:
             Generator yielding CourseDetail objects for each course
         """
 
         params = kwargs.copy()
-        if org is not None:
-            params['org'] = org
-        if search_term is not None:
-            params['search_term'] = search_term
-        if username is not None:
-            params['username'] = username
-        if active_only is not None:
-            params['active_only'] = active_only
+        params.update({
+            'org': org,
+            'search_term': search_term,
+            'username': username,
+            'active_only': active_only
+        })
+        params = {
+            key: value for key, value in params.items()
+            if value or (key == 'active_only' and value is not None)
+        }
 
-        page_size = PAGE_SIZE
         params['page_size'] = page_size
 
         if course_keys:
-            batch_size = BATCH_SIZE
             for i in range(0, len(course_keys), batch_size):
                 batch = course_keys[i:i + batch_size]
                 batch_params = params.copy()
