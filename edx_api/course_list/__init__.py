@@ -53,7 +53,7 @@ class CourseList:
                 break
 
     def get_courses(self, course_keys=None, org=None, search_term=None,
-                    username=None, active_only=None, page_size=PAGE_SIZE, batch_size=BATCH_SIZE, **kwargs):
+                    username=None, active_only=None, **kwargs):
         """
         Get a list of courses
 
@@ -67,8 +67,6 @@ class CourseList:
             search_term (str, optional): Search term to filter courses. Defaults to None.
             username (str, optional): The username whose visible courses to return. Defaults to None.
             active_only (bool, optional): Only return non-ended courses. Defaults to None.
-            page_size (int, optional): Number of courses per page. Defaults to PAGE_SIZE.
-            batch_size (int, optional): Number of course keys per batch. Defaults to BATCH_SIZE.
             **kwargs: Additional query parameters
 
         Returns:
@@ -87,11 +85,11 @@ class CourseList:
             if value or (key == 'active_only' and value is not None)
         }
 
-        params['page_size'] = page_size
+        params['page_size'] = PAGE_SIZE
 
         if course_keys:
-            for i in range(0, len(course_keys), batch_size):
-                batch = course_keys[i:i + batch_size]
+            for i in range(0, len(course_keys), BATCH_SIZE):
+                batch = course_keys[i:i + BATCH_SIZE]
                 batch_params = params.copy()
                 batch_params['course_keys'] = batch
 
