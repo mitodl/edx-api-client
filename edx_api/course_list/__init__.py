@@ -35,11 +35,12 @@ class CourseList:
         """
         page = 1
         while True:
-            params['page'] = page
+            request_params = params.copy()
+            request_params['page'] = page
 
             resp = self._requester.get(
                 urljoin(self._base_url, self.course_list_url),
-                params=params
+                params=request_params
             )
             resp.raise_for_status()
 
