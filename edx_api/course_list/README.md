@@ -7,7 +7,7 @@ The Course List API provides efficient retrieval of multiple courses with suppor
 ```python
 from edx_api.client import EdxApi
 
-client = EdxApi(credentials={'access_token': <token>})
+client = EdxApi(credentials={'access_token': <token>}, base_url=<LMS_BASE_URL>)
 
 # Get all courses
 for course in client.course_list.get_courses():

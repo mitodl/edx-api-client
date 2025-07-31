@@ -89,8 +89,8 @@ class CourseList:
         params['page_size'] = PAGE_SIZE
 
         if course_keys:
-            for i in range(0, len(course_keys), BATCH_SIZE):
-                batch = course_keys[i:i + BATCH_SIZE]
+            for start_index in range(0, len(course_keys), BATCH_SIZE):
+                batch = course_keys[start_index:start_index + BATCH_SIZE]
                 batch_params = params.copy()
                 batch_params['course_keys'] = batch
 
