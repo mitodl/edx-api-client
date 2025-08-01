@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+Version 1.12.0
+--------------
+
+- feat: add basic course list API functionality (#119)
+- chore(deps): pin actions/cache action to 5a3ec84 (#109)
+- chore(deps): update dependency ubuntu to v24 (#116)
+- chore(deps): update codecov/codecov-action action to v5 (#117)
+
 Version 1.11.0 (Released May 27, 2025)
 --------------
 
