@@ -10,7 +10,7 @@
     ],
     "pagination": {
         "next": null,
-        "previous": "http://example.com/api/courses/v1/courses/?page=1",
+        "previous": "http://192.168.33.10:8000/api/courses/v1/courses/?page=1",
         "count": 3,
         "num_pages": 3
     }
