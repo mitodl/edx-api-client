@@ -5,8 +5,8 @@ import os.path
 from unittest import TestCase
 from unittest.mock import Mock
 
-from . import CourseList
-from ..course_detail.models import CourseDetail
+from edx_api.course_list import CourseList
+from edx_api.course_detail.models import CourseDetail
 
 
 class CourseListTests(TestCase):
@@ -21,8 +21,14 @@ class CourseListTests(TestCase):
         with open(os.path.join(fixtures_dir, "course_list_response.json")) as f:
             cls.course_list_response = json.load(f)
 
-        with open(os.path.join(fixtures_dir, "course_list_paginated.json")) as f:
-            cls.course_list_paginated = json.load(f)
+        with open(os.path.join(fixtures_dir, "course_list_page1.json")) as f:
+            cls.course_list_page1 = json.load(f)
+
+        with open(os.path.join(fixtures_dir, "course_list_page2.json")) as f:
+            cls.course_list_page2 = json.load(f)
+
+        with open(os.path.join(fixtures_dir, "course_list_empty.json")) as f:
+            cls.course_list_empty = json.load(f)
 
     def setUp(self):
         """Set up each test"""
@@ -60,25 +66,40 @@ class CourseListTests(TestCase):
         self.assertEqual(courses[0].course_id, "course-v1:edX+DemoX+Demo_Course")
         self.assertEqual(courses[1].course_id, "course-v1:MITx+6.00.1x+3T2015")
 
-    def test_get_courses_with_all_filters(self):
-        """Test get_courses with all filter parameters"""
-        mock_response = Mock()
-        mock_response.json.return_value = self.course_list_response
-        self.requester.get.return_value = mock_response
+    def test_get_courses_with_filters(self):
+        """Test get_courses with various filter parameter combinations"""
+        test_cases = [
+            {
+                'name': 'valid_filters',
+                'params': {'org': 'MIT', 'search_term': 'python', 'username': 'testuser', 'active_only': True},
+                'should_contain': ['org', 'search_term', 'username', 'active_only']
+            },
+            {
+                'name': 'falsy_values',
+                'params': {'org': '', 'search_term': None, 'username': '', 'active_only': None},
+                'should_not_contain': ['org', 'search_term', 'username', 'active_only']
+            }
+        ]
 
-        courses = list(self.course_list.get_courses(
-            org='HarvardX',
-            search_term='python',
-            username='testuser',
-            active_only=True
-        ))
+        for test_case in test_cases:
+            with self.subTest(test_case['name']):
+                mock_response = Mock()
+                mock_response.json.return_value = self.course_list_response
+                self.requester.get.return_value = mock_response
 
-        call_args = self.requester.get.call_args
-        params = call_args[1]['params']
-        self.assertEqual(params['org'], 'HarvardX')
-        self.assertEqual(params['search_term'], 'python')
-        self.assertEqual(params['username'], 'testuser')
-        self.assertEqual(params['active_only'], True)
+                courses = list(self.course_list.get_courses(**test_case['params']))
+
+                call_args = self.requester.get.call_args
+                params = call_args[1]['params']
+
+                if 'should_contain' in test_case:
+                    for param in test_case['should_contain']:
+                        self.assertIn(param, params)
+                        self.assertEqual(params[param], test_case['params'][param])
+
+                if 'should_not_contain' in test_case:
+                    for param in test_case['should_not_contain']:
+                        self.assertNotIn(param, params)
 
         self.assertEqual(len(courses), 2)
 
@@ -98,55 +119,13 @@ class CourseListTests(TestCase):
 
         self.assertEqual(len(courses), 2)
 
-    def test_get_courses_filters_falsy_values(self):
-        """Test that falsy values are filtered out"""
-        mock_response = Mock()
-        mock_response.json.return_value = self.course_list_response
-        self.requester.get.return_value = mock_response
-
-        courses = list(self.course_list.get_courses(
-            org='',
-            search_term=None,
-            username='',
-            active_only=None
-        ))
-
-        call_args = self.requester.get.call_args
-        params = call_args[1]['params']
-        self.assertNotIn('org', params)
-        self.assertNotIn('search_term', params)
-        self.assertNotIn('username', params)
-        self.assertNotIn('active_only', params)
-
-        self.assertEqual(len(courses), 2)
-
     def test_get_courses_pagination(self):
         """Test get_courses with pagination"""
         mock_response1 = Mock()
-        mock_response1.json.return_value = self.course_list_paginated
+        mock_response1.json.return_value = self.course_list_page1
 
         mock_response2 = Mock()
-        mock_response2.json.return_value = {
-            "count": 3,
-            "next": None,
-            "previous": "http://192.168.33.10:8000/api/courses/v1/courses/?page=1",
-            "num_pages": 2,
-            "results": [
-                {
-                    "id": "course-v1:MITx+6.00.1x+3T2015",
-                    "name": "Introduction to Computer Science and Programming Using Python",
-                    "number": "6.00.1x",
-                    "org": "MITx",
-                    "course_id": "course-v1:MITx+6.00.1x+3T2015"
-                }
-            ],
-            "pagination": {
-                "next": None,
-                "previous": "http://192.168.33.10:8000/api/courses/v1/courses/?page=1",
-                "count": 3,
-                "num_pages": 2
-            }
-        }
+        mock_response2.json.return_value = self.course_list_page2
 
         self.requester.get.side_effect = [mock_response1, mock_response2]
         courses = list(self.course_list.get_courses())
@@ -198,21 +177,8 @@ class CourseListTests(TestCase):
 
     def test_get_courses_empty_response(self):
         """Test get_courses with empty response"""
-
         mock_response = Mock()
-        mock_response.json.return_value = {
-            "count": 0,
-            "next": None,
-            "previous": None,
-            "num_pages": 0,
-            "results": [],
-            "pagination": {
-                "next": None,
-                "previous": None,
-                "count": 0,
-                "num_pages": 0
-            }
-        }
+        mock_response.json.return_value = self.course_list_empty
         self.requester.get.return_value = mock_response
 
         courses = list(self.course_list.get_courses())

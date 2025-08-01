@@ -63,11 +63,11 @@ class CourseList:
         handle large datasets efficiently
 
         Args:
-            course_keys (list, optional): List of course keys to retrieve. Defaults to None.
-            org (str, optional): Filter by organization code (e.g., "HarvardX"). Defaults to None.
-            search_term (str, optional): Search term to filter courses. Defaults to None.
-            username (str, optional): The username whose visible courses to return. Defaults to None.
-            active_only (bool, optional): Only return non-ended courses. Defaults to None.
+            course_keys (list, optional): List of course keys to retrieve.
+            org (str, optional): Filter by organization code (e.g., "MIT").
+            search_term (str, optional): Search term to filter courses.
+            username (str, optional): The username whose visible courses to return.
+            active_only (bool, optional): Only return non-ended courses.
             **kwargs: Additional query parameters
 
         Returns:

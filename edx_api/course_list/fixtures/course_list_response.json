@@ -1,8 +1,4 @@
 {
-    "count": 2,
-    "next": null,
-    "previous": null,
-    "num_pages": 1,
     "results": [
         {
             "blocks_url": "http://192.168.33.10:8000/api/courses/v1/blocks/?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course",
@@ -21,7 +17,7 @@
             },
             "name": "edX Demonstration Course",
             "number": "DemoX",
-            "org": "edX",
+            "org": "MIT",
             "short_description": "",
             "start": "2016-03-25T05:00:00Z",
             "start_display": "March 25, 2016",
@@ -47,7 +43,7 @@
             },
             "name": "Introduction to Computer Science and Programming Using Python",
             "number": "6.00.1x",
-            "org": "MITx",
+            "org": "MIT",
             "short_description": "Introduction to Computer Science and Programming Using Python",
             "start": "2015-09-15T05:00:00Z",
             "start_display": "September 15, 2015",

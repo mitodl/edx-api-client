@@ -1,8 +1,4 @@
 {
-    "count": 3,
-    "next": "http://192.168.33.10:8000/api/courses/v1/courses/?page=2",
-    "previous": null,
-    "num_pages": 2,
     "results": [
         {
             "blocks_url": "http://192.168.33.10:8000/api/courses/v1/blocks/?course_id=course-v1%3AedX%2BDemoX%2BDemo_Course",
@@ -21,7 +17,7 @@
             },
             "name": "edX Demonstration Course",
             "number": "DemoX",
-            "org": "edX",
+            "org": "MIT",
             "short_description": "",
             "start": "2016-03-25T05:00:00Z",
             "start_display": "March 25, 2016",
@@ -35,6 +31,6 @@
         "next": "http://192.168.33.10:8000/api/courses/v1/courses/?page=2",
         "previous": null,
         "count": 3,
-        "num_pages": 2
+        "num_pages": 3
     }
 } 

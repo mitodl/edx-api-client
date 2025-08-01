@@ -13,7 +13,7 @@ client = EdxApi(credentials={'access_token': <token>}, base_url=<LMS_BASE_URL>)
 for course in client.course_list.get_courses():
 
 # Filter by organization
-for course in client.course_list.get_courses(org='HarvardX'):
+for course in client.course_list.get_courses(org='MIT'):
 
 # Get specific courses
 course_keys = ['course-v1:edX+DemoX+Demo_Course', 'course-v1:MITx+6.00.1x+3T2015']
@@ -34,11 +34,11 @@ The edX API implements server-side rate limiting. The Course List client uses co
 Retrieves course information from the edX Course List API with support for filtering, batching, and pagination.
 
 **Parameters:**
-- `course_keys` (list, optional): List of course keys to retrieve. Defaults to None.
-- `org` (str, optional): Filter by organization code (e.g., "HarvardX"). Defaults to None.
-- `search_term` (str, optional): Search term to filter courses. Defaults to None.
-- `username` (str, optional): The username whose visible courses to return. Defaults to None.
-- `active_only` (bool, optional): Only return non-ended courses. Defaults to None.
+- `course_keys` (list, optional): List of course keys to retrieve.
+- `org` (str, optional): Filter by organization code (e.g., "MIT").
+- `search_term` (str, optional): Search term to filter courses.
+- `username` (str, optional): The username whose visible courses to return.
+- `active_only` (bool, optional): Only return non-ended courses.
 - `**kwargs`: Additional query parameters
 
 **Returns:**
