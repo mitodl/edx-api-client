@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.12.0
+Version 1.12.0 (Released August 01, 2025)
 --------------
 
 - feat: add basic course list API functionality (#119)
