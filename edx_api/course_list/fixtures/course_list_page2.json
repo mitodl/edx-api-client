@@ -1,0 +1,17 @@
+{
+    "results": [
+        {
+            "id": "course-v1:MITx+6.00.1x+3T2015",
+            "name": "Introduction to Computer Science and Programming Using Python",
+            "number": "6.00.1x",
+            "org": "MIT",
+            "course_id": "course-v1:MITx+6.00.1x+3T2015"
+        }
+    ],
+    "pagination": {
+        "next": null,
+        "previous": "http://192.168.33.10:8000/api/courses/v1/courses/?page=1",
+        "count": 3,
+        "num_pages": 3
+    }
+} 
