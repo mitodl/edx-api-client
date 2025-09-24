@@ -100,7 +100,7 @@ class CourseModes:
         resp = self._requester.get(
             urljoin(
                 self._base_url,
-                f"/api/course_modes/v1/courses/{course_id}/modes/{mode_slug}",
+                f"/api/course_modes/v1/courses/{course_id}/{mode_slug}",
             )
         )
 
@@ -133,16 +133,14 @@ class CourseModes:
             "min_price": min_price,
         }
 
-        # Add optional fields only if they are provided
-        if expiration_datetime is not None:
-            payload["expiration_datetime"] = expiration_datetime
-        if description is not None:
-            payload["description"] = description
-        if sku is not None:
-            payload["sku"] = sku
-        if bulk_sku is not None:
-            payload["bulk_sku"] = bulk_sku
-
+        optional_fields = {
+            "expiration_datetime": expiration_datetime,
+            "description": description,
+            "sku": sku,
+            "bulk_sku": bulk_sku,
+        }
+        payload.update({k: v for k, v in optional_fields.items() if v is not None})
+        
         resp = self._requester.post(
             urljoin(
                 self._base_url,
@@ -164,28 +162,24 @@ class CourseModes:
             min_price (Decimal): The new minimum price for the mode.
             currency (str): The new currency for the price.
             expiration_datetime (str, optional): The new expiration datetime for the mode in ISO 8601 format. Defaults to None.
-            description (str, optional): The new description for the mode. Defaults to "".
+            description (str, optional): The new description for the mode. Defaults to None.
             sku (str, optional): The new SKU for the mode. Defaults to None.
             bulk_sku (str, optional): The new bulk SKU for the mode. Defaults to None.
         Returns:
-            bool: True if the deletion was successful, False otherwise.
+            bool: True on successful update.
         """
         payload = {}
+        updatable_fields = {
+            "mode_display_name": mode_display_name,
+            "currency": currency,
+            "min_price": min_price,
+            "expiration_datetime": expiration_datetime,
+            "description": description,
+            "sku": sku,
+            "bulk_sku": bulk_sku,
+        }
+        payload.update({k: v for k, v in updatable_fields.items() if v is not None})
 
-        if mode_display_name:
-            payload["mode_display_name"] = mode_display_name
-        if currency:
-            payload["currency"] = currency
-        if min_price:
-            payload["min_price"] = min_price
-        if expiration_datetime:
-            payload["expiration_datetime"] = expiration_datetime
-        if description:
-            payload["description"] = description
-        if sku:
-            payload["sku"] = sku
-        if bulk_sku:
-            payload["bulk_sku"] = bulk_sku
 
         resp = self._requester.patch(
             urljoin(
@@ -206,7 +200,7 @@ class CourseModes:
             course_id (str): An edx course id.
             mode_slug (str): The mode slug to delete.
         Returns:
-            bool: True if the deletion was successful, False otherwise.
+            bool: True on successful deletion.
         """
         resp = self._requester.delete(
             urljoin(
