@@ -79,7 +79,7 @@ class CourseModes:
         for course_mode_json in resp.json():
             course_mode_list.append(CourseMode(course_mode_json))
         return course_mode_list
-    
+
     def get_mode(self, course_id):
         """
         Just for backwards compatibility, fetches course mode details.
@@ -118,7 +118,7 @@ class CourseModes:
             currency (str): The currency for the price.
             min_price (Decimal): The minimum price for the mode.
             expiration_datetime (str, optional): The expiration datetime for the mode in ISO 8601 format. Defaults to None.
-            description (str, optional): A description for the mode. Defaults to "".
+            description (str, optional): A description for the mode. Defaults to None.
             sku (str, optional): The SKU for the mode. Defaults to None.
             bulk_sku (str, optional): The bulk SKU for the mode. Defaults to None
 
@@ -153,7 +153,7 @@ class CourseModes:
         resp.raise_for_status()
         return CourseMode(resp.json())
 
-    def update_course_mode(self, course_id, mode_slug, mode_display_name, currency, min_price=0, expiration_datetime=None, description="", sku=None, bulk_sku=None):
+    def update_course_mode(self, course_id, mode_slug, mode_display_name=None, currency=None, min_price=None, expiration_datetime=None, description=None, sku=None, bulk_sku=None):
         """
         Updates an existing course mode for the given course.
 
@@ -168,12 +168,16 @@ class CourseModes:
             sku (str, optional): The new SKU for the mode. Defaults to None.
             bulk_sku (str, optional): The new bulk SKU for the mode. Defaults to None.
         Returns:
-            CourseMode: The updated course mode.
+            bool: True if the deletion was successful, False otherwise.
         """
         payload = {}
 
         if mode_display_name:
             payload["mode_display_name"] = mode_display_name
+        if currency:
+            payload["currency"] = currency
+        if min_price:
+            payload["min_price"] = min_price
         if expiration_datetime:
             payload["expiration_datetime"] = expiration_datetime
         if description:
@@ -182,10 +186,6 @@ class CourseModes:
             payload["sku"] = sku
         if bulk_sku:
             payload["bulk_sku"] = bulk_sku
-        if min_price is not None:
-            payload["min_price"] = str(min_price)
-        if currency:
-            payload["currency"] = currency
 
         resp = self._requester.patch(
             urljoin(
@@ -195,10 +195,8 @@ class CourseModes:
             json=payload,
             headers={"Content-Type": "application/merge-patch+json"}
         )
-        if resp.status_code == 204:
-            return True
         resp.raise_for_status()
-        return False
+        return True
 
     def delete_course_mode(self, course_id, mode_slug):
         """
@@ -216,7 +214,5 @@ class CourseModes:
                 f"/api/course_modes/v1/courses/{course_id}/{mode_slug}",
             )
         )
-        if resp.status_code == 204:
-            return True
         resp.raise_for_status()
-        return False
+        return True
