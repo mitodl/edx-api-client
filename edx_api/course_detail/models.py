@@ -204,3 +204,13 @@ class CourseMode:
     def description(self):
         """A description of this mode"""
         return self.json.get("description")
+
+    @property
+    def sku(self):
+        """SKU of this mode"""
+        return self.json.get("sku")
+    
+    @property
+    def bulk_sku(self):
+        """Bulk SKU of this mode"""
+        return self.json.get("bulk_sku")
