@@ -166,7 +166,7 @@ class CourseModes:
             sku (str, optional): The new SKU for the mode. Defaults to None.
             bulk_sku (str, optional): The new bulk SKU for the mode. Defaults to None.
         Returns:
-            bool: True on successful update.
+             None: On successful update.
         """
         payload = {
             "mode_display_name": mode_display_name,
@@ -179,7 +179,6 @@ class CourseModes:
         }
         payload = {k: v for k, v in payload.items() if v is not None}
 
-
         resp = self._requester.patch(
             urljoin(
             self._base_url,
@@ -189,7 +188,7 @@ class CourseModes:
             headers={"Content-Type": "application/merge-patch+json"}
         )
         resp.raise_for_status()
-        return True
+        return
 
     def delete_course_mode(self, course_id, mode_slug):
         """
@@ -199,7 +198,7 @@ class CourseModes:
             course_id (str): An edx course id.
             mode_slug (str): The mode slug to delete.
         Returns:
-            bool: True on successful deletion.
+            None: On successful deletion.
         """
         resp = self._requester.delete(
             urljoin(
@@ -208,4 +207,4 @@ class CourseModes:
             )
         )
         resp.raise_for_status()
-        return True
+        return
