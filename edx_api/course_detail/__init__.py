@@ -168,8 +168,7 @@ class CourseModes:
         Returns:
             bool: True on successful update.
         """
-        payload = {}
-        updatable_fields = {
+        payload = {
             "mode_display_name": mode_display_name,
             "currency": currency,
             "min_price": min_price,
@@ -178,7 +177,7 @@ class CourseModes:
             "sku": sku,
             "bulk_sku": bulk_sku,
         }
-        payload.update({k: v for k, v in updatable_fields.items() if v is not None})
+        payload = {k: v for k, v in payload.items() if v is not None}
 
 
         resp = self._requester.patch(
