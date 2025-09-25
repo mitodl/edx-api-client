@@ -59,7 +59,7 @@ class CourseModes:
 
     def get_course_modes(self, course_id):
         """
-        Fetches course mode details.
+        Fetches details of all the course modes for a single course.
 
         Args:
             course_id (str): An edx course id.
