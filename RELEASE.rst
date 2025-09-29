@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+Version 1.13.0
+--------------
+
+- feat: add create, update, delete functionality (#129)
+
 Version 1.12.0 (Released August 01, 2025)
 --------------
 
