@@ -163,3 +163,12 @@ class CourseModeTests(TestCase):
     def test_description(self):
         """Test for description property"""
         assert self.detail.description == "string"
+
+    def test_sku(self):
+        """Test for sku property"""
+        assert self.detail.sku == "string"
+
+    def test_bulk_sku(self):
+        """Test for bulk_sku property"""
+        assert self.detail.bulk_sku == "string"
+
