@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 1.14.0
+Version 1.14.0 (Released December 03, 2025)
 --------------
 
 - feat: add LTI tools for LTI APIs in edX (#133)
