@@ -1,6 +1,16 @@
 Release Notes
 =============
 
+Version 1.14.0
+--------------
+
+- feat: add LTI tools for LTI APIs in edX (#133)
+- chore(deps): update dependency python to 3.14 (#132)
+- chore(deps): update actions/cache digest to 0057852 (#124)
+- chore(deps): update actions/checkout action to v5 (#126)
+- chore(deps): update codecov/codecov-action digest to 5a10915 (#127)
+- chore(deps): update actions/setup-python action to v6 (#128)
+
 Version 1.13.0 (Released September 29, 2025)
 --------------
 
