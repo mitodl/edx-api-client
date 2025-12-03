@@ -15,6 +15,7 @@ from .email_settings import EmailSettings
 from .grades import UserCurrentGrades
 from .user_info import UserInfo
 from .user_validation import UserValidation
+from .lti_tools import LTITools
 
 
 class EdxApi:
@@ -123,3 +124,9 @@ class EdxApi:
     def course_runs(self):
         """Course runs management API (Works with CMS)"""
         return CourseRuns(self.get_requester(token_type="jwt"), self.base_url)
+
+    @property
+    def lti_tools(self):
+        """LTI Tools API"""
+        return LTITools(self.get_requester(), self.base_url)
+
