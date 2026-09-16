@@ -9,7 +9,7 @@ class UserValidationResult(object):
         self.validation_decisions = json.get('validation_decisions', {})
 
     def __str__(self):
-        return f"<User validation>"
+        return "<User validation>"
 
     @property
     def name(self):

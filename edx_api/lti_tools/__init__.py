@@ -16,7 +16,6 @@ class LTITools:
         self.requester = requester
         self.base_url = base_url
 
-
     def fix_lti_user(self, email):
         """
         Fixes an LTI user with duplicate email

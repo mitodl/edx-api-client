@@ -108,7 +108,7 @@ class CourseRunListTests(TestCase):
 
     def test_previous(self):
         """Test for previous property"""
-        assert self.list_detail.previous == None
+        assert self.list_detail.previous is None
 
     def test_count(self):
         """Test for count property"""
