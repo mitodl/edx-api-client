@@ -140,7 +140,7 @@ class CourseModes:
             "bulk_sku": bulk_sku,
         }
         payload.update({k: v for k, v in optional_fields.items() if v is not None})
-        
+
         resp = self._requester.post(
             urljoin(
                 self._base_url,
@@ -181,8 +181,8 @@ class CourseModes:
 
         resp = self._requester.patch(
             urljoin(
-            self._base_url,
-            f"/api/course_modes/v1/courses/{course_id}/{mode_slug}",
+                self._base_url,
+                f"/api/course_modes/v1/courses/{course_id}/{mode_slug}",
             ),
             json=payload,
             headers={"Content-Type": "application/merge-patch+json"}
